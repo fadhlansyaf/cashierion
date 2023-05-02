@@ -6,14 +6,14 @@ import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 
 void main() async{
-
+  WidgetsFlutterBinding.ensureInitialized();
   if (!kIsWeb) {
     var path = await getTemporaryDirectory();
     Hive.init(path.path);
   }
 
   var mainStorage = await Hive.openBox('mainStorage');
-  return runApp(MaterialApp(
+  runApp(MaterialApp(
     title: 'POS',
     navigatorKey: Get.navigatorKey,
     debugShowCheckedModeBanner: false,
