@@ -12,6 +12,20 @@ class ProductFormView extends StatefulWidget {
     controller.view = this;
     ImagePicker picker = new ImagePicker();
 
+    File? _image;
+  
+
+    Future getImage() async {
+    final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if(image == null) return;
+
+    final imageTemporary = File(image.path);
+
+    controller.setState(() {
+      _image = imageTemporary;
+    });
+  }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("ProductForm"),
@@ -25,14 +39,14 @@ class ProductFormView extends StatefulWidget {
               SizedBox(
                 height: 20,
               ),
-              Image.network("https://i.ibb.co/QrTHd59/woman.jpg"),
+              _image != null ? Image.file(_image!,width: 250, height: 250, fit: BoxFit.cover,) :  Image.network("https://i.ibb.co/QrTHd59/woman.jpg"),
               SizedBox(
                 height: 20,
               ),
               CustomButton(
                   title: 'Pick from Gallery',
                   icon: Icons.image_outlined,
-                  onClick: () => controller.getImage()),
+                  onClick: () => getImage()),
               SizedBox(
                 height: 20,
               ),
