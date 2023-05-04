@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:pos_app_skripsi/state_util.dart';
 import '../view/product_form_view.dart';
+
 
 class ProductFormController extends State<ProductFormView> implements MvcController {
   static late ProductFormController instance;
