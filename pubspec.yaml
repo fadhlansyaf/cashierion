@@ -38,6 +38,8 @@ dependencies:
   hive_generator: ^2.0.0
   build_runner: ^2.3.3
   image_picker: ^0.8.7+4
+  get: ^4.6.5
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -81,4 +83,4 @@ flutter:
   #         weight: 700
   #
   # For details regarding fonts from package dependencies,
-  # see https://flutter.dev/custom-fonts/#from-packages
+  # see https://flutter.dev/custom-fonts/#from-packages

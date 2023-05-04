@@ -104,31 +104,31 @@ class DashboardView extends StatefulWidget {
                       "icon":
                           "https://cdn-icons-png.flaticon.com/128/2652/2652218.png",
                       "label": "Product\n",
-                      "onTap": () => Get.to(const ProductListView()),
+                      "onTap": () => OldGet.to(const ProductListView()),
                     },
                     {
                       "icon":
                           "https://cdn-icons-png.flaticon.com/128/2435/2435281.png",
                       "label": "Purchase\nOrder",
-                      "onTap": () => Get.to(const PurchaseOrderView()),
+                      "onTap": () => OldGet.to(const PurchaseOrderView()),
                     },
                     {
                       "icon":
                           "https://cdn-icons-png.flaticon.com/128/5681/5681355.png",
                       "label": "Sales\nTransaction",
-                      "onTap": () => Get.to(const SalesTransactionView()),
+                      "onTap": () => OldGet.to(const SalesTransactionView()),
                     },
                     {
                       "icon":
                           "https://cdn-icons-png.flaticon.com/128/1450/1450932.png",
                       "label": "Sales\nReport",
-                      "onTap": () => Get.to(const SalesReportView()),
+                      "onTap": () => OldGet.to(const SalesReportView()),
                     },
                     {
                       "icon":
                           "https://cdn-icons-png.flaticon.com/128/2912/2912773.png",
                       "label": "Stock\nReport",
-                      "onTap": () => Get.to(const StockReportView()),
+                      "onTap": () => OldGet.to(const StockReportView()),
                     },
                     
                   ];

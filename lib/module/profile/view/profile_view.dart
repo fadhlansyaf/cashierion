@@ -21,7 +21,7 @@ class ProfileView extends StatefulWidget {
             children: [
               SizedBox(height: 20),
               CircleAvatar(
-                radius: Get.width / 6,
+                radius: OldGet.width / 6,
                 backgroundImage: NetworkImage(
                   "https://i.ibb.co/PGv8ZzG/me.jpg",
                 ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pos_app_skripsi/state_util.dart';
-import '../view/main_navigation_view.dart';
+import '../view/home_view.dart';
 
 class MainNavigationController extends State<MainNavigationView> implements MvcController {
   static late MainNavigationController instance;
@@ -20,3 +20,4 @@ class MainNavigationController extends State<MainNavigationView> implements MvcC
 
   int selectedIndex = 0;
 }
+

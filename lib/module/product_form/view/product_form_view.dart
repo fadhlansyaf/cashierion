@@ -13,7 +13,6 @@ class ProductFormView extends StatefulWidget {
     ImagePicker picker = new ImagePicker();
 
     File? _image;
-  
 
     Future getImage() async {
     final image = await ImagePicker().pickImage(source: ImageSource.gallery);

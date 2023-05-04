@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
+import 'package:get/get.dart';
 import 'package:pos_app_skripsi/core.dart';
-import 'package:pos_app_skripsi/state_util.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
@@ -13,11 +13,11 @@ void main() async{
   }
 
   var mainStorage = await Hive.openBox('mainStorage');
-  runApp(MaterialApp(
+  runApp(GetMaterialApp(
     title: 'POS',
-    navigatorKey: Get.navigatorKey,
+    navigatorKey: OldGet.navigatorKey,
     debugShowCheckedModeBanner: false,
-    home: const MainNavigationView(),
+    home: const HomePage(),
     ));
 }
 

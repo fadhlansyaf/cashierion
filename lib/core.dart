@@ -5,8 +5,8 @@ it means you have to rename it to something more unique.
 */
 export 'package:pos_app_skripsi/module/dashboard/controller/dashboard_controller.dart';
 export 'package:pos_app_skripsi/module/dashboard/view/dashboard_view.dart';
-export 'package:pos_app_skripsi/module/main_navigation/controller/main_navigation_controller.dart';
-export 'package:pos_app_skripsi/module/main_navigation/view/main_navigation_view.dart';
+export 'package:pos_app_skripsi/module/home/controller/home_controller.dart';
+export 'package:pos_app_skripsi/module/home/view/home_view.dart';
 export 'package:pos_app_skripsi/module/product_form/controller/product_form_controller.dart';
 export 'package:pos_app_skripsi/module/product_form/view/product_form_view.dart';
 export 'package:pos_app_skripsi/module/product_list/controller/product_list_controller.dart';
