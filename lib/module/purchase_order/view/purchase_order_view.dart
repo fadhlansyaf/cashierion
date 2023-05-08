@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:pos_app_skripsi/core.dart';
+import 'package:get/get.dart';
+
 import '../controller/purchase_order_controller.dart';
 
-class PurchaseOrderView extends StatefulWidget {
-  const PurchaseOrderView({Key? key}) : super(key: key);
+class PurchaseOrderPage extends StatelessWidget {
+  const PurchaseOrderPage({Key? key}) : super(key: key);
 
-  Widget build(context, PurchaseOrderController controller) {
-    controller.view = this;
+  @override
+  Widget build(BuildContext context) {
+    final logic = Get.find<PurchaseOrderController>();
 
     return Scaffold(
       appBar: AppBar(
@@ -133,7 +135,4 @@ class PurchaseOrderView extends StatefulWidget {
       ),
     );
   }
-
-  @override
-  State<PurchaseOrderView> createState() => PurchaseOrderController();
 }

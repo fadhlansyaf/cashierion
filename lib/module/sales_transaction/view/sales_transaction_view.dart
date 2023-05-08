@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:pos_app_skripsi/core.dart';
+import 'package:get/get.dart';
+
 import '../controller/sales_transaction_controller.dart';
 
-class SalesTransactionView extends StatefulWidget {
-  const SalesTransactionView({Key? key}) : super(key: key);
+class SalesTransactionPage extends StatelessWidget {
+  const SalesTransactionPage({Key? key}) : super(key: key);
 
-  Widget build(context, SalesTransactionController controller) {
-    controller.view = this;
+  @override
+  Widget build(BuildContext context) {
+    final logic = Get.find<SalesTransactionController>();
 
     return Scaffold(
       appBar: AppBar(
@@ -133,7 +135,4 @@ class SalesTransactionView extends StatefulWidget {
       ),
     );
   }
-
-  @override
-  State<SalesTransactionView> createState() => SalesTransactionController();
 }
