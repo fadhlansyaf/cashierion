@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:pos_app_skripsi/core.dart';
-import '../controller/profile_controller.dart';
 
-class ProfileView extends StatefulWidget {
+class ProfileView extends StatelessWidget {
   const ProfileView({Key? key}) : super(key: key);
 
-  Widget build(context, ProfileController controller) {
-    controller.view = this;
+  @override
+  Widget build(context) {
 
     return Scaffold(
       appBar: AppBar(
@@ -82,7 +81,4 @@ class ProfileView extends StatefulWidget {
       ),
     );
   }
-
-  @override
-  State<ProfileView> createState() => ProfileController();
 }

@@ -1,117 +1,58 @@
 import 'package:flutter/material.dart';
-import 'package:pos_app_skripsi/core.dart';
-import '../controller/home_controller.dart';
+import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
-import 'package:flutter/material.dart';
+import '../widget/dashboard_view.dart';
+import '../widget/profile_view.dart';
+import '../widget/sales_report_view.dart';
+import '../controller/home_controller.dart';
 
-class MainNavigationView extends StatefulWidget {
-  const MainNavigationView({Key? key}) : super(key: key);
-
-  Widget build(context, MainNavigationController controller) {
-    controller.view = this;
-
-    return DefaultTabController(
-      length: 3,
-      initialIndex: controller.selectedIndex,
-      child: Scaffold(
-        body: IndexedStack(
-          index: controller.selectedIndex,
-          children: [
-            DashboardView(),
-            SalesReportView(),
-            ProfileView()
-          ],
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          currentIndex: controller.selectedIndex,
-          selectedItemColor: Colors.grey[700],
-          unselectedItemColor: Colors.grey[500],
-          onTap: (index) {
-            controller.selectedIndex = index;
-            controller.setState(() {});
-          },
-          items: const [
-            BottomNavigationBarItem(
-              label: "Dashboard",
-              icon: Icon(
-                MdiIcons.viewDashboard,
-              ),
-            ),
-            BottomNavigationBarItem(
-              label: "Order",
-              icon: Icon(
-                Icons.list,
-              ),
-            ),
-            BottomNavigationBarItem(
-              label: "Me",
-              icon: Icon(
-                Icons.person,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  @override
-  State<MainNavigationView> createState() => MainNavigationController();
-}
-
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  int selectedIndex = 0;
-
-  @override
   Widget build(BuildContext context) {
+    final controller = Get.find<HomeLogic>();
+
     return DefaultTabController(
       length: 3,
-      initialIndex: selectedIndex,
+      initialIndex: controller.selectedIndex.value,
       child: Scaffold(
-        body: IndexedStack(
-          index: selectedIndex,
-          children: [
-            DashboardView(),
-            SalesReportView(),
-            ProfileView()
-          ],
+        body: Obx(
+          () => IndexedStack(
+            index: controller.selectedIndex.value,
+            children: [DashboardView(), SalesReportView(), ProfileView()],
+          ),
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          currentIndex: selectedIndex,
-          selectedItemColor: Colors.grey[700],
-          unselectedItemColor: Colors.grey[500],
-          onTap: (index) {
-            selectedIndex = index;
-            setState(() {});
-          },
-          items: const [
-            BottomNavigationBarItem(
-              label: "Dashboard",
-              icon: Icon(
-                MdiIcons.viewDashboard,
+        bottomNavigationBar: Obx(
+          () => BottomNavigationBar(
+            currentIndex: controller.selectedIndex.value,
+            selectedItemColor: Colors.grey[700],
+            unselectedItemColor: Colors.grey[500],
+            onTap: (index) {
+              controller.selectedIndex.value = index;
+            },
+            items: const [
+              BottomNavigationBarItem(
+                label: "Dashboard",
+                icon: Icon(
+                  MdiIcons.viewDashboard,
+                ),
               ),
-            ),
-            BottomNavigationBarItem(
-              label: "Order",
-              icon: Icon(
-                Icons.list,
+              BottomNavigationBarItem(
+                label: "Order",
+                icon: Icon(
+                  Icons.list,
+                ),
               ),
-            ),
-            BottomNavigationBarItem(
-              label: "Me",
-              icon: Icon(
-                Icons.person,
+              BottomNavigationBarItem(
+                label: "Me",
+                icon: Icon(
+                  Icons.person,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

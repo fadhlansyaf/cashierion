@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:pos_app_skripsi/core.dart';
-import '../controller/sales_report_controller.dart';
 
-class SalesReportView extends StatefulWidget {
+class SalesReportView extends StatelessWidget {
   const SalesReportView({Key? key}) : super(key: key);
 
-  Widget build(context, SalesReportController controller) {
-    controller.view = this;
+  @override
+  Widget build(context) {
 
     return Scaffold(
       appBar: AppBar(
@@ -23,7 +22,4 @@ class SalesReportView extends StatefulWidget {
       ),
     );
   }
-
-  @override
-  State<SalesReportView> createState() => SalesReportController();
 }

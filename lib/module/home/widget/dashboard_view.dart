@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pos_app_skripsi/core.dart';
-import '../controller/dashboard_controller.dart';
+import '../../dashboard/controller/dashboard_controller.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class DashboardView extends StatefulWidget {

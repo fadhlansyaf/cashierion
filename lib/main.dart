@@ -4,6 +4,7 @@ import 'package:pos_app_skripsi/core.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:pos_app_skripsi/module/home/controller/home_binding.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,6 +19,7 @@ void main() async{
     navigatorKey: OldGet.navigatorKey,
     debugShowCheckedModeBanner: false,
     home: const HomePage(),
+    initialBinding: HomeBinding(),
     ));
 }
 
