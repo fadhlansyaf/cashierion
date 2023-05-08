@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pos_app_skripsi/core.dart';
+import 'package:pos_app_skripsi/module/product_list/controller/product_list_binding.dart';
 import 'package:pos_app_skripsi/module/purchase_order/controller/purchase_order_binding.dart';
 import 'package:pos_app_skripsi/module/sales_transaction/controller/sales_transaction_binding.dart';
 import '../../dashboard/controller/dashboard_controller.dart';
@@ -107,7 +108,7 @@ class DashboardView extends StatefulWidget {
                       "icon":
                           "https://cdn-icons-png.flaticon.com/128/2652/2652218.png",
                       "label": "Product\n",
-                      "onTap": () => OldGet.to(const ProductListView()),
+                      "onTap": () => Get.to(const ProductListPage(), binding: ProductListBinding()),
                     },
                     {
                       "icon":

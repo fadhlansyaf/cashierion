@@ -6,8 +6,8 @@ import 'package:image_picker/image_picker.dart';
 
 import '../controller/product_form_controller.dart';
 
-class ProductFormView extends StatelessWidget {
-  const ProductFormView({Key? key}) : super(key: key);
+class ProductFormPage extends StatelessWidget {
+  const ProductFormPage({Key? key}) : super(key: key);
 
   Widget build(BuildContext context) {
     final controller = Get.find<ProductFormLogic>();
@@ -113,7 +113,7 @@ class ProductFormView extends StatelessWidget {
   }
 
   // @override
-  // State<ProductFormView> createState() => ProductFormController();
+  // State<ProductFormPage> createState() => ProductFormController();
 }
 
 Widget CustomButton({

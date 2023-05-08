@@ -5,11 +5,11 @@ import 'package:pos_app_skripsi/core.dart';
 import '../controller/product_list_controller.dart';
 import 'package:pos_app_skripsi/module/product_form/controller/product_form_binding.dart';
 
-class ProductListView extends StatefulWidget {
-  const ProductListView({Key? key}) : super(key: key);
+class ProductListPage extends StatelessWidget {
+  const ProductListPage({Key? key}) : super(key: key);
 
-  Widget build(context, ProductListController controller) {
-    controller.view = this;
+  Widget build(BuildContext context) {
+    final controller = Get.find<ProductListLogic>();
 
     return Scaffold(
       appBar: AppBar(
@@ -19,7 +19,7 @@ class ProductListView extends StatefulWidget {
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () async {
-          await Get.to(ProductFormView(),binding: ProductFormBinding());
+          await Get.to(ProductFormPage(),binding: ProductFormBinding());
         },
       ),
       body: SingleChildScrollView(
@@ -46,9 +46,9 @@ class ProductListView extends StatefulWidget {
                       subtitle: const Text("Programmer"),
                       trailing: IconButton(
                         onPressed: () async {
-                          // await OldGet.to(const ProductFormView(
+                          // await OldGet.to(const ProductFormPage(
                           // ));
-                          await Get.to(ProductFormView(),binding: ProductFormBinding());
+                          await Get.to(ProductFormPage(),binding: ProductFormBinding());
                         },
                         icon: const Icon(
                           Icons.edit,
@@ -66,6 +66,4 @@ class ProductListView extends StatefulWidget {
     );
   }
 
-  @override
-  State<ProductListView> createState() => ProductListController();
 }
