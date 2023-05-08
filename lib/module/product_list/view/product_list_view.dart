@@ -1,6 +1,9 @@
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:pos_app_skripsi/core.dart';
+
 import '../controller/product_list_controller.dart';
+import 'package:pos_app_skripsi/module/product_form/controller/product_form_binding.dart';
 
 class ProductListView extends StatefulWidget {
   const ProductListView({Key? key}) : super(key: key);
@@ -16,7 +19,7 @@ class ProductListView extends StatefulWidget {
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () async {
-          await OldGet.to(ProductFormView());
+          await Get.to(ProductFormView(),binding: ProductFormBinding());
         },
       ),
       body: SingleChildScrollView(
@@ -43,9 +46,9 @@ class ProductListView extends StatefulWidget {
                       subtitle: const Text("Programmer"),
                       trailing: IconButton(
                         onPressed: () async {
-                          await OldGet.to(const ProductFormView(
-                            //add here
-                          ));
+                          // await OldGet.to(const ProductFormView(
+                          // ));
+                          await Get.to(ProductFormView(),binding: ProductFormBinding());
                         },
                         icon: const Icon(
                           Icons.edit,

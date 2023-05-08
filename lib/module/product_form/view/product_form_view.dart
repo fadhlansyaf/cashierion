@@ -1,29 +1,30 @@
 import 'dart:io';
-
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:pos_app_skripsi/core.dart';
-import '../controller/product_form_controller.dart';
 import 'package:image_picker/image_picker.dart';
 
-class ProductFormView extends StatefulWidget {
+import '../controller/product_form_controller.dart';
+
+class ProductFormView extends StatelessWidget {
   const ProductFormView({Key? key}) : super(key: key);
 
-  Widget build(context, ProductFormController controller) {
-    controller.view = this;
+  Widget build(BuildContext context) {
+    final controller = Get.find<ProductFormLogic>();
     ImagePicker picker = new ImagePicker();
 
     File? _image;
 
     Future getImage() async {
-    final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-    if(image == null) return;
+      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (image == null) return;
 
-    final imageTemporary = File(image.path);
+      final imageTemporary = File(image.path);
 
-    controller.setState(() {
-      _image = imageTemporary;
-    });
-  }
+      // controller.setState(() {
+      //   _image = imageTemporary;
+      // });
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -38,7 +39,14 @@ class ProductFormView extends StatefulWidget {
               SizedBox(
                 height: 20,
               ),
-              _image != null ? Image.file(_image!,width: 250, height: 250, fit: BoxFit.cover,) :  Image.network("https://i.ibb.co/QrTHd59/woman.jpg"),
+              _image != null
+                  ? Image.file(
+                      _image!,
+                      width: 250,
+                      height: 250,
+                      fit: BoxFit.cover,
+                    )
+                  : Image.network("https://i.ibb.co/QrTHd59/woman.jpg"),
               SizedBox(
                 height: 20,
               ),
@@ -104,8 +112,8 @@ class ProductFormView extends StatefulWidget {
     );
   }
 
-  @override
-  State<ProductFormView> createState() => ProductFormController();
+  // @override
+  // State<ProductFormView> createState() => ProductFormController();
 }
 
 Widget CustomButton({
