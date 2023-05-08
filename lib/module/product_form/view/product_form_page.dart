@@ -15,17 +15,6 @@ class ProductFormPage extends StatelessWidget {
 
     File? _image;
 
-    Future getImage() async {
-      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-      if (image == null) return;
-
-      final imageTemporary = File(image.path);
-
-      // controller.setState(() {
-      //   _image = imageTemporary;
-      // });
-    }
-
     return Scaffold(
       appBar: AppBar(
         title: const Text("ProductForm"),
@@ -39,28 +28,44 @@ class ProductFormPage extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
-              _image != null
-                  ? Image.file(
-                      _image!,
-                      width: 250,
-                      height: 250,
-                      fit: BoxFit.cover,
+              Obx(() => controller.selectedImagePath.value == ''
+                  ? Text(
+                      'Select Image from camera/galery',
+                      style: TextStyle(fontSize: 20),
                     )
-                  : Image.network("https://i.ibb.co/QrTHd59/woman.jpg"),
+                  : Image.file(File(controller.selectedImagePath.value))),
               SizedBox(
                 height: 20,
               ),
-              CustomButton(
-                  title: 'Pick from Gallery',
-                  icon: Icons.image_outlined,
-                  onClick: () => getImage()),
-              SizedBox(
-                height: 20,
+              ElevatedButton(
+                onPressed: () {
+                  controller.getImage(ImageSource.gallery);
+                },
+                child: Row(
+                    children: [
+                      Icon(Icons.image_outlined),
+                      SizedBox(
+                        width: 20,
+                      ),
+                      Text("Gallery"),
+                    ],
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center),
               ),
-              CustomButton(
-                title: 'Pick from Camera',
-                icon: Icons.camera,
-                onClick: () => {},
+              ElevatedButton(
+                onPressed: () {
+                  controller.getImage(ImageSource.camera);
+                },
+                child: Row(
+                    children: [
+                      Icon(Icons.camera),
+                      SizedBox(
+                        width: 20,
+                      ),
+                      Text("Camera"),
+                    ],
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center),
               ),
               SizedBox(
                 height: 40,
@@ -114,26 +119,4 @@ class ProductFormPage extends StatelessWidget {
 
   // @override
   // State<ProductFormPage> createState() => ProductFormController();
-}
-
-Widget CustomButton({
-  required String title,
-  required IconData icon,
-  required VoidCallback onClick,
-}) {
-  return Container(
-    width: 280,
-    child: ElevatedButton(
-      onPressed: () => onClick,
-      child: Row(
-        children: [
-          Icon(icon),
-          SizedBox(
-            width: 20,
-          ),
-          Text(title)
-        ],
-      ),
-    ),
-  );
 }

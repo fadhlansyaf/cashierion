@@ -108,7 +108,7 @@ class DashboardView extends StatefulWidget {
                       "icon":
                           "https://cdn-icons-png.flaticon.com/128/2652/2652218.png",
                       "label": "Product\n",
-                      "onTap": () => Get.to(const ProductListPage(), binding: ProductListBinding()),
+                      "onTap": () => Get.to(ProductListPage(), binding: ProductListBinding()),
                     },
                     {
                       "icon":
