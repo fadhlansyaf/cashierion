@@ -21,24 +21,4 @@ class ProductFormLogic extends GetxController {
           colorText: Colors.white);
     }
   }
-
-  // File? _image;
-
-  // Future getImage() async {
-  //     final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-  //     if (image == null) return;
-
-  //     final imageTemporary = File(image.path);
-
-  //     _image = imageTemporary;
-
-  //     // controller.setState(() {
-  //     //   _image = imageTemporary;
-  //     // });
-  //   }
-
-  // Future test() async {
-  //   var test = 0;
-  //   stderr.writeln(test);
-  // }
 }
