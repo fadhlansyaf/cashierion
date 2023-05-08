@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:pos_app_skripsi/core.dart';
+import 'package:pos_app_skripsi/module/purchase_order/controller/purchase_order_binding.dart';
+import 'package:pos_app_skripsi/module/sales_transaction/controller/sales_transaction_binding.dart';
 import '../../dashboard/controller/dashboard_controller.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -110,13 +113,13 @@ class DashboardView extends StatefulWidget {
                       "icon":
                           "https://cdn-icons-png.flaticon.com/128/2435/2435281.png",
                       "label": "Purchase\nOrder",
-                      "onTap": () => OldGet.to(const PurchaseOrderView()),
+                      "onTap": () => Get.to(PurchaseOrderPage(), binding: PurchaseOrderBinding()),
                     },
                     {
                       "icon":
                           "https://cdn-icons-png.flaticon.com/128/5681/5681355.png",
                       "label": "Sales\nTransaction",
-                      "onTap": () => OldGet.to(const SalesTransactionView()),
+                      "onTap": () => Get.to(SalesTransactionPage(), binding: SalesTransactionBinding()),
                     },
                     {
                       "icon":
