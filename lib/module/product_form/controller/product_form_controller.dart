@@ -9,11 +9,23 @@ class ProductFormLogic extends GetxController {
   var selectedImagePath = ''.obs;
   var selectedImageSize = ''.obs;
 
+  /// 0 = Product Name
+  ///
+  /// 1 = Price
+  ///
+  /// 2 = Description
+  List<TextEditingController> textController = [
+    TextEditingController(),
+    TextEditingController(),
+    TextEditingController()
+  ];
+
   void getImage(ImageSource imageSource) async {
     final pickedFile = await ImagePicker().pickImage(source: imageSource);
     if (pickedFile != null) {
-      selectedImagePath.value=pickedFile.path;
-      selectedImageSize.value=((File(selectedImagePath.value)).lengthSync()/1024/1024).toStringAsFixed(2)+" Mb";
+      selectedImagePath.value = pickedFile.path;
+      selectedImageSize.value =
+          "${((File(selectedImagePath.value)).lengthSync() / 1024 / 1024).toStringAsFixed(2)} Mb";
     } else {
       Get.snackbar('Error', 'No image selected',
           snackPosition: SnackPosition.BOTTOM,

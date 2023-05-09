@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:pos_app_skripsi/core.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:pos_app_skripsi/model/database/database_model.dart';
+import 'package:pos_app_skripsi/module/product_form/controller/product_form_dao.dart';
 
 import '../controller/product_form_controller.dart';
 
@@ -11,9 +13,7 @@ class ProductFormPage extends StatelessWidget {
 
   Widget build(BuildContext context) {
     final controller = Get.find<ProductFormLogic>();
-    ImagePicker picker = new ImagePicker();
-
-    File? _image;
+    final dao = Get.find<ProductFormDao>();
 
     return Scaffold(
       appBar: AppBar(
@@ -71,6 +71,7 @@ class ProductFormPage extends StatelessWidget {
                 height: 40,
               ),
               TextFormField(
+                controller: controller.textController[0],
                 decoration: const InputDecoration(
                   border: UnderlineInputBorder(),
                   labelText: 'Product Name',
@@ -80,6 +81,7 @@ class ProductFormPage extends StatelessWidget {
                 height: 20,
               ),
               TextFormField(
+                controller: controller.textController[1],
                 decoration: const InputDecoration(
                   border: UnderlineInputBorder(),
                   labelText: 'Price',
@@ -89,6 +91,7 @@ class ProductFormPage extends StatelessWidget {
                 height: 20,
               ),
               TextField(
+                controller: controller.textController[2],
                 decoration: const InputDecoration(
                   border: UnderlineInputBorder(),
                   labelText: 'Description',
@@ -101,11 +104,17 @@ class ProductFormPage extends StatelessWidget {
               ),
               ElevatedButton.icon(
                 icon: const Icon(Icons.save),
-                label: const Text("save"),
+                label: const Text("Save"),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue,
                 ),
-                onPressed: () {},
+                onPressed: () async {
+                  await dao.insertItem(ProductFormModel(
+                      productName: controller.textController[0].text,
+                      price: int.parse(controller.textController[1].text),
+                      desc: controller.textController[2].text));
+                  Get.back();
+                },
               ),
               SizedBox(
                 height: 40,
