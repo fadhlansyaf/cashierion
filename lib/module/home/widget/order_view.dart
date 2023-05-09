@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:pos_app_skripsi/core.dart';
 
-class SalesReportView extends StatelessWidget {
-  const SalesReportView({Key? key}) : super(key: key);
+class OrderView extends StatelessWidget {
+  const OrderView({Key? key}) : super(key: key);
 
   @override
   Widget build(context) {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("SalesReport"),
+        title: const Text("Order"),
         actions: const [],
       ),
       body: SingleChildScrollView(

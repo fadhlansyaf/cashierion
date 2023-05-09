@@ -4,6 +4,7 @@ import 'package:pos_app_skripsi/core.dart';
 import 'package:pos_app_skripsi/module/product_list/controller/product_list_binding.dart';
 import 'package:pos_app_skripsi/module/purchase_order/controller/purchase_order_binding.dart';
 import 'package:pos_app_skripsi/module/sales_transaction/controller/sales_transaction_binding.dart';
+import 'package:pos_app_skripsi/module/stock_report/controller/stock_report_binding.dart';
 import '../../dashboard/controller/dashboard_controller.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -126,13 +127,13 @@ class DashboardView extends StatefulWidget {
                       "icon":
                           "https://cdn-icons-png.flaticon.com/128/1450/1450932.png",
                       "label": "Sales\nReport",
-                      "onTap": () => OldGet.to(const SalesReportView()),
+                      "onTap": () => OldGet.to(const OrderView()),
                     },
                     {
                       "icon":
                           "https://cdn-icons-png.flaticon.com/128/2912/2912773.png",
                       "label": "Stock\nReport",
-                      "onTap": () => OldGet.to(const StockReportView()),
+                      "onTap": () => Get.to(StockReportView(), binding: StockReportBinding()),
                     },
                     
                   ];

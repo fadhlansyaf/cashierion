@@ -4,7 +4,7 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 
 import '../widget/dashboard_view.dart';
 import '../widget/profile_view.dart';
-import '../widget/sales_report_view.dart';
+import '../widget/order_view.dart';
 import '../controller/home_controller.dart';
 
 class HomePage extends StatelessWidget {
@@ -21,7 +21,7 @@ class HomePage extends StatelessWidget {
         body: Obx(
           () => IndexedStack(
             index: controller.selectedIndex.value,
-            children: [DashboardView(), SalesReportView(), ProfileView()],
+            children: [DashboardView(), OrderView(), ProfileView()],
           ),
         ),
         bottomNavigationBar: Obx(
