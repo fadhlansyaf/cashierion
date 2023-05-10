@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pos_app_skripsi/core.dart';
-import 'package:syncfusion_flutter_xlsio/xlsio.dart' hide Column,Row;
+import 'package:syncfusion_flutter_xlsio/xlsio.dart' hide Column, Row;
 import 'package:open_file/open_file.dart';
 import '../controller/stock_report_controller.dart';
 
@@ -79,5 +79,4 @@ class StockReportView extends StatelessWidget {
     await file.writeAsBytes(bytes, flush: true);
     OpenFile.open(fileName);
   }
-
 }
