@@ -4,6 +4,7 @@ import 'package:pos_app_skripsi/core.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:pos_app_skripsi/module/home/controller/home_binding.dart';
 
 void main() async{
@@ -12,6 +13,7 @@ void main() async{
     var path = await getTemporaryDirectory();
     Hive.init(path.path);
   }
+
 
   var mainStorage = await Hive.openBox('mainStorage');
   runApp(GetMaterialApp(
@@ -22,6 +24,8 @@ void main() async{
     initialBinding: HomeBinding(),
     ));
 }
+
+
 
 // class MyApp extends StatelessWidget {
 //   const MyApp({super.key});

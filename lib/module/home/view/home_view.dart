@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import '../widget/dashboard_view.dart';
 import '../widget/profile_view.dart';
@@ -13,6 +14,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<HomeLogic>();
+    requestPermission();
 
     return DefaultTabController(
       length: 3,
@@ -56,5 +58,12 @@ class HomePage extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+void requestPermission() async{
+  var status = await Permission.storage.status;
+  if (!status.isGranted) {
+    await Permission.storage.request();
   }
 }

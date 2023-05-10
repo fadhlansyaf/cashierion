@@ -74,9 +74,9 @@ class StockReportView extends StatelessWidget {
     workbook.dispose();
 
     final String path = (await getApplicationSupportDirectory()).path;
-    final String fileName = '$path/Output.xlsx';
+    final String fileName ='$path/Output.xlsx';
     final File file = File(fileName);
     await file.writeAsBytes(bytes, flush: true);
-    OpenFile.open(fileName);
+    await OpenFile.open(fileName);
   }
 }

@@ -90,6 +90,16 @@ class ProductFormPage extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
+              TextFormField(
+                controller: controller.textController[1],
+                decoration: const InputDecoration(
+                  border: UnderlineInputBorder(),
+                  labelText: 'Selling Price',
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
               TextField(
                 controller: controller.textController[2],
                 decoration: const InputDecoration(
