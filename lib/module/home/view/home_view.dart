@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:pos_app_skripsi/core.dart';
+import 'package:pos_app_skripsi/module/purchase_order/view/purchase_order_view.dart';
 
 import '../widget/dashboard_view.dart';
 import '../widget/profile_view.dart';
-import '../widget/order_view.dart';
+import '../widget/purchase_order_view.dart';
 import '../controller/home_controller.dart';
+import '../widget/sales_transaction_view.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -23,7 +26,7 @@ class HomePage extends StatelessWidget {
         body: Obx(
           () => IndexedStack(
             index: controller.selectedIndex.value,
-            children: [DashboardView(), OrderView(), ProfileView()],
+            children: [DashboardView(), PurchaseOrderView(), SalesTransactionView(), ProfileView()],
           ),
         ),
         bottomNavigationBar: Obx(
@@ -42,9 +45,15 @@ class HomePage extends StatelessWidget {
                 ),
               ),
               BottomNavigationBarItem(
-                label: "Order",
+                label: "Purchase Order",
                 icon: Icon(
-                  Icons.list,
+                  Icons.check_box,
+                ),
+              ),
+              BottomNavigationBarItem(
+                label: "Sales Transaction",
+                icon: Icon(
+                  Icons.sell,
                 ),
               ),
               BottomNavigationBarItem(

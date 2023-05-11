@@ -73,9 +73,13 @@ class StockReportView extends StatelessWidget {
     final xcel.Worksheet sheet = workbook.worksheets[0];
     sheet.getRangeByIndex(1, 1).setText("Title");
     sheet.getRangeByIndex(1, 2).setText("Links");
-    
+
     final List<int> bytes = workbook.saveAsStream();
-    FileStorage.writeCounter(bytes, "geeksforgeeks.xlsx");
+    FileStorage.writeCounter(bytes, "stock_report.xlsx");
+    Get.snackbar('Success', 'stock_report.xlsx has been saved',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.green,
+          colorText: Colors.white);
     workbook.dispose();
   }
 }
@@ -90,18 +94,18 @@ class FileStorage {
     }
     Directory _directory = Directory("");
     if (Platform.isAndroid) {
-       // Redirects it to download folder in android
+      // Redirects it to download folder in android
       _directory = Directory("/storage/emulated/0/Download");
     } else {
       _directory = await getApplicationDocumentsDirectory();
     }
-  
+
     final exPath = _directory.path;
     print("Saved Path: $exPath");
     await Directory(exPath).create(recursive: true);
     return exPath;
   }
-  
+
   static Future<String> get _localPath async {
     // final directory = await getApplicationDocumentsDirectory();
     // return directory.path;
@@ -109,15 +113,16 @@ class FileStorage {
     final String directory = await getExternalDocumentPath();
     return directory;
   }
-  
-static Future<File> writeCounter(List<int> bytes,String name) async {
-  final path = await _localPath;
+
+  static Future<File> writeCounter(List<int> bytes, String name) async {
+    final path = await _localPath;
     // Create a file for the path of
-      // device and file name with extension
-    File file= File('$path/$name');
+    // device and file name with extension
+
+    File file = File('$path/$name');
     print("Save file");
-      
-      // Write the data in the file you have created
+
+    // Write the data in the file you have created
     return file.writeAsBytes(bytes);
   }
 }

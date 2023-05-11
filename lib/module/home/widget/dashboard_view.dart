@@ -102,6 +102,54 @@ class DashboardView extends StatefulWidget {
               const SizedBox(
                 height: 20.0,
               ),
+              Row(
+                children: [
+                  Text(
+                    "Total Sales: ",
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const Expanded(
+                    child: Text(
+                      "Rp. 0",
+                      textAlign: TextAlign.right,
+                      style: TextStyle(
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 5.0,
+              ),
+              Row(
+                children: [
+                  Text(
+                    "Total Profit: ",
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const Expanded(
+                    child: Text(
+                      "Rp. 0",
+                      textAlign: TextAlign.right,
+                      style: TextStyle(
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 5.0,
+              ),
               LayoutBuilder(
                 builder: (context, constraint) {
                   List menus = [
@@ -109,33 +157,36 @@ class DashboardView extends StatefulWidget {
                       "icon":
                           "https://cdn-icons-png.flaticon.com/128/2652/2652218.png",
                       "label": "Product\n",
-                      "onTap": () => Get.to(ProductListPage(), binding: ProductListBinding()),
+                      "onTap": () => Get.to(ProductListPage(),
+                          binding: ProductListBinding()),
                     },
                     {
                       "icon":
                           "https://cdn-icons-png.flaticon.com/128/2435/2435281.png",
                       "label": "Purchase\nOrder",
-                      "onTap": () => Get.to(PurchaseOrderPage(), binding: PurchaseOrderBinding()),
+                      "onTap": () => Get.to(PurchaseOrderPage(),
+                          binding: PurchaseOrderBinding()),
                     },
                     {
                       "icon":
                           "https://cdn-icons-png.flaticon.com/128/5681/5681355.png",
                       "label": "Sales\nTransaction",
-                      "onTap": () => Get.to(SalesTransactionPage(), binding: SalesTransactionBinding()),
+                      "onTap": () => Get.to(SalesTransactionPage(),
+                          binding: SalesTransactionBinding()),
                     },
                     {
                       "icon":
                           "https://cdn-icons-png.flaticon.com/128/1450/1450932.png",
                       "label": "Sales\nReport",
-                      "onTap": () => OldGet.to(const OrderView()),
+                      "onTap": () => {},
                     },
                     {
                       "icon":
                           "https://cdn-icons-png.flaticon.com/128/2912/2912773.png",
                       "label": "Stock\nReport",
-                      "onTap": () => Get.to(StockReportView(), binding: StockReportBinding()),
+                      "onTap": () => Get.to(StockReportView(),
+                          binding: StockReportBinding()),
                     },
-                    
                   ];
 
                   return Wrap(
