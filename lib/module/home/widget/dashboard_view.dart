@@ -8,6 +8,8 @@ import 'package:pos_app_skripsi/module/stock_report/controller/stock_report_bind
 import '../../dashboard/controller/dashboard_controller.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../sales_report/controller/sales_report_binding.dart';
+
 class DashboardView extends StatefulWidget {
   const DashboardView({Key? key}) : super(key: key);
 
@@ -178,13 +180,14 @@ class DashboardView extends StatefulWidget {
                       "icon":
                           "https://cdn-icons-png.flaticon.com/128/1450/1450932.png",
                       "label": "Sales\nReport",
-                      "onTap": () => {},
+                      "onTap": () => Get.to(SalesReportPage(),
+                          binding: SalesReportBinding())
                     },
                     {
                       "icon":
                           "https://cdn-icons-png.flaticon.com/128/2912/2912773.png",
                       "label": "Stock\nReport",
-                      "onTap": () => Get.to(StockReportView(),
+                      "onTap": () => Get.to(StockReportPage(),
                           binding: StockReportBinding()),
                     },
                   ];

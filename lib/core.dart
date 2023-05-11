@@ -19,6 +19,8 @@ export 'package:pos_app_skripsi/module/sales_transaction/controller/sales_transa
 export 'package:pos_app_skripsi/module/sales_transaction/view/sales_transaction_view.dart';
 export 'package:pos_app_skripsi/module/stock_report/controller/stock_report_controller.dart';
 export 'package:pos_app_skripsi/module/stock_report/view/stock_report_view.dart';
+export 'package:pos_app_skripsi/module/sales_report/controller/sales_report_controller.dart';
+export 'package:pos_app_skripsi/module/sales_report/view/sales_report_view.dart';
 export 'package:pos_app_skripsi/service/order_service.dart';
 export 'package:pos_app_skripsi/service/product_service.dart';
 export 'state_util.dart';

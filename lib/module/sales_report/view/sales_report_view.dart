@@ -9,17 +9,17 @@ import 'package:open_file/open_file.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:pos_app_skripsi/main.dart';
 
-import '../controller/stock_report_controller.dart';
+import '../controller/sales_report_controller.dart';
 
-class StockReportPage extends StatelessWidget {
-  const StockReportPage({Key? key}) : super(key: key);
+class SalesReportPage extends StatelessWidget {
+  const SalesReportPage({Key? key}) : super(key: key);
 
   Widget build(BuildContext context) {
-    final controller = Get.find<StockReportLogic>();
+    final controller = Get.find<SalesReportLogic>();
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("StockReport"),
+        title: const Text("SalesReport"),
         actions: const [],
       ),
       body: SingleChildScrollView(
@@ -76,8 +76,8 @@ class StockReportPage extends StatelessWidget {
     sheet.getRangeByIndex(1, 2).setText("Links");
 
     final List<int> bytes = workbook.saveAsStream();
-    FileStorage.writeCounter(bytes, "stock_report.xlsx");
-    Get.snackbar('Success', 'stock_report.xlsx has been saved',
+    FileStorage.writeCounter(bytes, "sales_report.xlsx");
+    Get.snackbar('Success', 'sales_report.xlsx has been saved',
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.green,
           colorText: Colors.white);
