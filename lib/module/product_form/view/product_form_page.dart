@@ -119,10 +119,12 @@ class ProductFormPage extends StatelessWidget {
                   backgroundColor: Colors.blue,
                 ),
                 onPressed: () async {
-                  await dao.insertItem(ProductFormModel(
-                      productName: controller.textController[0].text,
-                      price: int.parse(controller.textController[1].text),
-                      desc: controller.textController[2].text));
+                  await dao.insertItem(ProductsModel(
+                      name: controller.textController[0].text,
+                      price: double.parse(controller.textController[1].text),
+                      sellingPrice: double.parse(controller.textController[1].text),
+                      stock: 0,
+                      description: controller.textController[2].text));
                   Get.back();
                 },
               ),
