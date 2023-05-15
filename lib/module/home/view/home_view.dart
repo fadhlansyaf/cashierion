@@ -7,6 +7,7 @@ import 'package:pos_app_skripsi/module/purchase_order/view/purchase_order_view.d
 
 import '../widget/dashboard_view.dart';
 import '../widget/profile_view.dart';
+import '../widget/purchase_order_nav.dart';
 import '../widget/purchase_order_view.dart';
 import '../controller/home_controller.dart';
 import '../widget/sales_transaction_view.dart';
@@ -26,7 +27,7 @@ class HomePage extends StatelessWidget {
         body: Obx(
           () => IndexedStack(
             index: controller.selectedIndex.value,
-            children: [DashboardView(), PurchaseOrderView(), SalesTransactionView(), ProfileView()],
+            children: [DashboardView(), PurchaseOrderNavView(), SalesTransactionView(), ProfileView()],
           ),
         ),
         bottomNavigationBar: Obx(

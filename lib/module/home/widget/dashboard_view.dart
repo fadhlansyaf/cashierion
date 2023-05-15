@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pos_app_skripsi/core.dart';
+import 'package:pos_app_skripsi/module/category_list/controller/category_list_binding.dart';
 import 'package:pos_app_skripsi/module/product_list/controller/product_list_binding.dart';
 import 'package:pos_app_skripsi/module/purchase_order/controller/purchase_order_binding.dart';
 import 'package:pos_app_skripsi/module/sales_transaction/controller/sales_transaction_binding.dart';
@@ -20,20 +21,20 @@ class DashboardView extends StatefulWidget {
       appBar: AppBar(
         title: const Text("Dashboard"),
         actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.notifications,
-              size: 24.0,
-            ),
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.chat,
-              size: 24.0,
-            ),
-          ),
+          // IconButton(
+          //   onPressed: () {},
+          //   icon: const Icon(
+          //     Icons.notifications,
+          //     size: 24.0,
+          //   ),
+          // ),
+          // IconButton(
+          //   onPressed: () {},
+          //   icon: const Icon(
+          //     Icons.chat,
+          //     size: 24.0,
+          //   ),
+          // ),
         ],
       ),
       body: SingleChildScrollView(
@@ -165,17 +166,11 @@ class DashboardView extends StatefulWidget {
                     {
                       "icon":
                           "https://cdn-icons-png.flaticon.com/128/2435/2435281.png",
-                      "label": "Purchase\nOrder",
-                      "onTap": () => Get.to(PurchaseOrderPage(),
-                          binding: PurchaseOrderBinding()),
+                      "label": "Category\n",
+                      "onTap": () => Get.to(CategoryListPage(),
+                          binding: CategoryListBinding()),
                     },
-                    {
-                      "icon":
-                          "https://cdn-icons-png.flaticon.com/128/5681/5681355.png",
-                      "label": "Sales\nTransaction",
-                      "onTap": () => Get.to(SalesTransactionPage(),
-                          binding: SalesTransactionBinding()),
-                    },
+                    
                     {
                       "icon":
                           "https://cdn-icons-png.flaticon.com/128/1450/1450932.png",
