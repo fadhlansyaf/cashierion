@@ -165,7 +165,7 @@ class DashboardView extends StatefulWidget {
                     },
                     {
                       "icon":
-                          "https://cdn-icons-png.flaticon.com/128/2435/2435281.png",
+                          "https://img.icons8.com/?size=1x&id=13705&format=png",
                       "label": "Category\n",
                       "onTap": () => Get.to(CategoryListPage(),
                           binding: CategoryListBinding()),
