@@ -20,5 +20,5 @@ ThemeData darkTheme = ThemeData(
 ThemeData mainTheme = ThemeData(
   primaryColor: COLOR_PRIMARY,
   cardColor: COLOR_CARD,
-  backgroundColor: COLOR_BACKGROUND,
+  scaffoldBackgroundColor: COLOR_BACKGROUND,
 );
