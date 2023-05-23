@@ -6,10 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:pos_app_skripsi/theme/theme_constants.dart';
+import 'package:pos_app_skripsi/theme/theme_manager.dart';
 import 'package:syncfusion_flutter_xlsio/xlsio.dart' as xcel;
 import 'package:open_file/open_file.dart';
 import 'package:pos_app_skripsi/module/home/controller/home_binding.dart';
 
+ThemeManager _themeManager = ThemeManager();
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,6 +25,7 @@ void main() async{
   var mainStorage = await Hive.openBox('mainStorage');
   runApp(GetMaterialApp(
     title: 'POS',
+    theme: darkTheme,
     navigatorKey: OldGet.navigatorKey,
     debugShowCheckedModeBanner: false,
     home: const HomePage(),
