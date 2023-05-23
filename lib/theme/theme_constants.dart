@@ -16,3 +16,9 @@ ThemeData lightTheme = ThemeData(
 ThemeData darkTheme = ThemeData(
   brightness: Brightness.dark
 );
+
+ThemeData mainTheme = ThemeData(
+  primaryColor: COLOR_PRIMARY,
+  cardColor: COLOR_CARD,
+  backgroundColor: COLOR_BACKGROUND,
+);
