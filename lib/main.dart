@@ -25,7 +25,7 @@ void main() async{
   var mainStorage = await Hive.openBox('mainStorage');
   runApp(GetMaterialApp(
     title: 'POS',
-    theme: darkTheme,
+    theme: mainTheme,
     navigatorKey: OldGet.navigatorKey,
     debugShowCheckedModeBanner: false,
     home: const HomePage(),

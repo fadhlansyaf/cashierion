@@ -4,6 +4,7 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:permission_handler/permission_handler.dart';
 import 'package:pos_app_skripsi/core.dart';
 import 'package:pos_app_skripsi/module/purchase_order/view/purchase_order_view.dart';
+import 'package:pos_app_skripsi/theme/theme_constants.dart';
 
 import '../widget/dashboard_view.dart';
 import '../widget/profile_view.dart';
@@ -27,41 +28,50 @@ class HomePage extends StatelessWidget {
         body: Obx(
           () => IndexedStack(
             index: controller.selectedIndex.value,
-            children: [DashboardView(), PurchaseOrderNavView(), SalesTransactionNavView(), ProfileView()],
+            children: [
+              DashboardView(), 
+              PurchaseOrderNavView(), 
+              // SalesTransactionNavView(), 
+              ProfileView()],
           ),
         ),
         bottomNavigationBar: Obx(
           () => BottomNavigationBar(
+            type: BottomNavigationBarType.shifting,
             currentIndex: controller.selectedIndex.value,
-            selectedItemColor: Colors.grey[700],
-            unselectedItemColor: Colors.grey[500],
+            selectedItemColor: COLOR_WHITE,
+            unselectedItemColor: COLOR_WHITE,
             onTap: (index) {
               controller.selectedIndex.value = index;
             },
-            items: const [
+            items: [
               BottomNavigationBarItem(
                 label: "Dashboard",
-                icon: Icon(
-                  MdiIcons.viewDashboard,
-                ),
+                backgroundColor: COLOR_CARD,
+                icon: new Image.asset("assets/icons8-home-32.png")
               ),
               BottomNavigationBarItem(
                 label: "Purchase Order",
-                icon: Icon(
-                  Icons.check_box,
-                ),
+                backgroundColor: COLOR_CARD,
+                icon: new Image.asset("assets/icons8-order-32.png")
+,
               ),
-              BottomNavigationBarItem(
-                label: "Sales Transaction",
-                icon: Icon(
-                  Icons.sell,
-                ),
-              ),
+              // BottomNavigationBarItem(
+              //   label: "Sales Transaction",
+              //   backgroundColor: COLOR_CARD,
+              //   icon: Icon(
+              //     Icons.sell,
+              //   ),
+              // ),
               BottomNavigationBarItem(
                 label: "Me",
-                icon: Icon(
-                  Icons.person,
-                ),
+                backgroundColor: COLOR_CARD,
+                // icon: Icon(
+                //   Icons.person,
+                // ),
+                icon: new Image.asset("assets/icons8-store-32.png")
+                
+
               ),
             ],
           ),

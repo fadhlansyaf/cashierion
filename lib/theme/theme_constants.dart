@@ -19,6 +19,14 @@ ThemeData darkTheme = ThemeData(
 
 ThemeData mainTheme = ThemeData(
   primaryColor: COLOR_PRIMARY,
+  textTheme: TextTheme(
+    displayLarge: TextStyle(color: COLOR_WHITE),
+    displayMedium: TextStyle(color: COLOR_WHITE),
+    displaySmall: TextStyle(color: COLOR_WHITE)
+  ),
+  appBarTheme:  AppBarTheme(
+    color: COLOR_PRIMARY,
+  ),
   cardColor: COLOR_CARD,
   scaffoldBackgroundColor: COLOR_BACKGROUND,
 );
