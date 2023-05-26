@@ -6,6 +6,7 @@ import 'package:pos_app_skripsi/module/product_list/controller/product_list_bind
 import 'package:pos_app_skripsi/module/purchase_order/controller/purchase_order_binding.dart';
 import 'package:pos_app_skripsi/module/sales_transaction/controller/sales_transaction_binding.dart';
 import 'package:pos_app_skripsi/module/stock_report/controller/stock_report_binding.dart';
+import 'package:pos_app_skripsi/theme/theme_constants.dart';
 import '../../dashboard/controller/dashboard_controller.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -42,60 +43,197 @@ class DashboardView extends StatefulWidget {
           padding: const EdgeInsets.all(10.0),
           child: Column(
             children: [
-              Container(
-                height: 160.0,
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage(
-                      "https://images.unsplash.com/photo-1550547660-d9450f859349?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=765&q=80",
-                    ),
-                    fit: BoxFit.cover,
-                  ),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(
-                      16.0,
-                    ),
+              Card(
+                child: LayoutBuilder(
+                  builder: (context, constraint) {
+                    List menus = [
+                      {
+                        "icon": "assets/icons8-product-32.png",
+                        "label": "Products\n",
+                        "onTap": () => Get.to(ProductListPage(),
+                            binding: ProductListBinding()),
+                      },
+                      {
+                        "icon": "assets/icons8-category-32.png",
+                        "label": "Categories\n",
+                        "onTap": () => Get.to(CategoryListPage(),
+                            binding: CategoryListBinding()),
+                      },
+                      {
+                        "icon": "assets/icons8-transaction-32.png",
+                        "label": "Transactions",
+                        "onTap": () => {}
+                      },
+                      {
+                        "icon": "assets/icons8-report-32.png",
+                        "label": "Transaction\nReport",
+                        "onTap": () => Get.to(StockReportPage(),
+                            binding: StockReportBinding()),
+                      },
+                    ];
+
+                    return Wrap(
+                      children: List.generate(
+                        menus.length,
+                        (index) {
+                          var item = menus[index];
+
+                          var size = constraint.biggest.width / 4;
+
+                          return SizedBox(
+                            width: size,
+                            height: size,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                foregroundColor: COLOR_GREY,
+                                animationDuration:
+                                    const Duration(milliseconds: 1000),
+                                backgroundColor: Colors.transparent,
+                                splashFactory: InkSplash.splashFactory,
+                                shadowColor: Colors.transparent,
+                                elevation: 0.0,
+                              ),
+                              onPressed: () => item["onTap"](),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Image.asset(
+                                    item["icon"],
+                                    width: 30.0,
+                                  ),
+                                  const SizedBox(
+                                    height: 6.0,
+                                  ),
+                                  Text(
+                                    "${item["label"]}",
+                                    textAlign: TextAlign.center,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                      fontSize: 9.0,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    );
+                  },
+                ),
+              ),
+              const SizedBox(
+                height: 10.0,
+              ),
+              Card(
+                margin: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+                child: Container(
+                  padding: EdgeInsets.all(10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Text(
+                        "Prediction",
+                        style: TextStyle(
+                            color: COLOR_WHITE,
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(
+                        height: 150.0,
+                      ),
+                    ],
                   ),
                 ),
-                child: Stack(
+              ),
+              const SizedBox(
+                height: 10.0,
+              ),
+              Container(
+                margin: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Financial Statement",
+                    style: TextStyle(
+                        color: COLOR_WHITE,
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 10.0,
+              ),
+              Container(
+                margin: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+                child: Row(
                   children: [
-                    Container(
-                      decoration: const BoxDecoration(
-                        color: Colors.black26,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(
-                            16.0,
+                    Expanded(
+                      child: Card(
+                        child: Container(
+                          padding: EdgeInsets.all(10),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Sales",
+                                  style: TextStyle(
+                                      color: COLOR_GREY,
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                const SizedBox(
+                                  height: 20.0,
+                                ),
+                                Text(
+                                  "Rp 0",
+                                  style: TextStyle(
+                                      color: COLOR_WHITE,
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
                     ),
-                    Positioned(
-                      left: 20.0,
-                      top: 0.0,
-                      bottom: 0.0,
-                      child: SizedBox(
-                        width: 100.0,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "30%",
-                              style: GoogleFonts.oswald(
-                                fontSize: 30.0,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
+                    const SizedBox(
+                      width: 10.0,
+                    ),
+                    Expanded(
+                      child: Card(
+                        child: Container(
+                          padding: EdgeInsets.all(10),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Expenditure",
+                                  style: TextStyle(
+                                      color: COLOR_GREY,
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                const SizedBox(
+                                  height: 20.0,
+                                ),
+                                Text(
+                                  "Rp 0",
+                                  style: TextStyle(
+                                      color: COLOR_WHITE,
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
                             ),
-                            Text(
-                              "Discount Only Valid for Today",
-                              style: GoogleFonts.oswald(
-                                fontSize: 16.0,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
                       ),
                     ),
@@ -103,139 +241,97 @@ class DashboardView extends StatefulWidget {
                 ),
               ),
               const SizedBox(
-                height: 20.0,
+                height: 10.0,
               ),
-              Row(
-                children: [
-                  Text(
-                    "Total Sales: ",
+              Container(
+                margin: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Today's Transactions",
                     style: TextStyle(
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold,
-                    ),
+                        color: COLOR_WHITE,
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold),
                   ),
-                  const Expanded(
-                    child: Text(
-                      "Rp. 0",
-                      textAlign: TextAlign.right,
-                      style: TextStyle(
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ],
+                ),
               ),
               const SizedBox(
-                height: 5.0,
+                height: 10.0,
               ),
-              Row(
-                children: [
-                  Text(
-                    "Total Profit: ",
-                    style: TextStyle(
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const Expanded(
-                    child: Text(
-                      "Rp. 0",
-                      textAlign: TextAlign.right,
-                      style: TextStyle(
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 5.0,
-              ),
-              LayoutBuilder(
-                builder: (context, constraint) {
-                  List menus = [
-                    {
-                      "icon":
-                          "https://cdn-icons-png.flaticon.com/128/2652/2652218.png",
-                      "label": "Product\n",
-                      "onTap": () => Get.to(ProductListPage(),
-                          binding: ProductListBinding()),
-                    },
-                    {
-                      "icon":
-                          "https://img.icons8.com/?size=1x&id=13705&format=png",
-                      "label": "Category\n",
-                      "onTap": () => Get.to(CategoryListPage(),
-                          binding: CategoryListBinding()),
-                    },
-                    
-                    {
-                      "icon":
-                          "https://cdn-icons-png.flaticon.com/128/1450/1450932.png",
-                      "label": "Sales\nReport",
-                      "onTap": () => Get.to(SalesReportPage(),
-                          binding: SalesReportBinding())
-                    },
-                    {
-                      "icon":
-                          "https://cdn-icons-png.flaticon.com/128/2912/2912773.png",
-                      "label": "Stock\nReport",
-                      "onTap": () => Get.to(StockReportPage(),
-                          binding: StockReportBinding()),
-                    },
-                  ];
-
-                  return Wrap(
-                    children: List.generate(
-                      menus.length,
-                      (index) {
-                        var item = menus[index];
-
-                        var size = constraint.biggest.width / 4;
-
-                        return SizedBox(
-                          width: size,
-                          height: size,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              foregroundColor: Colors.blueGrey,
-                              animationDuration:
-                                  const Duration(milliseconds: 1000),
-                              backgroundColor: Colors.transparent,
-                              splashFactory: InkSplash.splashFactory,
-                              shadowColor: Colors.transparent,
-                              elevation: 0.0,
-                            ),
-                            onPressed: () => item["onTap"](),
+              Container(
+                margin: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Card(
+                        child: Container(
+                          padding: EdgeInsets.all(10),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
                             child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Image.network(
-                                  item["icon"],
-                                  width: 30.0,
+                                Text(
+                                  "Transaction Totals",
+                                  style: TextStyle(
+                                      color: COLOR_GREY,
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.bold),
                                 ),
                                 const SizedBox(
-                                  height: 6.0,
+                                  height: 20.0,
                                 ),
                                 Text(
-                                  "${item["label"]}",
-                                  textAlign: TextAlign.center,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(
-                                    fontSize: 11.0,
-                                  ),
+                                  "0",
+                                  style: TextStyle(
+                                      color: COLOR_WHITE,
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold),
                                 ),
                               ],
                             ),
                           ),
-                        );
-                      },
+                        ),
+                      ),
                     ),
-                  );
-                },
+                    const SizedBox(
+                      width: 10.0,
+                    ),
+                    Expanded(
+                      child: Card(
+                        child: Container(
+                          padding: EdgeInsets.all(10),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Total Product Sold",
+                                  style: TextStyle(
+                                      color: COLOR_GREY,
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                const SizedBox(
+                                  height: 20.0,
+                                ),
+                                Text(
+                                  "0",
+                                  style: TextStyle(
+                                      color: COLOR_WHITE,
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
