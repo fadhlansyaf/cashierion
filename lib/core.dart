@@ -9,6 +9,8 @@ export 'package:pos_app_skripsi/module/home/controller/home_controller.dart';
 export 'package:pos_app_skripsi/module/home/view/home_view.dart';
 export 'package:pos_app_skripsi/module/product_form/controller/product_form_controller.dart';
 export 'package:pos_app_skripsi/module/product_form/view/product_form_page.dart';
+export 'package:pos_app_skripsi/module/product_detail/controller/product_detail_controller.dart';
+export 'package:pos_app_skripsi/module/product_detail/view/product_detail_page.dart';
 export 'package:pos_app_skripsi/module/product_list/controller/product_list_controller.dart';
 export 'package:pos_app_skripsi/module/product_list/view/product_list_page.dart';
 export 'package:pos_app_skripsi/module/category_form/controller/category_form_controller.dart';
