@@ -61,7 +61,7 @@ class DashboardView extends StatefulWidget {
                       },
                       {
                         "icon": "assets/icons8-transaction-32.png",
-                        "label": "Transactions",
+                        "label": "Transaction\nDetail",
                         "onTap": () => {}
                       },
                       {

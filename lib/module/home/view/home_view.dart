@@ -29,33 +29,32 @@ class HomePage extends StatelessWidget {
           () => IndexedStack(
             index: controller.selectedIndex.value,
             children: [
-              DashboardView(), 
-              PurchaseOrderNavView(), 
-              // SalesTransactionNavView(), 
-              ProfileView()],
+              DashboardView(),
+              PurchaseOrderNavView(),
+              // SalesTransactionNavView(),
+              ProfileView()
+            ],
           ),
         ),
         bottomNavigationBar: Obx(
           () => BottomNavigationBar(
-            type: BottomNavigationBarType.shifting,
+            type: BottomNavigationBarType.fixed,
             currentIndex: controller.selectedIndex.value,
-            selectedItemColor: ColorTheme.COLOR_WHITE,
+            selectedItemColor: ColorTheme.COLOR_PRIMARY,
             unselectedItemColor: ColorTheme.COLOR_WHITE,
+            backgroundColor: ColorTheme.COLOR_CARD,
             onTap: (index) {
               controller.selectedIndex.value = index;
             },
             items: [
               BottomNavigationBarItem(
-                label: "Dashboard",
-                backgroundColor: ColorTheme.COLOR_CARD,
-                icon: new Image.asset("assets/icons8-home-32.png")
-              ),
+                  label: "Dashboard",
+                  // icon: new Image.asset("assets/icons8-home-32.png")
+                  icon: Icon(Icons.home)),
               BottomNavigationBarItem(
-                label: "Purchase Order",
-                backgroundColor: ColorTheme.COLOR_CARD,
-                icon: new Image.asset("assets/icons8-order-32.png")
-,
-              ),
+                  label: "Transaction",
+                  // icon: new Image.asset("assets/icons8-order-32.png")
+                  icon: Icon(Icons.list_alt_outlined)),
               // BottomNavigationBarItem(
               //   label: "Sales Transaction",
               //   backgroundColor: COLOR_CARD,
@@ -64,15 +63,9 @@ class HomePage extends StatelessWidget {
               //   ),
               // ),
               BottomNavigationBarItem(
-                label: "Me",
-                backgroundColor: ColorTheme.COLOR_CARD,
-                // icon: Icon(
-                //   Icons.person,
-                // ),
-                icon: new Image.asset("assets/icons8-store-32.png")
-                
-
-              ),
+                  label: "Store",
+                  // icon: new Image.asset("assets/icons8-store-32.png")
+                  icon: Icon(Icons.store_mall_directory)),
             ],
           ),
         ),
@@ -81,7 +74,7 @@ class HomePage extends StatelessWidget {
   }
 }
 
-void requestPermission() async{
+void requestPermission() async {
   var status = await Permission.storage.status;
   if (!status.isGranted) {
     await Permission.storage.request();
