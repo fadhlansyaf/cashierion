@@ -9,6 +9,8 @@ import 'package:pos_app_skripsi/theme/theme_constants.dart';
 
 import '../controller/product_form_controller.dart';
 
+import '../widget/select_image_bottom_sheet.dart';
+
 class ProductFormPage extends StatelessWidget {
   const ProductFormPage({Key? key}) : super(key: key);
 
@@ -29,41 +31,50 @@ class ProductFormPage extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
-              Obx(() => controller.selectedImagePath.value == ''
-                  ? Image.asset("assets/select-image.png")
-                  : Image.file(File(controller.selectedImagePath.value))),
-              SizedBox(
-                height: 20,
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  controller.getImage(ImageSource.gallery);
+              GestureDetector(
+                onTap: () => {
+                  showModalBottomSheet<void>(
+                    isScrollControlled: true,
+                    context: context,
+                    builder: (BuildContext context) {
+                      return SelectImageBottomSheet();
+                    },
+                  )
                 },
-                child: Row(
-                    children: [
-                      Icon(Icons.image_outlined),
-                      SizedBox(
-                        width: 20,
+                child: Obx(() => controller.selectedImagePath.value == ''
+                    ? Column(
+                        children: [
+                          Image.asset("assets/select-image.png"),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            "Add image",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      )
+                    : 
+                    Column(
+                        children: [
+                          Container(
+                            width: (MediaQuery.of(context).size.width)/2,
+                            child: Image.file(File(controller.selectedImagePath.value)),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            "Change",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
                       ),
-                      Text("Gallery"),
-                    ],
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  controller.getImage(ImageSource.camera);
-                },
-                child: Row(
-                    children: [
-                      Icon(Icons.camera),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Text("Camera"),
-                    ],
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center),
+                    ),
               ),
               SizedBox(
                 height: 40,
