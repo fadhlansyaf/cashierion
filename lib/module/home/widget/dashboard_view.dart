@@ -85,7 +85,7 @@ class DashboardView extends StatefulWidget {
                             height: size,
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                foregroundColor: COLOR_GREY,
+                                foregroundColor: ColorTheme.COLOR_GREY,
                                 animationDuration:
                                     const Duration(milliseconds: 1000),
                                 backgroundColor: Colors.transparent,
@@ -136,7 +136,7 @@ class DashboardView extends StatefulWidget {
                       Text(
                         "Prediction",
                         style: TextStyle(
-                            color: COLOR_WHITE,
+                            color: ColorTheme.COLOR_WHITE,
                             fontSize: 12,
                             fontWeight: FontWeight.bold),
                       ),
@@ -157,7 +157,7 @@ class DashboardView extends StatefulWidget {
                   child: Text(
                     "Financial Statement",
                     style: TextStyle(
-                        color: COLOR_WHITE,
+                        color: ColorTheme.COLOR_WHITE,
                         fontSize: 12,
                         fontWeight: FontWeight.bold),
                   ),
@@ -182,7 +182,7 @@ class DashboardView extends StatefulWidget {
                                 Text(
                                   "Sales",
                                   style: TextStyle(
-                                      color: COLOR_GREY,
+                                      color: ColorTheme.COLOR_GREY,
                                       fontSize: 10,
                                       fontWeight: FontWeight.bold),
                                 ),
@@ -192,7 +192,7 @@ class DashboardView extends StatefulWidget {
                                 Text(
                                   "Rp 0",
                                   style: TextStyle(
-                                      color: COLOR_WHITE,
+                                      color: ColorTheme.COLOR_WHITE,
                                       fontSize: 24,
                                       fontWeight: FontWeight.bold),
                                 ),
@@ -217,7 +217,7 @@ class DashboardView extends StatefulWidget {
                                 Text(
                                   "Expenditure",
                                   style: TextStyle(
-                                      color: COLOR_GREY,
+                                      color: ColorTheme.COLOR_GREY,
                                       fontSize: 10,
                                       fontWeight: FontWeight.bold),
                                 ),
@@ -227,7 +227,7 @@ class DashboardView extends StatefulWidget {
                                 Text(
                                   "Rp 0",
                                   style: TextStyle(
-                                      color: COLOR_WHITE,
+                                      color: ColorTheme.COLOR_WHITE,
                                       fontSize: 24,
                                       fontWeight: FontWeight.bold),
                                 ),
@@ -250,7 +250,7 @@ class DashboardView extends StatefulWidget {
                   child: Text(
                     "Today's Transactions",
                     style: TextStyle(
-                        color: COLOR_WHITE,
+                        color: ColorTheme.COLOR_WHITE,
                         fontSize: 12,
                         fontWeight: FontWeight.bold),
                   ),
@@ -275,7 +275,7 @@ class DashboardView extends StatefulWidget {
                                 Text(
                                   "Transaction Totals",
                                   style: TextStyle(
-                                      color: COLOR_GREY,
+                                      color: ColorTheme.COLOR_GREY,
                                       fontSize: 10,
                                       fontWeight: FontWeight.bold),
                                 ),
@@ -285,7 +285,7 @@ class DashboardView extends StatefulWidget {
                                 Text(
                                   "0",
                                   style: TextStyle(
-                                      color: COLOR_WHITE,
+                                      color: ColorTheme.COLOR_WHITE,
                                       fontSize: 24,
                                       fontWeight: FontWeight.bold),
                                 ),
@@ -310,7 +310,7 @@ class DashboardView extends StatefulWidget {
                                 Text(
                                   "Total Product Sold",
                                   style: TextStyle(
-                                      color: COLOR_GREY,
+                                      color: ColorTheme.COLOR_GREY,
                                       fontSize: 10,
                                       fontWeight: FontWeight.bold),
                                 ),
@@ -320,7 +320,7 @@ class DashboardView extends StatefulWidget {
                                 Text(
                                   "0",
                                   style: TextStyle(
-                                      color: COLOR_WHITE,
+                                      color: ColorTheme.COLOR_WHITE,
                                       fontSize: 24,
                                       fontWeight: FontWeight.bold),
                                 ),

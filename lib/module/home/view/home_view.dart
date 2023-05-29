@@ -39,20 +39,20 @@ class HomePage extends StatelessWidget {
           () => BottomNavigationBar(
             type: BottomNavigationBarType.shifting,
             currentIndex: controller.selectedIndex.value,
-            selectedItemColor: COLOR_WHITE,
-            unselectedItemColor: COLOR_WHITE,
+            selectedItemColor: ColorTheme.COLOR_WHITE,
+            unselectedItemColor: ColorTheme.COLOR_WHITE,
             onTap: (index) {
               controller.selectedIndex.value = index;
             },
             items: [
               BottomNavigationBarItem(
                 label: "Dashboard",
-                backgroundColor: COLOR_CARD,
+                backgroundColor: ColorTheme.COLOR_CARD,
                 icon: new Image.asset("assets/icons8-home-32.png")
               ),
               BottomNavigationBarItem(
                 label: "Purchase Order",
-                backgroundColor: COLOR_CARD,
+                backgroundColor: ColorTheme.COLOR_CARD,
                 icon: new Image.asset("assets/icons8-order-32.png")
 ,
               ),
@@ -65,7 +65,7 @@ class HomePage extends StatelessWidget {
               // ),
               BottomNavigationBarItem(
                 label: "Me",
-                backgroundColor: COLOR_CARD,
+                backgroundColor: ColorTheme.COLOR_CARD,
                 // icon: Icon(
                 //   Icons.person,
                 // ),
