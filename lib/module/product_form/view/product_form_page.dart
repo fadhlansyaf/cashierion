@@ -5,6 +5,7 @@ import 'package:pos_app_skripsi/core.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pos_app_skripsi/model/database/database_model.dart';
 import 'package:pos_app_skripsi/module/product_form/controller/product_form_dao.dart';
+import 'package:pos_app_skripsi/theme/theme_constants.dart';
 
 import '../controller/product_form_controller.dart';
 
@@ -29,10 +30,7 @@ class ProductFormPage extends StatelessWidget {
                 height: 20,
               ),
               Obx(() => controller.selectedImagePath.value == ''
-                  ? Text(
-                      'Select Image from camera/galery',
-                      style: TextStyle(fontSize: 20),
-                    )
+                  ? Image.asset("assets/select-image.png")
                   : Image.file(File(controller.selectedImagePath.value))),
               SizedBox(
                 height: 20,
@@ -72,7 +70,8 @@ class ProductFormPage extends StatelessWidget {
               ),
               TextFormField(
                 controller: controller.textController[0],
-                decoration: const InputDecoration(
+                cursorColor: ColorTheme.COLOR_WHITE,
+                decoration: InputDecoration(
                   border: UnderlineInputBorder(),
                   labelText: 'Product Name',
                 ),
@@ -82,6 +81,7 @@ class ProductFormPage extends StatelessWidget {
               ),
               TextFormField(
                 controller: controller.textController[1],
+                cursorColor: ColorTheme.COLOR_WHITE,
                 decoration: const InputDecoration(
                   border: UnderlineInputBorder(),
                   labelText: 'Price',
@@ -92,6 +92,7 @@ class ProductFormPage extends StatelessWidget {
               ),
               TextFormField(
                 controller: controller.textController[1],
+                cursorColor: ColorTheme.COLOR_WHITE,
                 decoration: const InputDecoration(
                   border: UnderlineInputBorder(),
                   labelText: 'Selling Price',
@@ -102,6 +103,7 @@ class ProductFormPage extends StatelessWidget {
               ),
               TextField(
                 controller: controller.textController[2],
+                cursorColor: ColorTheme.COLOR_WHITE,
                 decoration: const InputDecoration(
                   border: UnderlineInputBorder(),
                   labelText: 'Description',
@@ -115,14 +117,12 @@ class ProductFormPage extends StatelessWidget {
               ElevatedButton.icon(
                 icon: const Icon(Icons.save),
                 label: const Text("Save"),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue,
-                ),
                 onPressed: () async {
                   await dao.insertItem(ProductsModel(
                       name: controller.textController[0].text,
                       price: double.parse(controller.textController[1].text),
-                      sellingPrice: double.parse(controller.textController[1].text),
+                      sellingPrice:
+                          double.parse(controller.textController[1].text),
                       stock: 0,
                       description: controller.textController[2].text));
                   Get.back();

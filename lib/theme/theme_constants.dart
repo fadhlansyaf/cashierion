@@ -10,25 +10,34 @@ class ColorTheme {
   static const COLOR_WHITE = Color.fromARGB(255, 255, 255, 255); //FFFFFF
 }
 
+ThemeData lightTheme = ThemeData(brightness: Brightness.light);
 
+ThemeData darkTheme = ThemeData(brightness: Brightness.dark);
 
-ThemeData lightTheme = ThemeData(
-  brightness: Brightness.light
-);
-
-ThemeData darkTheme = ThemeData(
-  brightness: Brightness.dark
-);
-
-ThemeData mainTheme = ThemeData(
+ThemeData mainTheme = ThemeData (
   brightness: Brightness.dark,
   primaryColor: ColorTheme.COLOR_PRIMARY,
-  textTheme: TextTheme(
-    displayLarge: TextStyle(color: ColorTheme.COLOR_WHITE),
-    displayMedium: TextStyle(color: ColorTheme.COLOR_WHITE),
-    displaySmall: TextStyle(color: ColorTheme.COLOR_WHITE)
+  inputDecorationTheme: InputDecorationTheme(
+    labelStyle: TextStyle(color: ColorTheme.COLOR_WHITE),
+    enabledBorder: UnderlineInputBorder(
+      borderSide: BorderSide(color: ColorTheme.COLOR_WHITE),
+    ),
+    focusedBorder: UnderlineInputBorder(
+      borderSide: BorderSide(color: ColorTheme.COLOR_PRIMARY),
+    ),
   ),
-  appBarTheme:  AppBarTheme(
+  elevatedButtonTheme: ElevatedButtonThemeData(
+    style: ElevatedButton.styleFrom(
+      backgroundColor: ColorTheme.COLOR_PRIMARY
+    ),
+  ),
+  floatingActionButtonTheme:
+      FloatingActionButtonThemeData(backgroundColor: ColorTheme.COLOR_PRIMARY),
+  textTheme: TextTheme(
+      displayLarge: TextStyle(color: ColorTheme.COLOR_WHITE),
+      displayMedium: TextStyle(color: ColorTheme.COLOR_WHITE),
+      displaySmall: TextStyle(color: ColorTheme.COLOR_WHITE)),
+  appBarTheme: AppBarTheme(
     color: ColorTheme.COLOR_PRIMARY,
   ),
   cardColor: ColorTheme.COLOR_CARD,
