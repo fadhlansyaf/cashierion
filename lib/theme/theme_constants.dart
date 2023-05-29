@@ -21,6 +21,7 @@ ThemeData darkTheme = ThemeData(
 );
 
 ThemeData mainTheme = ThemeData(
+  brightness: Brightness.dark,
   primaryColor: ColorTheme.COLOR_PRIMARY,
   textTheme: TextTheme(
     displayLarge: TextStyle(color: ColorTheme.COLOR_WHITE),
