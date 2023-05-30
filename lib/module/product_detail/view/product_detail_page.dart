@@ -147,6 +147,37 @@ class ProductDetailPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
+                      "Category",
+                      style: TextStyle(color: ColorTheme.COLOR_PRIMARY),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      "Category",
+                      style: TextStyle(
+                          color: ColorTheme.COLOR_WHITE, fontSize: 18),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Container(
+                alignment: Alignment.centerLeft,
+                padding: EdgeInsets.all(5),
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: ColorTheme.COLOR_WHITE,
+                  ),
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
                       "Price",
                       style: TextStyle(color: ColorTheme.COLOR_PRIMARY),
                     ),
