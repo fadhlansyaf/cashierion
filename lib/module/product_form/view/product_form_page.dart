@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:pos_app_skripsi/core.dart';
@@ -9,7 +10,8 @@ import 'package:pos_app_skripsi/theme/theme_constants.dart';
 
 import '../controller/product_form_controller.dart';
 
-import '../widget/select_image_bottom_sheet.dart';
+import '../widget/category_bottom_sheet.dart';
+import '../widget/select_image_dialog.dart';
 
 class ProductFormPage extends StatelessWidget {
   const ProductFormPage({Key? key}) : super(key: key);
@@ -21,7 +23,15 @@ class ProductFormPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("ProductForm"),
-        actions: const [],
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(
+              Icons.check,
+              size: 24.0,
+            ),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -32,49 +42,48 @@ class ProductFormPage extends StatelessWidget {
                 height: 20,
               ),
               GestureDetector(
-                onTap: () => {
-                  showModalBottomSheet<void>(
-                    isScrollControlled: true,
-                    context: context,
-                    builder: (BuildContext context) {
-                      return SelectImageBottomSheet();
-                    },
-                  )
+                onTap: () async {
+                  final result = await showDialog<bool>(
+                      context: context,
+                      builder: (context) {
+                        return SelectImageDialog();
+                      });
                 },
-                child: Obx(() => controller.selectedImagePath.value == ''
-                    ? Column(
-                        children: [
-                          Image.asset("assets/select-image.png"),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Text(
-                            "Add image",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
+                child: Obx(
+                  () => controller.selectedImagePath.value == ''
+                      ? Column(
+                          children: [
+                            Image.asset("assets/select-image.png"),
+                            SizedBox(
+                              height: 20,
                             ),
-                          ),
-                        ],
-                      )
-                    : 
-                    Column(
-                        children: [
-                          Container(
-                            width: (MediaQuery.of(context).size.width)/2,
-                            child: Image.file(File(controller.selectedImagePath.value)),
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Text(
-                            "Change",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
+                            Text(
+                              "Add image",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
+                          ],
+                        )
+                      : Column(
+                          children: [
+                            Container(
+                              width: (MediaQuery.of(context).size.width) / 2,
+                              child: Image.file(
+                                  File(controller.selectedImagePath.value)),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Text(
+                              "Change",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                ),
               ),
               SizedBox(
                 height: 40,
@@ -85,6 +94,63 @@ class ProductFormPage extends StatelessWidget {
                 decoration: InputDecoration(
                   border: UnderlineInputBorder(),
                   labelText: 'Product Name',
+                ),
+              ),
+              SizedBox(
+                height: 40,
+              ),
+              GestureDetector(
+                onTap: () => {
+                  showModalBottomSheet<void>(
+                    isScrollControlled: true,
+                    context: context,
+                    builder: (BuildContext context) {
+                      return CategoryBottomSheet(
+                        title: Title(
+                          color: ColorTheme.COLOR_WHITE,
+                          child: Text("Search Category"),
+                        ),
+                      );
+                    },
+                  )
+                },
+                child: Card(
+                  child: Container(
+                    padding: EdgeInsets.all(15),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            "Category",
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Text(
+                                "Category",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Icon(
+                                Icons.edit,
+                                size: 15,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ),
               SizedBox(
