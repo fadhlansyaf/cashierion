@@ -129,13 +129,13 @@ class ProductFormPage extends StatelessWidget {
                 icon: const Icon(Icons.save),
                 label: const Text("Save"),
                 onPressed: () async {
-                  await dao.insertItem(ProductsModel(
+                  await dao.insertItem(Products(
                       name: controller.textController[0].text,
                       price: double.parse(controller.textController[1].text),
                       sellingPrice:
                           double.parse(controller.textController[1].text),
                       stock: 0,
-                      description: controller.textController[2].text));
+                      description: controller.textController[2].text, image: ''));
                   Get.back();
                 },
               ),

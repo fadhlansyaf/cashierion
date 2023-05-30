@@ -32,9 +32,7 @@ class ProductListPage extends StatelessWidget {
         padding: const EdgeInsets.all(10.0),
         child: Obx(() {
           return ListView.builder(
-            itemCount: controller.products.value.length,
-            // itemCount: 1,
-
+            itemCount: controller.products.length,
             shrinkWrap: true,
             padding: EdgeInsets.zero,
             clipBehavior: Clip.none,
@@ -57,7 +55,7 @@ class ProductListPage extends StatelessWidget {
                     subtitle: Text(controller.products.value[index].description),
                     // title: Text("Product Name"),
                     // subtitle: Text("Product Description"),
-                    
+
                     // trailing: IconButton(
                     //   onPressed: () async {
                     //     // await OldGet.to(const ProductFormPage(
@@ -79,4 +77,5 @@ class ProductListPage extends StatelessWidget {
       ),
     );
   }
+
 }

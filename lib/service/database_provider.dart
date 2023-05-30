@@ -29,39 +29,42 @@ class DatabaseProvider{
   }
 
   static Future<void> _onCreate(Database db, int version) async {
-    Batch batch = db.batch();
+    // Batch batch = db.batch();
     for (var script in _initScript) {
       db.execute(script);
     }
-    await batch.commit(noResult: true);
+    // await batch.commit(noResult: true);
+
+    // Batch batch2 = db.batch();
+    // for (var script in _secondInitScript) {
+    //   db.execute(script);
+    // }
+    // await batch2.commit(noResult: true);
   }
 
   static Future _onConfigure(Database db) async {
     await db.execute('PRAGMA foreign_keys = ON');
   }
 
+  static const productCategoryTable = 'ProductCategory';
   static const productTable = 'Products';
   static const transactionTable = 'Transactions';
 
   static final List<String> _initScript = [
-    'CREATE TABLE $productTable ('
-        'product_id INTEGER PRIMARY KEY,'
-        'name TEXT,'
-        'price REAL,'
-        'selling_price REAL,'
-        'stock INTEGER,'
+    'CREATE TABLE $productCategoryTable('
+        'product_category_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,'
+        'name TEXT NOT NULL,'
         'description TEXT'
         ')',
-    'CREATE TABLE $transactionTable ('
-        'transaction_id INTEGER PRIMARY KEY,'
-        'FOREIGN KEY(product_id) REFERENCES $productTable(product_id),'
-        'dates TEXT,'
-        'sales REAL,'
-        'quantity INTEGER'
+    'CREATE TABLE $productTable ('
+        'product_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,'
+        'name TEXT NOT NULL,'
+        'image TEXT,'
+        'price REAL,'
+        'selling_price REAL NOT NULL,'
+        'stock INTEGER,'
+        'description TEXT,'
+        'FOREIGN KEY(product_id) REFERENCES $productCategoryTable(product_category_id)'
         ')',
-  ];
-
-  static final List<String> _secondInitScript = [
-
   ];
 }

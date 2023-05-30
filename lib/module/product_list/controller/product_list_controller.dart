@@ -5,13 +5,13 @@ import '../../../model/database/products.dart';
 
 class ProductListLogic extends GetxController {
   var selectedIndex = 0.obs;
-  var products = <ProductsModel>[].obs;
+  var products = <Products>[].obs;
   var isLoaded = false.obs;
 
   @override
   Future<void> onInit() async {
     super.onInit();
-    products.value.clear();
+    products.clear();
     products.value = await ProductListDao().getAllItem();
     isLoaded.value = true;
   }
