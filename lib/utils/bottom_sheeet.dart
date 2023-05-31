@@ -13,7 +13,7 @@ import '../module/product_form/widget/search_appbar.dart';
 class BottomSheets {
   const BottomSheets({Key? key});
 
-  static void categoryModalBottomSheet(context) {
+  static Future<dynamic> categoryModalBottomSheet(context) async {
     showModalBottomSheet<void>(
       isScrollControlled: true,
       context: context,
@@ -21,7 +21,10 @@ class BottomSheets {
         return Scaffold(
           appBar: SearchAppBar(
             title: Title(
-                color: ColorTheme.COLOR_WHITE, child: Text("Search Category")),
+              color: ColorTheme.COLOR_WHITE,
+              child: Text("Search Category"),
+            ),
+            height: MediaQuery.of(context).size.height * 0.175,
           ),
           body: ListView.builder(
             itemCount: 2,

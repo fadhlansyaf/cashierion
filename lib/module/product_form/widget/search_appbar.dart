@@ -32,7 +32,7 @@ class SearchAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    double defaultBottomHeight = 0;
+    double defaultBottomHeight = 100;
     if (bottomHeight == null) {
       defaultBottomHeight = MediaQuery.of(context).size.height * 0.2;
     }
@@ -46,7 +46,7 @@ class SearchAppBar extends StatelessWidget implements PreferredSizeWidget {
               Icons.search,
               color: Colors.black,
             ),
-            hintStyle: TextStyle(color: Colors.black),
+            hintStyle: TextStyle(color: Colors.black,),
             hintText: 'search',
             suffixIcon: suffix,
             fillColor: ColorTheme.COLOR_WHITE,
@@ -83,9 +83,15 @@ class SearchAppBar extends StatelessWidget implements PreferredSizeWidget {
       //       children: bottomWidgetSearch,
       //     ),
       bottom: PreferredSize(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: bottomWidgetSearch,
+        child: Padding(
+          padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+          child: Container(
+            transform: Matrix4.translationValues(0, -20, 0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: bottomWidgetSearch,
+            ),
+          ),
         ),
         preferredSize: Size.fromHeight(bottomHeight ?? defaultBottomHeight),
       ),
