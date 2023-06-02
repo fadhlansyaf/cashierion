@@ -1,11 +1,11 @@
 import 'package:get/get.dart';
 import 'package:pos_app_skripsi/module/product_list/controller/product_list_dao.dart';
 
-import '../../../model/database/products.dart';
+import '../../../model/database/product.dart';
 
 class ProductListLogic extends GetxController {
   var selectedIndex = 0.obs;
-  var products = <Products>[].obs;
+  var products = <ProductModel>[].obs;
   var isLoaded = false.obs;
 
   @override

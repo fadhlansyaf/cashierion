@@ -3,13 +3,13 @@ import 'dart:async';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
-class DatabaseProvider{
+class DatabaseProvider {
   Database? _database;
 
   Future<Database> get database async {
     if (_database != null) {
       return _database!;
-    }else {
+    } else {
       _database = await _createDatabase();
       return _database!;
     }
@@ -19,14 +19,16 @@ class DatabaseProvider{
     var databasesPath = await getDatabasesPath();
     String path = join(databasesPath, 'cashierion.db');
 
-    Database database = await openDatabase(path, version: 1, onCreate: _onCreate, onUpgrade: _onUpgrade, onConfigure: _onConfigure);
+    Database database = await openDatabase(path,
+        version: 1,
+        onCreate: _onCreate,
+        onUpgrade: _onUpgrade,
+        onConfigure: _onConfigure);
     return database;
   }
 
-
-  static Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
-
-  }
+  static Future<void> _onUpgrade(
+      Database db, int oldVersion, int newVersion) async {}
 
   static Future<void> _onCreate(Database db, int version) async {
     // Batch batch = db.batch();
@@ -51,20 +53,28 @@ class DatabaseProvider{
   static const transactionTable = 'Transactions';
 
   static final List<String> _initScript = [
-    'CREATE TABLE $productCategoryTable('
-        'product_category_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,'
-        'name TEXT NOT NULL,'
-        'description TEXT'
-        ')',
-    'CREATE TABLE $productTable ('
-        'product_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,'
-        'name TEXT NOT NULL,'
-        'image TEXT,'
-        'price REAL,'
-        'selling_price REAL NOT NULL,'
-        'stock INTEGER,'
-        'description TEXT,'
-        'FOREIGN KEY(product_id) REFERENCES $productCategoryTable(product_category_id)'
-        ')',
+    '''
+  CREATE TABLE $productCategoryTable(
+    product_category_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    name TEXT NOT NULL,
+    description TEXT
+  )
+  ''',
+    '''
+  CREATE TABLE $productTable (
+    product_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    name TEXT NOT NULL,
+    image TEXT,
+    price REAL,
+    selling_price REAL NOT NULL,
+    stock INTEGER,
+    description TEXT,
+    product_category_id INTEGER,
+    FOREIGN KEY(product_id) REFERENCES $productCategoryTable(product_category_id)
+  )
+  ''',
+    '''
+  INSERT INTO $productCategoryTable(product_category_id, name) VALUES(0, 'No Category')
+  ''',
   ];
 }

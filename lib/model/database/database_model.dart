@@ -1,2 +1,2 @@
 //GENERATED BARREL FILE 
-export 'products.dart';
+export 'product.dart';

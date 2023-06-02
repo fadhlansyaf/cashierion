@@ -1,5 +1,6 @@
-class Products {
-  final int productCategoryId;
+class ProductModel {
+  final int id;
+  final int? productCategoryId;
   final String name;
   final String image;
   final double price;
@@ -7,23 +8,23 @@ class Products {
   final int stock;
   final String description;
 
-  Products(
+  ProductModel(
       {required this.name,
-      this.productCategoryId = 0,
-      required this.image,
+      this.productCategoryId = 0, this.id = 0,
+      this.image = '',
       required this.price,
       required this.description,
       required this.sellingPrice,
       required this.stock});
 
-  factory Products.fromJson(Map<String, dynamic> json) => Products(
+  factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
       name: json["name"] ?? '',
       price: json["price"] ?? 0,
       description: json["description"] ?? '',
       sellingPrice: json["selling_price"] ?? 0,
       stock: json["stock"] ?? '',
       productCategoryId: json["product_category_id"] ?? 0,
-      image: json["image"] ?? '');
+      image: json["image"] ?? '', id: json["id"] ?? 0);
 
   Map<String, dynamic> toJson() => {
         "name": name,
@@ -31,6 +32,7 @@ class Products {
         "description": description,
         "selling_price": sellingPrice,
         "stock": stock,
-        "image": image
+        "image": image,
+        "product_category_id": productCategoryId ?? 0
       };
 }
