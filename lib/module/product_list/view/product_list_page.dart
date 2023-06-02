@@ -40,35 +40,75 @@ class ProductListPage extends StatelessWidget {
               var item = "item";
               return GestureDetector(
                 onTap: () async {
-                        await Get.to(
-                            ProductDetailPage(), binding: ProductDetailBinding());
-                      },
+                  await Get.to(ProductDetailPage(),
+                      binding: ProductDetailBinding());
+                },
                 child: Card(
-                  child: ListTile(
-                    leading: CircleAvatar(
-                      backgroundColor: Colors.grey[200],
-                      backgroundImage: const NetworkImage(
-                        "https://i.ibb.co/QrTHd59/woman.jpg",
-                      ),
+                  child: Padding(
+                    padding: EdgeInsets.all(15),
+                    child: Row(
+                      children: [
+                        CircleAvatar(
+                          backgroundColor: Colors.grey[200],
+                          backgroundImage: const NetworkImage(
+                            "https://i.ibb.co/QrTHd59/woman.jpg",
+                          ),
+                          radius: 25,
+                        ),
+                        SizedBox(
+                          width: 15,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // Text(
+                            //   controller.products.value[index].name,
+                            //   style: TextStyle(
+                            //     fontSize: 16,
+                            //   ),
+                            // ),
+                            // SizedBox(
+                            //   height: 5,
+                            // ),
+                            // Text(
+                            //   controller.products.value[index].description,
+                            //   style: TextStyle(
+                            //     color: ColorTheme.COLOR_GREY,
+                            //   ),
+                            // ),
+                            Text(
+                              controller.products[index].name,
+                              style: TextStyle(
+                                fontSize: 16,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              controller.products[index].description,
+                              style: TextStyle(
+                                color: ColorTheme.COLOR_GREY,
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
                     ),
-                    title: Text(controller.products.value[index].name),
-                    subtitle: Text(controller.products.value[index].description),
-                    // title: Text("Product Name"),
-                    // subtitle: Text("Product Description"),
-
-                    // trailing: IconButton(
-                    //   onPressed: () async {
-                    //     // await OldGet.to(const ProductFormPage(
-                    //     // ));
-                    //     await Get.to(
-                    //         ProductFormPage(), binding: ProductFormBinding());
-                    //   },
-                    //   icon: const Icon(
-                    //     Icons.edit,
-                    //     size: 24.0,
-                    //   ),
-                    // ),
                   ),
+
+                  // ListTile(
+                  //   leading: CircleAvatar(
+                  //     backgroundColor: Colors.grey[200],
+                  //     backgroundImage: const NetworkImage(
+                  //       "https://i.ibb.co/QrTHd59/woman.jpg",
+                  //     ),
+                  //   ),
+                  //   title: Text(controller.products.value[index].name),
+                  //   subtitle: Text(controller.products.value[index].description),
+                  //   // title: Text("Product Name"),
+                  //   // subtitle: Text("Product Description"),
+                  // ),
                 ),
               );
             },
@@ -77,5 +117,4 @@ class ProductListPage extends StatelessWidget {
       ),
     );
   }
-
 }

@@ -13,7 +13,7 @@ import '../module/product_form/widget/search_appbar.dart';
 class BottomSheets {
   const BottomSheets({Key? key});
 
-  static void categoryModalBottomSheet(context) {
+  static Future<dynamic> categoryModalBottomSheet(context) async {
     showModalBottomSheet<void>(
       isScrollControlled: true,
       context: context,
@@ -21,21 +21,46 @@ class BottomSheets {
         return Scaffold(
           appBar: SearchAppBar(
             title: Title(
-                color: ColorTheme.COLOR_WHITE, child: Text("Search Category")),
+              color: ColorTheme.COLOR_WHITE,
+              child: Text("Search Category"),
+            ),
+            height: MediaQuery.of(context).size.height * 0.175,
           ),
-          body: ListView.builder(
-            itemCount: 2,
-            shrinkWrap: true,
-            padding: EdgeInsets.zero,
-            clipBehavior: Clip.none,
-            itemBuilder: (context, index) {
-              var item = "item";
-              return Card(
-                child: ListTile(
-                  title: const Text("Jessica Doe"),
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                Padding(
+                  padding: EdgeInsets.all(10),
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      child: Text("Add Category"),
+                    ),
+                  ),
                 ),
-              );
-            },
+                ListView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: 20,
+                  shrinkWrap: true,
+                  // primary: false,
+                  padding: EdgeInsets.zero,
+                  clipBehavior: Clip.none,
+                  itemBuilder: (context, index) {
+                    var item = "item";
+                    return Card(
+                      child: Padding(
+                        padding: EdgeInsets.all(15),
+                        child: Text(
+                          "Jessica Doe",
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
         );
       },
