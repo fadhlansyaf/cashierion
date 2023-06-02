@@ -17,11 +17,5 @@ class CategoryListLogic extends GetxController {
     super.onInit();
     final dao = Get.find<CategoryListDao>();
     categoryList = await dao.getCategoryList();
-    var timer = Timer.periodic(Duration(seconds: 5), (timer) {
-      selectedIndex.value++;
-      if(setState.value != null){
-        setState.value!((){});
-      }
-    });
   }
 }

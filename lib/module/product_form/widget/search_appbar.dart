@@ -38,8 +38,9 @@ class SearchAppBar extends StatelessWidget implements PreferredSizeWidget {
     }
     List<Widget> bottomWidgetSearch = [];
     Widget searchWidget = Padding(
-      padding: EdgeInsets.symmetric(horizontal: 15),
+      padding: EdgeInsets.symmetric(horizontal: 20),
       child: TextField(
+        textAlignVertical: TextAlignVertical.center,
         controller: controller,
         style: TextStyle(
           color: Colors.black,
@@ -48,9 +49,10 @@ class SearchAppBar extends StatelessWidget implements PreferredSizeWidget {
             prefixIcon: Icon(
               Icons.search,
               color: Colors.black,
+              size: 20,
             ),
             focusColor: Colors.black,
-            hintStyle: TextStyle(color: Colors.black, fontSize: 20),
+            hintStyle: TextStyle(color: Colors.black, ),
             hintText: 'search',
             suffixIcon: suffix,
             fillColor: ColorTheme.COLOR_WHITE,

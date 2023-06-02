@@ -30,47 +30,71 @@ class BottomSheets {
                 ),
                 height: MediaQuery.of(context).size.height * 0.175,
               ),
-              body: Obx(() {
-                return SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.all(10),
-                        child: SizedBox(
-                          width: double.infinity,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              //TODO: BottomSheet add kategori
-                            },
-                            child: Text("Add Category"),
+              body: Obx(
+                () {
+                  return SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.all(10),
+                          child: SizedBox(
+                            width: double.infinity,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                //TODO: BottomSheet add kategori
+                              },
+                              child: Text("Add Category"),
+                            ),
                           ),
                         ),
-                      ),
-                      ListView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: controller.categoryList.length,
-                        shrinkWrap: true,
-                        padding: EdgeInsets.zero,
-                        clipBehavior: Clip.none,
-                        itemBuilder: (context, index) {
-                          return InkWell(
-                            onTap: () {
-                              onSelected(controller.categoryList[index]);
-                              Navigator.pop(context);
-                            },
-                            //TODO: Ganti ListTile
-                            child: ListTile(
-                              title: Text(controller.categoryList[index].name),
-                              subtitle: Text(
-                                  controller.selectedIndex.value.toString()),
-                            ),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                );
-              }),
+                        ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: controller.categoryList.length,
+                          shrinkWrap: true,
+                          padding: EdgeInsets.zero,
+                          clipBehavior: Clip.none,
+                          itemBuilder: (context, index) {
+                            return InkWell(
+                              onTap: () {
+                                onSelected(controller.categoryList[index]);
+                                Navigator.pop(context);
+                              },
+                              //TODO: Ganti ListTile => Done
+                              child: Card(
+                                child: Padding(
+                                  padding: EdgeInsets.all(15),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        controller.categoryList[index].name,
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Text(
+                                        controller.selectedIndex.value
+                                            .toString(),
+                                        style: TextStyle(
+                                          color: ColorTheme.COLOR_GREY,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
             );
           },
         );

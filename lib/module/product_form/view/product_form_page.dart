@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 import 'dart:io';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,7 @@ import 'package:pos_app_skripsi/theme/theme_constants.dart';
 
 import '../../../model/database/category.dart';
 import '../../category_list/controller/category_list_dao.dart';
-import '/utils/bottom_sheeet.dart';
+import '/utils/bottom_sheet.dart';
 import '../widget/select_image_dialog.dart';
 import '../widget/category_bottom_sheet.dart';
 
@@ -29,7 +30,19 @@ class ProductFormPage extends StatelessWidget {
         title: const Text("ProductForm"),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () async {
+              await dao.insertItem(ProductModel(
+                  name: controller.textController[0].text,
+                  price: double.parse(controller.textController[1].text),
+                  sellingPrice: double.parse(controller.textController[1].text),
+                  stock: 0,
+                  description: controller.textController[2].text,
+                  image: controller.selectedImageBytes != null
+                      ? base64Encode(controller.selectedImageBytes!)
+                      : '',
+                  productCategoryId: controller.selectedCategory.value?.id));
+              Get.back();
+            },
             icon: const Icon(
               Icons.check,
               size: 24.0,
@@ -54,43 +67,39 @@ class ProductFormPage extends StatelessWidget {
                       });
                 },
                 child: Obx(
-                      () =>
-                  controller.selectedImagePath.value == ''
+                  () => controller.selectedImagePath.value == ''
                       ? Column(
-                    children: [
-                      Image.asset("assets/select-image.png"),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        "Add image",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  )
+                          children: [
+                            Image.asset("assets/select-image.png"),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Text(
+                              "Add image",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        )
                       : Column(
-                    children: [
-                      Container(
-                        width: (MediaQuery
-                            .of(context)
-                            .size
-                            .width) / 2,
-                        child: Image.file(
-                            File(controller.selectedImagePath.value)),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        "Change",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
+                          children: [
+                            Container(
+                              width: (MediaQuery.of(context).size.width) / 2,
+                              child: Image.file(
+                                  File(controller.selectedImagePath.value)),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Text(
+                              "Change",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
-                  ),
                 ),
               ),
               SizedBox(
@@ -111,9 +120,12 @@ class ProductFormPage extends StatelessWidget {
                 return GestureDetector(
                   onTap: () {
                     BottomSheets.categoryModalBottomSheet(
-                      context, categoryController, (category) {
-                      controller.selectedCategory.value = category;
-                    },);
+                      context,
+                      categoryController,
+                      (category) {
+                        controller.selectedCategory.value = category;
+                      },
+                    );
                   },
                   child: Card(
                     child: Container(
@@ -204,27 +216,6 @@ class ProductFormPage extends StatelessWidget {
                 ),
                 keyboardType: TextInputType.multiline,
                 maxLines: 4,
-              ),
-              SizedBox(
-                height: 40,
-              ),
-              ElevatedButton.icon(
-                icon: const Icon(Icons.save),
-                label: const Text("Save"),
-                onPressed: () async {
-                  await dao.insertItem(ProductModel(
-                      name: controller.textController[0].text,
-                      price: double.parse(controller.textController[1].text),
-                      sellingPrice:
-                      double.parse(controller.textController[1].text),
-                      stock: 0,
-                      description: controller.textController[2].text,
-                      image: controller.selectedImageBytes != null
-                          ? base64Encode(controller.selectedImageBytes!)
-                          : '',
-                      productCategoryId: controller.selectedCategory.value?.id));
-                  Get.back();
-                },
               ),
               SizedBox(
                 height: 40,
