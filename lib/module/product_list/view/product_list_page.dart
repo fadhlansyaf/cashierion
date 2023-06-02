@@ -32,8 +32,8 @@ class ProductListPage extends StatelessWidget {
         padding: const EdgeInsets.all(10.0),
         child: Obx(() {
           return ListView.builder(
-            // itemCount: controller.products.value.length,
-            itemCount: 1,
+            itemCount: controller.products.value.length,
+            // itemCount: 1,
 
             shrinkWrap: true,
             padding: EdgeInsets.zero,
