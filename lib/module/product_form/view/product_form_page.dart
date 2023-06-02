@@ -10,8 +10,9 @@ import 'package:pos_app_skripsi/theme/theme_constants.dart';
 
 import '../controller/product_form_controller.dart';
 
-import '../widget/category_bottom_sheet.dart';
+import '/utils/bottom_sheeet.dart';
 import '../widget/select_image_dialog.dart';
+import '../widget/category_bottom_sheet.dart';
 
 class ProductFormPage extends StatelessWidget {
   const ProductFormPage({Key? key}) : super(key: key);
@@ -101,18 +102,18 @@ class ProductFormPage extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () => {
-                  showModalBottomSheet<void>(
-                    isScrollControlled: true,
-                    context: context,
-                    builder: (BuildContext context) {
-                      return CategoryBottomSheet(
-                        title: Title(
-                          color: ColorTheme.COLOR_WHITE,
-                          child: Text("Search Category"),
-                        ),
-                      );
-                    },
-                  )
+                  BottomSheets.categoryModalBottomSheet(context)
+                  // showModalBottomSheet<void>(
+                  //   isScrollControlled: true,
+                  //   context: context,
+                  //   builder: (BuildContext context) {
+                  //     return CategoryBottomSheet(
+                  //       title: Title(
+                  //           color: ColorTheme.COLOR_WHITE,
+                  //           child: Text("Search Category")),
+                  //     );
+                  //   },
+                  // )
                 },
                 child: Card(
                   child: Container(
