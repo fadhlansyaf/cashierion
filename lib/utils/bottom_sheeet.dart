@@ -1,70 +1,204 @@
+import 'dart:async';
 import 'dart:io';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:pos_app_skripsi/core.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:pos_app_skripsi/model/database/database_model.dart';
-import 'package:pos_app_skripsi/module/product_form/controller/product_form_dao.dart';
-import 'package:pos_app_skripsi/module/product_form/widget/category_bottom_sheet.dart';
 import 'package:pos_app_skripsi/theme/theme_constants.dart';
 
+import '../model/database/category.dart';
 import '../module/product_form/widget/search_appbar.dart';
+import 'no_overscroll.dart';
 
 class BottomSheets {
-  const BottomSheets({Key? key});
-
-  static Future<dynamic> categoryModalBottomSheet(context) async {
+  static void categoryModalBottomSheet(
+      BuildContext context,
+      CategoryListLogic controller,
+      void Function(CategoryModel category) onSelected) {
     showModalBottomSheet<void>(
       isScrollControlled: true,
       context: context,
       builder: (BuildContext context) {
-        return Scaffold(
-          appBar: SearchAppBar(
-            title: Title(
-              color: ColorTheme.COLOR_WHITE,
-              child: Text("Search Category"),
-            ),
-            height: MediaQuery.of(context).size.height * 0.175,
-          ),
-          body: SingleChildScrollView(
-            child: Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.all(10),
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      child: Text("Add Category"),
-                    ),
-                  ),
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+            //Masukin setState bottomsheet ini ke GetX
+            controller.setState.value ??= setState;
+            return Scaffold(
+              appBar: SearchAppBar(
+                title: Title(
+                  color: ColorTheme.COLOR_WHITE,
+                  child: Text("Search Category"),
                 ),
-                ListView.builder(
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: 20,
-                  shrinkWrap: true,
-                  // primary: false,
-                  padding: EdgeInsets.zero,
-                  clipBehavior: Clip.none,
-                  itemBuilder: (context, index) {
-                    var item = "item";
-                    return Card(
-                      child: Padding(
-                        padding: EdgeInsets.all(15),
-                        child: Text(
-                          "Jessica Doe",
-                          style: TextStyle(fontSize: 16),
+                height: MediaQuery.of(context).size.height * 0.175,
+              ),
+              body: Obx(() {
+                return SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.all(10),
+                        child: SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              //TODO: BottomSheet add kategori
+                            },
+                            child: Text("Add Category"),
+                          ),
                         ),
                       ),
-                    );
-                  },
-                ),
-              ],
-            ),
-          ),
+                      ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: controller.categoryList.length,
+                        shrinkWrap: true,
+                        padding: EdgeInsets.zero,
+                        clipBehavior: Clip.none,
+                        itemBuilder: (context, index) {
+                          return InkWell(
+                            onTap: () {
+                              onSelected(controller.categoryList[index]);
+                              Navigator.pop(context);
+                            },
+                            //TODO: Ganti ListTile
+                            child: ListTile(
+                              title: Text(controller.categoryList[index].name),
+                              subtitle: Text(
+                                  controller.selectedIndex.value.toString()),
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                );
+              }),
+            );
+          },
         );
       },
     );
+  }
+
+  static Future<dynamic> spinner({
+    required BuildContext context,
+    required String title,
+    required List<SpinnerItem> spinnerItems,
+    required void Function(SpinnerItem selectedItem) onSelected,
+  }) async {
+    List<SpinnerItem> duplicate = [];
+    duplicate.addAll(spinnerItems);
+
+    return await showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        builder: (context) {
+          return StatefulBuilder(builder: (context, setState) {
+            return Material(
+                color: Theme.of(context).primaryColor,
+                child: Container(
+                  padding: EdgeInsets.only(
+                      top: MediaQuery.of(context).size.height * 0.04),
+                  child: Scaffold(
+                      backgroundColor: Theme.of(context).primaryColor,
+                      appBar: SearchAppBar(
+                        title: Text(title),
+                        onChanged: (value) {
+                          if (value.isNotEmpty) {
+                            List<SpinnerItem> searched = [];
+                            for (var e in spinnerItems) {
+                              if (e.description
+                                  .toLowerCase()
+                                  .contains(value.toLowerCase())) {
+                                searched.add(e);
+                              } else if (e.subDescription != null) {
+                                if (e.subDescription!
+                                    .toLowerCase()
+                                    .contains(value.toLowerCase())) {
+                                  searched.add(e);
+                                }
+                              }
+                            }
+                            spinnerItems.clear();
+                            spinnerItems.addAll(searched);
+                          } else {
+                            spinnerItems.clear();
+                            spinnerItems.addAll(duplicate);
+                          }
+                          setState(() {});
+                        },
+                        height: MediaQuery.of(context).size.height * 0.125,
+                      ),
+                      body: Container(
+                        height: MediaQuery.of(context).size.height * 0.875,
+                        child: ScrollConfiguration(
+                          behavior: NoOverscrollBehavior(),
+                          child: ListView.builder(
+                            itemCount: spinnerItems.length,
+                            itemBuilder: (context, index) {
+                              return InkWell(
+                                onTap: () {
+                                  onSelected(spinnerItems[index]);
+                                  Navigator.pop(context);
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20, vertical: 10),
+                                  child: Row(
+                                    children: [
+                                      Container(
+                                        width: 50,
+                                        height: 50,
+                                        alignment: Alignment.center,
+                                        decoration: BoxDecoration(
+                                            shape: BoxShape.circle),
+                                        child: Text(
+                                          spinnerItems[index]
+                                              .description[0]
+                                              .toUpperCase(),
+                                          style: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 20),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 10),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                spinnerItems[index].description,
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              if (spinnerItems[index]
+                                                      .subDescription !=
+                                                  null)
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          top: 5),
+                                                  child: Text(
+                                                      spinnerItems[index]
+                                                          .subDescription!),
+                                                ),
+                                            ],
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      )),
+                ));
+          });
+        });
   }
 
   @override
@@ -125,6 +259,19 @@ class BottomSheets {
     );
   }
 
-  // @override
-  // Size get preferredSize => Size.fromHeight(getHeight());
+// @override
+// Size get preferredSize => Size.fromHeight(getHeight());
+}
+
+class SpinnerItem {
+  final dynamic identity;
+  final String description;
+  final dynamic tag;
+  final String? subDescription;
+
+  SpinnerItem(
+      {required this.identity,
+      required this.description,
+      this.tag,
+      this.subDescription});
 }

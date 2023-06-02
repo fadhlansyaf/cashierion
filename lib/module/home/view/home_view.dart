@@ -55,13 +55,6 @@ class HomePage extends StatelessWidget {
                   label: "Transaction",
                   // icon: new Image.asset("assets/icons8-order-32.png")
                   icon: Icon(Icons.list_alt_outlined)),
-              // BottomNavigationBarItem(
-              //   label: "Sales Transaction",
-              //   backgroundColor: COLOR_CARD,
-              //   icon: Icon(
-              //     Icons.sell,
-              //   ),
-              // ),
               BottomNavigationBarItem(
                   label: "Store",
                   // icon: new Image.asset("assets/icons8-store-32.png")

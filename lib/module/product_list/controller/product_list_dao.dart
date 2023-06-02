@@ -4,10 +4,10 @@ import 'package:sqflite/sqflite.dart';
 import '../../../service/database_provider.dart';
 
 class ProductListDao{
-  Future<List<ProductsModel>> getAllItem() async {
+  Future<List<ProductModel>> getAllItem() async {
     Database db = await DatabaseProvider().database;
     var result = await db.query(DatabaseProvider.productTable);
-    List<ProductsModel> products = List.from(result.map((e) => ProductsModel.fromJson(e)));
+    List<ProductModel> products = List.from(result.map((e) => ProductModel.fromJson(e)));
     return products;
   }
 }

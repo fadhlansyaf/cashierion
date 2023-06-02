@@ -32,9 +32,7 @@ class ProductListPage extends StatelessWidget {
         padding: const EdgeInsets.all(10.0),
         child: Obx(() {
           return ListView.builder(
-            itemCount: controller.products.value.length,
-            // itemCount: 1,
-
+            itemCount: controller.products.length,
             shrinkWrap: true,
             padding: EdgeInsets.zero,
             clipBehavior: Clip.none,
@@ -79,7 +77,7 @@ class ProductListPage extends StatelessWidget {
                             //   ),
                             // ),
                             Text(
-                              "Product Name",
+                              controller.products[index].name,
                               style: TextStyle(
                                 fontSize: 16,
                               ),
@@ -88,7 +86,7 @@ class ProductListPage extends StatelessWidget {
                               height: 5,
                             ),
                             Text(
-                              "Product Description",
+                              controller.products[index].description,
                               style: TextStyle(
                                 color: ColorTheme.COLOR_GREY,
                               ),
