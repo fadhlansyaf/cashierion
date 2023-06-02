@@ -26,19 +26,41 @@ class BottomSheets {
             ),
             height: MediaQuery.of(context).size.height * 0.175,
           ),
-          body: ListView.builder(
-            itemCount: 2,
-            shrinkWrap: true,
-            padding: EdgeInsets.zero,
-            clipBehavior: Clip.none,
-            itemBuilder: (context, index) {
-              var item = "item";
-              return Card(
-                child: ListTile(
-                  title: const Text("Jessica Doe"),
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                Padding(
+                  padding: EdgeInsets.all(10),
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      child: Text("Add Category"),
+                    ),
+                  ),
                 ),
-              );
-            },
+                ListView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: 20,
+                  shrinkWrap: true,
+                  // primary: false,
+                  padding: EdgeInsets.zero,
+                  clipBehavior: Clip.none,
+                  itemBuilder: (context, index) {
+                    var item = "item";
+                    return Card(
+                      child: Padding(
+                        padding: EdgeInsets.all(15),
+                        child: Text(
+                          "Jessica Doe",
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
         );
       },

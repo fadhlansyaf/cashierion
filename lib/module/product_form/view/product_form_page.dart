@@ -160,6 +160,7 @@ class ProductFormPage extends StatelessWidget {
               TextFormField(
                 controller: controller.textController[1],
                 cursorColor: ColorTheme.COLOR_WHITE,
+                keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
                   border: UnderlineInputBorder(),
                   labelText: 'Price',
@@ -171,9 +172,22 @@ class ProductFormPage extends StatelessWidget {
               TextFormField(
                 controller: controller.textController[1],
                 cursorColor: ColorTheme.COLOR_WHITE,
+                keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
                   border: UnderlineInputBorder(),
                   labelText: 'Selling Price',
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              TextFormField(
+                controller: controller.textController[1],
+                cursorColor: ColorTheme.COLOR_WHITE,
+                keyboardType: TextInputType.number,
+                decoration: const InputDecoration(
+                  border: UnderlineInputBorder(),
+                  labelText: 'Stock',
                 ),
               ),
               SizedBox(

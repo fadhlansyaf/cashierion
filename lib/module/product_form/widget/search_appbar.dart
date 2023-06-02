@@ -41,12 +41,16 @@ class SearchAppBar extends StatelessWidget implements PreferredSizeWidget {
       padding: EdgeInsets.symmetric(horizontal: 15),
       child: TextField(
         controller: controller,
+        style: TextStyle(
+          color: Colors.black,
+        ),
         decoration: InputDecoration(
             prefixIcon: Icon(
               Icons.search,
               color: Colors.black,
             ),
-            hintStyle: TextStyle(color: Colors.black,),
+            focusColor: Colors.black,
+            hintStyle: TextStyle(color: Colors.black, fontSize: 20),
             hintText: 'search',
             suffixIcon: suffix,
             fillColor: ColorTheme.COLOR_WHITE,
