@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pos_app_skripsi/theme/theme_constants.dart';
 
 ///Custom TextField, jika [onTap] null maka menampilkan textfield biasa,
 ///jika [onTap] tidak null maka menampilkan suffix icon, jika
@@ -37,9 +38,9 @@ class CustomTextFieldOld extends StatelessWidget {
         decoration: InputDecoration(
           helperText: helperText,
           labelText: label,
-          labelStyle: TextStyle(color: Theme.of(context).colorScheme.primary),
+          labelStyle: TextStyle(color: Colors.black),
           floatingLabelBehavior: FloatingLabelBehavior.always,
-          fillColor: Theme.of(context).colorScheme.primary.withOpacity(0.2),
+          fillColor: ColorTheme.COLOR_GREY,
           filled: true,
           border: UnderlineInputBorder(
             borderSide: BorderSide(

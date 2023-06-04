@@ -14,6 +14,7 @@ import '../../category_list/controller/category_list_dao.dart';
 import '/utils/bottom_sheet.dart';
 import '../widget/select_image_dialog.dart';
 import '../widget/category_bottom_sheet.dart';
+import '/widgets/custom_text_field.dart';
 
 class ProductFormPage extends StatelessWidget {
   const ProductFormPage({Key? key}) : super(key: key);
@@ -102,6 +103,15 @@ class ProductFormPage extends StatelessWidget {
                           ],
                         ),
                 ),
+              ),
+              SizedBox(
+                height: 40,
+              ),
+              CustomTextFieldOld(
+                controller: controller.textController[0],
+                keyboardType: TextInputType.text,
+                label: "Product Name",
+                
               ),
               SizedBox(
                 height: 40,
