@@ -10,7 +10,9 @@ class CustomTextFieldOld extends StatelessWidget {
       this.keyboardType,
       required this.label,
       this.helperText,
-      this.onTap, this.suffixIcon = const Icon(Icons.arrow_drop_down), this.onSaved})
+      this.onTap,
+      this.suffixIcon = const Icon(Icons.arrow_drop_down,color: ColorTheme.COLOR_PRIMARY,),
+      this.onSaved})
       : super(key: key);
   final TextEditingController controller;
   final TextInputType? keyboardType;
@@ -22,8 +24,8 @@ class CustomTextFieldOld extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if(onTap != null && controller.text.isEmpty){
-      if(suffixIcon == Icon(Icons.arrow_drop_down)) {
+    if (onTap != null && controller.text.isEmpty) {
+      if (suffixIcon == Icon(Icons.arrow_drop_down,color: ColorTheme.COLOR_PRIMARY,)) {
         controller.text = 'Pilih salah satu';
       }
     }
@@ -35,20 +37,26 @@ class CustomTextFieldOld extends StatelessWidget {
         controller: controller,
         onTap: onTap,
         readOnly: onTap != null,
+        cursorColor: ColorTheme.COLOR_PRIMARY,
         decoration: InputDecoration(
-          helperText: helperText,
-          labelText: label,
-          labelStyle: TextStyle(color: Colors.black),
-          floatingLabelBehavior: FloatingLabelBehavior.always,
-          fillColor: ColorTheme.COLOR_GREY,
-          filled: true,
-          border: UnderlineInputBorder(
-            borderSide: BorderSide(
-              width: 0.25,
+            helperText: helperText,
+            labelText: label,
+            labelStyle: TextStyle(color: ColorTheme.COLOR_GREY),
+            floatingLabelBehavior: FloatingLabelBehavior.always,
+            fillColor: ColorTheme.COLOR_CARD,
+            filled: true,
+            enabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: ColorTheme.COLOR_WHITE),
             ),
-          ),
-          suffixIcon: onTap != null ? suffixIcon : null
-        ),
+            focusedBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: ColorTheme.COLOR_PRIMARY),
+            ),
+            border: UnderlineInputBorder(
+              borderSide: BorderSide(
+                width: 0.25,
+              ),
+            ),
+            suffixIcon: onTap != null ? suffixIcon : null),
       ),
     );
   }

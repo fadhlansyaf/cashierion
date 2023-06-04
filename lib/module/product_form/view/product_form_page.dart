@@ -113,23 +113,11 @@ class ProductFormPage extends StatelessWidget {
                 label: "Product Name",
                 
               ),
-              SizedBox(
-                height: 40,
-              ),
-              TextFormField(
+
+              CustomTextFieldOld(
                 controller: controller.textController[0],
-                cursorColor: ColorTheme.COLOR_WHITE,
-                decoration: InputDecoration(
-                  border: UnderlineInputBorder(),
-                  labelText: 'Product Name',
-                ),
-              ),
-              SizedBox(
-                height: 40,
-              ),
-              Obx(() {
-                return GestureDetector(
-                  onTap: () {
+                label: "Category",
+                onTap: () {
                     BottomSheets.categoryModalBottomSheet(
                       context,
                       categoryController,
@@ -137,99 +125,86 @@ class ProductFormPage extends StatelessWidget {
                         controller.selectedCategory.value = category;
                       },
                     );
-                  },
-                  child: Card(
-                    child: Container(
-                      padding: EdgeInsets.all(15),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Text(
-                              "Category",
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Text(
-                                  controller.selectedCategory.value?.name ??
-                                      'No Category',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Icon(
-                                  Icons.edit,
-                                  size: 15,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                );
-              }),
-              SizedBox(
-                height: 20,
+                }
               ),
-              TextFormField(
+              // SizedBox(
+              //   height: 20,
+              // ),
+              // Obx(() {
+              //   return GestureDetector(
+              //     onTap: () {
+              //       BottomSheets.categoryModalBottomSheet(
+              //         context,
+              //         categoryController,
+              //         (category) {
+              //           controller.selectedCategory.value = category;
+              //         },
+              //       );
+              //     },
+              //     child: Card(
+              //       child: Container(
+              //         padding: EdgeInsets.all(15),
+              //         child: Row(
+              //           children: [
+              //             Expanded(
+              //               child: Text(
+              //                 "Category",
+              //                 style: TextStyle(
+              //                   fontSize: 16,
+              //                   fontWeight: FontWeight.bold,
+              //                 ),
+              //               ),
+              //             ),
+              //             Expanded(
+              //               child: Row(
+              //                 mainAxisAlignment: MainAxisAlignment.end,
+              //                 children: [
+              //                   Text(
+              //                     controller.selectedCategory.value?.name ??
+              //                         'No Category',
+              //                     style: TextStyle(
+              //                       fontSize: 16,
+              //                     ),
+              //                   ),
+              //                   SizedBox(
+              //                     width: 5,
+              //                   ),
+              //                   Icon(
+              //                     Icons.edit,
+              //                     size: 15,
+              //                   ),
+              //                 ],
+              //               ),
+              //             ),
+              //           ],
+              //         ),
+              //       ),
+              //     ),
+              //   );
+              // }),
+              CustomTextFieldOld(
                 controller: controller.textController[1],
-                cursorColor: ColorTheme.COLOR_WHITE,
                 keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                  border: UnderlineInputBorder(),
-                  labelText: 'Price',
-                ),
+                label: "Price",
+                
               ),
-              SizedBox(
-                height: 20,
-              ),
-              TextFormField(
+              CustomTextFieldOld(
                 controller: controller.textController[2],
-                cursorColor: ColorTheme.COLOR_WHITE,
                 keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                  border: UnderlineInputBorder(),
-                  labelText: 'Selling Price',
-                ),
+                label: "Selling Price",
+                
               ),
-              SizedBox(
-                height: 20,
-              ),
-              TextFormField(
+              CustomTextFieldOld(
                 controller: controller.textController[3],
-                cursorColor: ColorTheme.COLOR_WHITE,
                 keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                  border: UnderlineInputBorder(),
-                  labelText: 'Stock',
-                ),
+                label: "Stock",
+                
               ),
-              SizedBox(
-                height: 20,
-              ),
-              TextField(
+              CustomTextFieldOld(
                 controller: controller.textController[4],
-                cursorColor: ColorTheme.COLOR_WHITE,
-                decoration: const InputDecoration(
-                  border: UnderlineInputBorder(),
-                  labelText: 'Description',
-                ),
-                keyboardType: TextInputType.multiline,
-                maxLines: 4,
-              ),
-              SizedBox(
-                height: 40,
+                keyboardType: TextInputType.text,
+                label: "Description",
+                
               ),
             ],
           ),
