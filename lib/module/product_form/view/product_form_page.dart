@@ -24,6 +24,8 @@ class ProductFormPage extends StatelessWidget {
     final controller = Get.find<ProductFormLogic>();
     final dao = Get.find<ProductFormDao>();
     final categoryController = Get.find<CategoryListLogic>();
+    final categoryFormController = Get.find<CategoryFormLogic>();
+
     final categoryDao = Get.find<CategoryListDao>();
 
     return Scaffold(
@@ -121,6 +123,7 @@ class ProductFormPage extends StatelessWidget {
                     BottomSheets.categoryModalBottomSheet(
                       context,
                       categoryController,
+                      categoryFormController,
                       (category) {
                         controller.selectedCategory.value = category;
                       },

@@ -8,11 +8,13 @@ import 'package:pos_app_skripsi/theme/theme_constants.dart';
 import '../model/database/category.dart';
 import '../module/product_form/widget/search_appbar.dart';
 import 'no_overscroll.dart';
+import '/widgets/custom_text_field.dart';
 
 class BottomSheets {
   static void categoryModalBottomSheet(
       BuildContext context,
       CategoryListLogic controller,
+      CategoryFormLogic categoryFormController,
       void Function(CategoryModel category) onSelected) {
     showModalBottomSheet<void>(
       isScrollControlled: true,
@@ -41,7 +43,8 @@ class BottomSheets {
                             width: double.infinity,
                             child: ElevatedButton(
                               onPressed: () {
-                                //TODO: BottomSheet add kategori
+                                addCategoryModalBottomSheet(
+                                    context, categoryFormController);
                               },
                               child: Text("Add Category"),
                             ),
@@ -97,6 +100,93 @@ class BottomSheets {
               ),
             );
           },
+        );
+      },
+    );
+  }
+
+  static void addCategoryModalBottomSheet(
+    BuildContext context,
+    // CategoryListLogic controller,
+    CategoryFormLogic controller,
+    // ntar ganti aja
+    // void Function(CategoryModel category) onSelected
+  ) {
+    showModalBottomSheet<void>(
+      isScrollControlled: true,
+      context: context,
+      builder: (BuildContext context) {
+        return Scaffold(
+          appBar: AppBar(
+            bottom: PreferredSize(
+              preferredSize: Size.fromHeight(40),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Row(
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: Icon(Icons.arrow_back),
+                      ),
+                      Text(
+                        "Add Category",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Spacer(),
+                      IconButton(
+                        onPressed: () async {
+                          Get.back();
+                        },
+                        icon: const Icon(
+                          Icons.check,
+                          size: 24.0,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            elevation: 0,
+            automaticallyImplyLeading: false,
+            toolbarHeight: 40,
+            actions: [
+              IconButton(
+                onPressed: () async {
+                  Get.back();
+                },
+                icon: const Icon(
+                  Icons.check,
+                  size: 24.0,
+                ),
+              ),
+            ],
+          ),
+          body: Container(
+            padding: EdgeInsets.all(10),
+            child: Column(
+              children: [
+                CustomTextFieldOld(
+                  controller: controller.textController[0],
+                  keyboardType: TextInputType.text,
+                  label: "Category Name",
+                ),
+                CustomTextFieldOld(
+                  controller: controller.textController[2],
+                  keyboardType: TextInputType.text,
+                  label: "Description",
+                ),
+              ],
+            ),
+          ),
         );
       },
     );
