@@ -53,6 +53,7 @@ class DatabaseProvider {
   static const paymentType = 'PaymentType';
   static const paymentDetail = 'PaymentDetail';
   static const transactionTable = 'Transactions';
+  static const transactionDetailTable = 'TransactionsDetail';
 
   static final List<String> _initScript = [
     '''
@@ -87,10 +88,32 @@ class DatabaseProvider {
     '''
     CREATE TABLE $paymentDetail (
       payment_detail_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-      payment_type_id INTEGER,
-      payment_name TEXT NOT NULL,
+      payment_type_id INTEGER NOT NULL,
+      description TEXT,
       FOREIGN KEY(payment_type_id) REFERENCES $paymentType(payment_type_id)
     )
+    ''',
     '''
+    CREATE TABLE $transactionTable (
+      transaction_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+      payment_type_id INTEGER NOT NULL,
+      payment_detail_id INTEGER,
+      invoice TEXT NOT NULL,
+      dates DATE NOT NULL,
+      sales REAL NOT NULL,
+      FOREIGN KEY(payment_type_id) REFERENCES $paymentType(payment_type_id),
+      FOREIGN KEY(payment_detail_id) REFERENCES $paymentDetail(payment_detail_id)
+    )
+    ''',
+    '''
+    CREATE TABLE $transactionDetailTable (
+      transaction_id INTEGER NOT NULL,
+      product_id INTEGER NOT NULL,
+      quantity INTEGER,
+      description TEXT,
+      FOREIGN KEY(transaction_id) REFERENCES $transactionTable(transaction_id),
+      FOREIGN KEY(product_id) REFERENCES $productTable(product_id)
+    )
+    ''',
   ];
 }
