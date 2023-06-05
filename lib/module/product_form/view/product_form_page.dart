@@ -27,12 +27,8 @@ class ProductFormPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<ProductFormLogic>();
-    final dao = Get.find<ProductFormDao>();
     final categoryController = Get.find<CategoryListLogic>();
     final categoryFormController = Get.find<CategoryFormLogic>();
-
-    final categoryDao = Get.find<CategoryListDao>();
-
     if (isEditing && product != null && categories != null) {
       controller.textController[0].text = product!.name;
       controller.textController[1].text = product!.price.toString();
@@ -54,7 +50,7 @@ class ProductFormPage extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () async {
-              controller.insertOrEditProduct(isEditing, product);
+              controller.insertOrEditProduct(product);
             },
             icon: const Icon(
               Icons.check,

@@ -14,10 +14,9 @@ import '../controller/category_detail_controller.dart';
 import '../widget/category_detail_widget.dart';
 
 class CategoryDetailPage extends StatelessWidget {
-  const CategoryDetailPage({Key? key, 
-  // required this.category
-  }) : super(key: key);
-  // final CategoryModel category;
+  const CategoryDetailPage({Key? key, required this.category})
+      : super(key: key);
+  final CategoryModel category;
 
   @override
   Widget build(BuildContext context) {
@@ -29,13 +28,12 @@ class CategoryDetailPage extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () async {
-              // Get.to(
-              //         () => CategoryFormPage(
-              //             category: category,
-              //             isEditing: true,
-              //             categories: controller.categoryList),
-              //         binding: CategoryFormBinding())
-              //     ?.then((value) => controller.onInit());
+              Get.to(
+                      () => CategoryFormPage(
+                          category: category,
+                          isEditing: true,),
+                      binding: CategoryFormBinding())
+                  ?.then((value) => controller.onInit());
             },
             icon: const Icon(
               Icons.edit,
@@ -69,7 +67,7 @@ class CategoryDetailPage extends StatelessWidget {
                 ),
               );
               if (result == true) {
-                // controller.deleteItem(category);
+                controller.deleteCategory(category);
               }
             },
             icon: const Icon(
@@ -90,23 +88,20 @@ class CategoryDetailPage extends StatelessWidget {
                     height: 20,
                   ),
                   CategoryDetailWidget(
-                      title: 'Category Name', subtitle: "Category Name"),
+                      title: 'Category Name', subtitle: category.name),
                   SizedBox(
                     height: 20,
                   ),
                   CategoryDetailWidget(
-                      title: 'Description', subtitle: "Description"),
+                      title: 'Description', subtitle: category.description),
                 ],
               ),
             );
           } else {
-            return CircularProgressIndicator();
+            return const CircularProgressIndicator();
           }
         }),
       ),
     );
   }
-
-// @override
-// State<ProductFormPage> createState() => ProductFormController();
 }

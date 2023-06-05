@@ -47,10 +47,10 @@ class ProductFormLogic extends GetxController {
     }
   }
 
-  Future<void> insertOrEditProduct(bool isEdit, [ProductModel? product]) async {
+  Future<void> insertOrEditProduct([ProductModel? product]) async {
     final dao = Get.find<ProductFormDao>();
     var compressed = await _compressImage();
-    if(!isEdit) {
+    if(product == null) {
       await dao.insertItem(ProductModel(
           name: textController[0].text,
           price: double.parse(textController[1].text),

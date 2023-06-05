@@ -10,6 +10,7 @@ import 'package:pos_app_skripsi/module/category_detail/controller/category_detai
 class CategoryListPage extends StatelessWidget {
   const CategoryListPage({Key? key}) : super(key: key);
 
+  @override
   Widget build(BuildContext context) {
     final controller = Get.find<CategoryListLogic>();
 
@@ -21,51 +22,69 @@ class CategoryListPage extends StatelessWidget {
         floatingActionButton: FloatingActionButton(
           child: const Icon(Icons.add),
           onPressed: () async {
-            await Get.to(CategoryFormPage(), binding: CategoryFormBinding());
+            await Get.to(CategoryFormPage(), binding: CategoryFormBinding())
+                ?.then((value) => controller.onInit());
           },
         ),
-        body: Padding(
-          padding: EdgeInsets.all(10),
-          child: GridView.builder(
-            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 200,
-                childAspectRatio: 4 / 2,
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10),
-            itemCount: 2,
-            itemBuilder: (BuildContext ctx, index) {
-              return GestureDetector(
-                onTap: () 
-                  async {
-                  await Get.to(CategoryDetailPage(
-                    // category: controller.categories[index],
-                    ),
-                      binding: CategoryDetailBinding())?.then((value) => controller.onInit());
-                },
-                child: Container(
-                  padding: EdgeInsets.all(15),
-                  alignment: Alignment.centerLeft,
-                  decoration: BoxDecoration(
-                      color: ColorTheme.COLOR_CARD,
-                      borderRadius: BorderRadius.circular(5)),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Name",
-                        style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold,),
+        body: GetBuilder<CategoryListLogic>(
+          assignId: true,
+          builder: (logic) {
+            if (!logic.isLoading.value) {
+              return Padding(
+                padding: EdgeInsets.all(10),
+                child: GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                      maxCrossAxisExtent: 200,
+                      childAspectRatio: 4 / 2,
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 10),
+                  itemCount: controller.categoryList.length,
+                  itemBuilder: (BuildContext ctx, index) {
+                    return GestureDetector(
+                      onTap: () async {
+                        await Get.to(
+                                CategoryDetailPage(
+                                    category: controller.categoryList[index],
+                                    ),
+                                binding: CategoryDetailBinding())
+                            ?.then((value) => controller.onInit());
+                      },
+                      child: Container(
+                        padding: EdgeInsets.all(15),
+                        alignment: Alignment.centerLeft,
+                        decoration: BoxDecoration(
+                            color: ColorTheme.COLOR_CARD,
+                            borderRadius: BorderRadius.circular(5)),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              logic.categoryList[index].name,
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Spacer(),
+                            Text(
+                              logic.categoryCount[index].toString() +
+                                  ' item(s)',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                      Spacer(),
-                      Text(
-                        "2 Product(s)",
-                        style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold,),
-                      ),
-                    ],
-                  ),
+                    );
+                  },
                 ),
               );
-            },
-          ),
+            } else {
+              return CircularProgressIndicator();
+            }
+          },
         ));
   }
 }
