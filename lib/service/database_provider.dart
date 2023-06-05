@@ -50,6 +50,8 @@ class DatabaseProvider {
 
   static const productCategoryTable = 'ProductCategory';
   static const productTable = 'Products';
+  static const paymentType = 'PaymentType';
+  static const paymentDetail = 'PaymentDetail';
   static const transactionTable = 'Transactions';
 
   static final List<String> _initScript = [
@@ -63,27 +65,32 @@ class DatabaseProvider {
     '''
   CREATE TABLE $productTable (
     product_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    product_category_id INTEGER,
     name TEXT NOT NULL,
     image TEXT,
     price REAL,
     selling_price REAL NOT NULL,
     stock INTEGER,
     description TEXT,
-    product_category_id INTEGER,
-    FOREIGN KEY(product_id) REFERENCES $productCategoryTable(product_category_id)
+    FOREIGN KEY(product_category_id) REFERENCES $productCategoryTable(product_category_id)
   )
   ''',
     '''
   INSERT INTO $productCategoryTable(product_category_id, name) VALUES(0, 'No Category')
   ''',
     '''
-  INSERT INTO $productCategoryTable(name) VALUES('Food')
-  ''',
+    CREATE TABLE $paymentType (
+      payment_type_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+      payment_name TEXT NOT NULL
+    )
+    ''',
     '''
-  INSERT INTO $productCategoryTable(name) VALUES('Drinks')
-  ''',
+    CREATE TABLE $paymentDetail (
+      payment_detail_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+      payment_type_id INTEGER,
+      payment_name TEXT NOT NULL,
+      FOREIGN KEY(payment_type_id) REFERENCES $paymentType(payment_type_id)
+    )
     '''
-  INSERT INTO $productCategoryTable(name) VALUES('Miscellaneous')
-  ''',
   ];
 }

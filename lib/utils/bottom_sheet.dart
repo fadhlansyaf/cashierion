@@ -44,7 +44,10 @@ class BottomSheets {
                             child: ElevatedButton(
                               onPressed: () {
                                 addCategoryModalBottomSheet(
-                                    context, categoryFormController);
+                                        context, categoryFormController)
+                                    .then((value) => controller
+                                        .onInit()
+                                        .then((value) => controller.setState));
                               },
                               child: Text("Add Category"),
                             ),
@@ -94,14 +97,13 @@ class BottomSheets {
     );
   }
 
-  static void addCategoryModalBottomSheet(
+  static Future<void> addCategoryModalBottomSheet(
     BuildContext context,
-    // CategoryListLogic controller,
     CategoryFormLogic controller,
     // ntar ganti aja
     // void Function(CategoryModel category) onSelected
-  ) {
-    showModalBottomSheet<void>(
+  ) async {
+    await showModalBottomSheet<void>(
       isScrollControlled: true,
       context: context,
       builder: (BuildContext context) {
@@ -132,7 +134,7 @@ class BottomSheets {
                       Spacer(),
                       IconButton(
                         onPressed: () async {
-                          Get.back();
+                          controller.insertOrUpdateCategory();
                         },
                         icon: const Icon(
                           Icons.check,
@@ -150,7 +152,7 @@ class BottomSheets {
             actions: [
               IconButton(
                 onPressed: () async {
-                  Get.back();
+                  controller.insertOrUpdateCategory();
                 },
                 icon: const Icon(
                   Icons.check,
@@ -169,7 +171,7 @@ class BottomSheets {
                   label: "Category Name",
                 ),
                 CustomTextFieldOld(
-                  controller: controller.textController[2],
+                  controller: controller.textController[1],
                   keyboardType: TextInputType.text,
                   label: "Description",
                 ),

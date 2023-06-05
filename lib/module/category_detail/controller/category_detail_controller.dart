@@ -37,9 +37,9 @@ class CategoryDetailLogic extends GetxController {
     update();
   }
 
-  Future<void> deleteItem(CategoryModel category)async {
+  Future<void> deleteCategory(CategoryModel category)async {
     final dao = Get.find<CategoryDetailDao>();
-    dao.deleteItem(category);
+    dao.deleteCategory(category);
     Get.back();
   }
 }
