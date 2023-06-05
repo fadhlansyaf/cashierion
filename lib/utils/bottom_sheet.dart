@@ -62,7 +62,6 @@ class BottomSheets {
                                 onSelected(controller.categoryList[index]);
                                 Navigator.pop(context);
                               },
-                              //TODO: Ganti ListTile => Done
                               child: Card(
                                 child: Padding(
                                   padding: EdgeInsets.all(15),
@@ -74,16 +73,6 @@ class BottomSheets {
                                         controller.categoryList[index].name,
                                         style: TextStyle(
                                           fontSize: 16,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 5,
-                                      ),
-                                      Text(
-                                        controller.selectedIndex.value
-                                            .toString(),
-                                        style: TextStyle(
-                                          color: ColorTheme.COLOR_GREY,
                                         ),
                                       ),
                                     ],

@@ -76,5 +76,14 @@ class DatabaseProvider {
     '''
   INSERT INTO $productCategoryTable(product_category_id, name) VALUES(0, 'No Category')
   ''',
+    '''
+  INSERT INTO $productCategoryTable(name) VALUES('Food')
+  ''',
+    '''
+  INSERT INTO $productCategoryTable(name) VALUES('Drinks')
+  ''',
+    '''
+  INSERT INTO $productCategoryTable(name) VALUES('Miscellaneous')
+  ''',
   ];
 }
