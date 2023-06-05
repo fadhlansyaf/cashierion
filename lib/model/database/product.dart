@@ -24,7 +24,7 @@ class ProductModel {
       sellingPrice: json["selling_price"] ?? 0,
       stock: json["stock"] ?? '',
       productCategoryId: json["product_category_id"] ?? 0,
-      image: json["image"] ?? '', id: json["id"] ?? 0);
+      image: json["image"] ?? '', id: json["product_id"] ?? 0);
 
   Map<String, dynamic> toJson() => {
         "name": name,

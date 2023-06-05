@@ -42,6 +42,7 @@ class ProductFormPage extends StatelessWidget {
       controller.textController[5].text = categories!.firstWhere((p0) => p0.id == product!.productCategoryId).name;
       controller.selectedCategory.value =
           categories!.firstWhere((p0) => p0.id == product!.productCategoryId);
+      controller.selectedImageBytes = product!.image.isNotEmpty ? base64Decode(product!.image) : null;
     }
 
     return Scaffold(
@@ -50,34 +51,35 @@ class ProductFormPage extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () async {
-              if (!isEditing) {
-                await dao.insertItem(ProductModel(
-                    name: controller.textController[0].text,
-                    price: double.parse(controller.textController[1].text),
-                    sellingPrice:
-                        double.parse(controller.textController[1].text),
-                    stock: 0,
-                    description: controller.textController[2].text,
-                    image: controller.selectedImageBytes != null
-                        ? base64Encode(controller.selectedImageBytes!)
-                        : '',
-                    productCategoryId: controller.selectedCategory.value?.id));
-              } else {
-                await dao.editItem(ProductModel(
-                    id: product!.id,
-                    name: controller.textController[0].text,
-                    price: double.parse(controller.textController[1].text),
-                    sellingPrice:
-                        double.parse(controller.textController[1].text),
-                    stock: 0,
-                    description: controller.textController[2].text,
-                    image: controller.selectedImageBytes != null
-                        ? base64Encode(controller.selectedImageBytes!)
-                        : '',
-                    productCategoryId: controller.selectedCategory.value?.id));
-                Get.back();
-              }
-              Get.back();
+              controller.insertOrEditProduct(isEditing, product);
+              // if (!isEditing) {
+              //   await dao.insertItem(ProductModel(
+              //       name: controller.textController[0].text,
+              //       price: double.parse(controller.textController[1].text),
+              //       sellingPrice:
+              //           double.parse(controller.textController[1].text),
+              //       stock: 0,
+              //       description: controller.textController[2].text,
+              //       image: controller.selectedImageBytes != null
+              //           ? base64Encode(controller.selectedImageBytes!)
+              //           : '',
+              //       productCategoryId: controller.selectedCategory.value?.id));
+              // } else {
+              //   await dao.editItem(ProductModel(
+              //       id: product!.id,
+              //       name: controller.textController[0].text,
+              //       price: double.parse(controller.textController[1].text),
+              //       sellingPrice:
+              //           double.parse(controller.textController[1].text),
+              //       stock: 0,
+              //       description: controller.textController[2].text,
+              //       image: controller.selectedImageBytes != null
+              //           ? base64Encode(controller.selectedImageBytes!)
+              //           : '',
+              //       productCategoryId: controller.selectedCategory.value?.id));
+              //   Get.back();
+              // }
+              // Get.back();
             },
             icon: const Icon(
               Icons.check,
@@ -103,7 +105,7 @@ class ProductFormPage extends StatelessWidget {
                       });
                 },
                 child: Obx(
-                  () => controller.selectedImagePath.value == ''
+                  () => controller.selectedImagePath.value == '' && controller.selectedImageBytes == null
                       ? Column(
                           children: [
                             Image.asset("assets/select-image.png"),
@@ -122,7 +124,7 @@ class ProductFormPage extends StatelessWidget {
                           children: [
                             Container(
                               width: (MediaQuery.of(context).size.width) / 2,
-                              child: Image.file(
+                              child: controller.selectedImageBytes != null ? Image.memory(controller.selectedImageBytes!) :Image.file(
                                   File(controller.selectedImagePath.value)),
                             ),
                             SizedBox(

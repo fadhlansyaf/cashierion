@@ -2,8 +2,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:pos_app_skripsi/module/product_detail/controller/product_detail_dao.dart';
 
 import '../../../model/database/category.dart';
+import '../../../model/database/product.dart';
 import '../../category_list/controller/category_list_dao.dart';
 
 class ProductDetailLogic extends GetxController {
@@ -47,5 +49,11 @@ class ProductDetailLogic extends GetxController {
           backgroundColor: Colors.red,
           colorText: Colors.white);
     }
+  }
+
+  Future<void> deleteItem(ProductModel product)async {
+    final dao = Get.find<ProductDetailDao>();
+    dao.deleteItem(product);
+    Get.back();
   }
 }

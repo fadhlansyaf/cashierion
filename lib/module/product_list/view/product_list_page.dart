@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:pos_app_skripsi/core.dart';
@@ -50,9 +52,7 @@ class ProductListPage extends StatelessWidget {
                       children: [
                         CircleAvatar(
                           backgroundColor: Colors.grey[200],
-                          backgroundImage: const NetworkImage(
-                            "https://i.ibb.co/QrTHd59/woman.jpg",
-                          ),
+                          backgroundImage: controller.products[index].image.isNotEmpty ? MemoryImage(base64Decode(controller.products[index].image)) : null,
                           radius: 25,
                         ),
                         SizedBox(

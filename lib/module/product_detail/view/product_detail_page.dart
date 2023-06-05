@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,6 @@ class ProductDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<ProductDetailLogic>();
-    final dao = Get.find<ProductDetailDao>();
 
     return Scaffold(
       appBar: AppBar(
@@ -66,6 +66,9 @@ class ProductDetailPage extends StatelessWidget {
                   ],
                 ),
               );
+              if(result == true){
+                controller.deleteItem(product);
+              }
             },
             icon: const Icon(
               Icons.delete,
@@ -84,8 +87,7 @@ class ProductDetailPage extends StatelessWidget {
                   SizedBox(
                     height: 20,
                   ),
-                  Obx(
-                    () => logic.selectedImagePath.value == ''
+                  product.image.isEmpty
                         ? Column(
                             children: [
                               Image.asset("assets/select-image.png"),
@@ -98,15 +100,13 @@ class ProductDetailPage extends StatelessWidget {
                             children: [
                               Container(
                                 width: (MediaQuery.of(context).size.width) / 2,
-                                child: Image.file(
-                                    File(logic.selectedImagePath.value)),
+                                child: Image.memory(base64Decode(product.image)),
                               ),
                               SizedBox(
                                 height: 20,
                               ),
                             ],
                           ),
-                  ),
                   SizedBox(
                     height: 40,
                   ),
