@@ -90,7 +90,7 @@ class CategoryDetailPage extends StatelessWidget {
                     height: 20,
                   ),
                   CategoryDetailWidget(
-                      title: 'Product Name', subtitle: "Category Name"),
+                      title: 'Category Name', subtitle: "Category Name"),
                   SizedBox(
                     height: 20,
                   ),

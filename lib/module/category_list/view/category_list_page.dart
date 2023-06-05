@@ -32,7 +32,7 @@ class CategoryListPage extends StatelessWidget {
                 childAspectRatio: 4 / 2,
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 10),
-            itemCount: 20,
+            itemCount: 2,
             itemBuilder: (BuildContext ctx, index) {
               return GestureDetector(
                 onTap: () 
