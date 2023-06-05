@@ -39,47 +39,22 @@ class ProductFormPage extends StatelessWidget {
       controller.textController[2].text = product!.sellingPrice.toString();
       controller.textController[3].text = product!.stock.toString();
       controller.textController[4].text = product!.description;
-      controller.textController[5].text = categories!.firstWhere((p0) => p0.id == product!.productCategoryId).name;
+      controller.textController[5].text = categories!
+          .firstWhere((p0) => p0.id == product!.productCategoryId)
+          .name;
       controller.selectedCategory.value =
           categories!.firstWhere((p0) => p0.id == product!.productCategoryId);
-      controller.selectedImageBytes = product!.image.isNotEmpty ? base64Decode(product!.image) : null;
+      controller.selectedImageBytes =
+          product!.image.isNotEmpty ? base64Decode(product!.image) : null;
     }
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("ProductForm"),
+        title: const Text("Product Form"),
         actions: [
           IconButton(
             onPressed: () async {
               controller.insertOrEditProduct(isEditing, product);
-              // if (!isEditing) {
-              //   await dao.insertItem(ProductModel(
-              //       name: controller.textController[0].text,
-              //       price: double.parse(controller.textController[1].text),
-              //       sellingPrice:
-              //           double.parse(controller.textController[1].text),
-              //       stock: 0,
-              //       description: controller.textController[2].text,
-              //       image: controller.selectedImageBytes != null
-              //           ? base64Encode(controller.selectedImageBytes!)
-              //           : '',
-              //       productCategoryId: controller.selectedCategory.value?.id));
-              // } else {
-              //   await dao.editItem(ProductModel(
-              //       id: product!.id,
-              //       name: controller.textController[0].text,
-              //       price: double.parse(controller.textController[1].text),
-              //       sellingPrice:
-              //           double.parse(controller.textController[1].text),
-              //       stock: 0,
-              //       description: controller.textController[2].text,
-              //       image: controller.selectedImageBytes != null
-              //           ? base64Encode(controller.selectedImageBytes!)
-              //           : '',
-              //       productCategoryId: controller.selectedCategory.value?.id));
-              //   Get.back();
-              // }
-              // Get.back();
             },
             icon: const Icon(
               Icons.check,
@@ -105,7 +80,8 @@ class ProductFormPage extends StatelessWidget {
                       });
                 },
                 child: Obx(
-                  () => controller.selectedImagePath.value == '' && controller.selectedImageBytes == null
+                  () => controller.selectedImagePath.value == '' &&
+                          controller.selectedImageBytes == null
                       ? Column(
                           children: [
                             Image.asset("assets/select-image.png"),
@@ -124,8 +100,10 @@ class ProductFormPage extends StatelessWidget {
                           children: [
                             Container(
                               width: (MediaQuery.of(context).size.width) / 2,
-                              child: controller.selectedImageBytes != null ? Image.memory(controller.selectedImageBytes!) :Image.file(
-                                  File(controller.selectedImagePath.value)),
+                              child: controller.selectedImageBytes != null
+                                  ? Image.memory(controller.selectedImageBytes!)
+                                  : Image.file(
+                                      File(controller.selectedImagePath.value)),
                             ),
                             SizedBox(
                               height: 20,
@@ -148,76 +126,21 @@ class ProductFormPage extends StatelessWidget {
                 keyboardType: TextInputType.text,
                 label: "Product Name",
               ),
-
               CustomTextFieldOld(
-                  controller: controller.textController[5],
-                  label: "Category",
-                  onTap: () {
-                    BottomSheets.categoryModalBottomSheet(
-                      context,
-                      categoryController,
-                      categoryFormController,
-                      (category) {
-                        controller.selectedCategory.value = category;
-                        controller.textController[5].text = category.name;
-                      },
-                    );
-                  }),
-              // SizedBox(
-              //   height: 20,
-              // ),
-              // Obx(() {
-              //   return GestureDetector(
-              //     onTap: () {
-              //       BottomSheets.categoryModalBottomSheet(
-              //         context,
-              //         categoryController,
-              //         (category) {
-              //           controller.selectedCategory.value = category;
-              //         },
-              //       );
-              //     },
-              //     child: Card(
-              //       child: Container(
-              //         padding: EdgeInsets.all(15),
-              //         child: Row(
-              //           children: [
-              //             Expanded(
-              //               child: Text(
-              //                 "Category",
-              //                 style: TextStyle(
-              //                   fontSize: 16,
-              //                   fontWeight: FontWeight.bold,
-              //                 ),
-              //               ),
-              //             ),
-              //             Expanded(
-              //               child: Row(
-              //                 mainAxisAlignment: MainAxisAlignment.end,
-              //                 children: [
-              //                   Text(
-              //                     controller.selectedCategory.value?.name ??
-              //                         'No Category',
-              //                     style: TextStyle(
-              //                       fontSize: 16,
-              //                     ),
-              //                   ),
-              //                   SizedBox(
-              //                     width: 5,
-              //                   ),
-              //                   Icon(
-              //                     Icons.edit,
-              //                     size: 15,
-              //                   ),
-              //                 ],
-              //               ),
-              //             ),
-              //           ],
-              //         ),
-              //       ),
-              //     ),
-              //   );
-              // }),
+                controller: controller.textController[5],
+                label: "Category",
+                onTap: () {
+                  BottomSheets.categoryModalBottomSheet(
+                    context,
+                    categoryController,
+                    categoryFormController,
+                    (category) {
+                      controller.selectedCategory.value = category;
+                      controller.textController[5].text = category.name;
+                    },
+                  );
+                },
+              ),
               CustomTextFieldOld(
                 controller: controller.textController[1],
                 keyboardType: TextInputType.number,

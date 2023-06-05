@@ -23,7 +23,7 @@ class ProductDetailPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("ProductDetail"),
+        title: const Text("Product Detail"),
         actions: [
           IconButton(
             onPressed: () async {
@@ -66,7 +66,7 @@ class ProductDetailPage extends StatelessWidget {
                   ],
                 ),
               );
-              if(result == true){
+              if (result == true) {
                 controller.deleteItem(product);
               }
             },
@@ -88,25 +88,25 @@ class ProductDetailPage extends StatelessWidget {
                     height: 20,
                   ),
                   product.image.isEmpty
-                        ? Column(
-                            children: [
-                              Image.asset("assets/select-image.png"),
-                              SizedBox(
-                                height: 20,
-                              ),
-                            ],
-                          )
-                        : Column(
-                            children: [
-                              Container(
-                                width: (MediaQuery.of(context).size.width) / 2,
-                                child: Image.memory(base64Decode(product.image)),
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                            ],
-                          ),
+                      ? Column(
+                          children: [
+                            Image.asset("assets/select-image.png"),
+                            SizedBox(
+                              height: 20,
+                            ),
+                          ],
+                        )
+                      : Column(
+                          children: [
+                            Container(
+                              width: (MediaQuery.of(context).size.width) / 2,
+                              child: Image.memory(base64Decode(product.image)),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                          ],
+                        ),
                   SizedBox(
                     height: 40,
                   ),
