@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ffi';
 import 'dart:io';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
@@ -16,8 +15,14 @@ import '../widget/select_image_dialog.dart';
 import '../widget/category_bottom_sheet.dart';
 import '/widgets/custom_text_field.dart';
 
+///Jika isEditing true, product dan categories tidak boleh null
 class ProductFormPage extends StatelessWidget {
-  const ProductFormPage({Key? key}) : super(key: key);
+  const ProductFormPage(
+      {Key? key, this.isEditing = false, this.product, this.categories})
+      : super(key: key);
+  final bool isEditing;
+  final ProductModel? product;
+  final List<CategoryModel>? categories;
 
   @override
   Widget build(BuildContext context) {
@@ -28,25 +33,52 @@ class ProductFormPage extends StatelessWidget {
 
     final categoryDao = Get.find<CategoryListDao>();
 
+    if (isEditing && product != null && categories != null) {
+      controller.textController[0].text = product!.name;
+      controller.textController[1].text = product!.price.toString();
+      controller.textController[2].text = product!.sellingPrice.toString();
+      controller.textController[3].text = product!.stock.toString();
+      controller.textController[4].text = product!.description;
+      controller.textController[5].text = categories!.firstWhere((p0) => p0.id == product!.productCategoryId).name;
+      controller.selectedCategory.value =
+          categories!.firstWhere((p0) => p0.id == product!.productCategoryId);
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("ProductForm"),
         actions: [
           IconButton(
             onPressed: () async {
-                  await dao.insertItem(ProductModel(
-                      name: controller.textController[0].text,
-                      price: double.parse(controller.textController[1].text),
-                      sellingPrice:
-                      double.parse(controller.textController[1].text),
-                      stock: 0,
-                      description: controller.textController[2].text,
-                      image: controller.selectedImageBytes != null
-                          ? base64Encode(controller.selectedImageBytes!)
-                          : '',
-                      productCategoryId: controller.selectedCategory.value?.id));
-                  Get.back();
-                },
+              if (!isEditing) {
+                await dao.insertItem(ProductModel(
+                    name: controller.textController[0].text,
+                    price: double.parse(controller.textController[1].text),
+                    sellingPrice:
+                        double.parse(controller.textController[1].text),
+                    stock: 0,
+                    description: controller.textController[2].text,
+                    image: controller.selectedImageBytes != null
+                        ? base64Encode(controller.selectedImageBytes!)
+                        : '',
+                    productCategoryId: controller.selectedCategory.value?.id));
+              } else {
+                await dao.editItem(ProductModel(
+                    id: product!.id,
+                    name: controller.textController[0].text,
+                    price: double.parse(controller.textController[1].text),
+                    sellingPrice:
+                        double.parse(controller.textController[1].text),
+                    stock: 0,
+                    description: controller.textController[2].text,
+                    image: controller.selectedImageBytes != null
+                        ? base64Encode(controller.selectedImageBytes!)
+                        : '',
+                    productCategoryId: controller.selectedCategory.value?.id));
+                Get.back();
+              }
+              Get.back();
+            },
             icon: const Icon(
               Icons.check,
               size: 24.0,
@@ -113,23 +145,22 @@ class ProductFormPage extends StatelessWidget {
                 controller: controller.textController[0],
                 keyboardType: TextInputType.text,
                 label: "Product Name",
-                
               ),
 
               CustomTextFieldOld(
-                controller: controller.textController[0],
-                label: "Category",
-                onTap: () {
+                  controller: controller.textController[5],
+                  label: "Category",
+                  onTap: () {
                     BottomSheets.categoryModalBottomSheet(
                       context,
                       categoryController,
                       categoryFormController,
                       (category) {
                         controller.selectedCategory.value = category;
+                        controller.textController[5].text = category.name;
                       },
                     );
-                }
-              ),
+                  }),
               // SizedBox(
               //   height: 20,
               // ),
@@ -189,25 +220,21 @@ class ProductFormPage extends StatelessWidget {
                 controller: controller.textController[1],
                 keyboardType: TextInputType.number,
                 label: "Price",
-                
               ),
               CustomTextFieldOld(
                 controller: controller.textController[2],
                 keyboardType: TextInputType.number,
                 label: "Selling Price",
-                
               ),
               CustomTextFieldOld(
                 controller: controller.textController[3],
                 keyboardType: TextInputType.number,
                 label: "Stock",
-                
               ),
               CustomTextFieldOld(
                 controller: controller.textController[4],
                 keyboardType: TextInputType.text,
                 label: "Description",
-                
               ),
             ],
           ),

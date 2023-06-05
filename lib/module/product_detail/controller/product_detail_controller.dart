@@ -3,11 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../model/database/category.dart';
+import '../../category_list/controller/category_list_dao.dart';
+
 class ProductDetailLogic extends GetxController {
   var selectedIndex = 0.obs;
 
   var selectedImagePath = ''.obs;
   var selectedImageSize = ''.obs;
+
+  var categoryList = <CategoryModel>[].obs;
+  var isLoading = true.obs;
 
   /// 0 = Product Name
   ///
@@ -19,6 +25,15 @@ class ProductDetailLogic extends GetxController {
     TextEditingController(),
     TextEditingController()
   ];
+
+  @override
+  Future<void> onInit() async {
+    super.onInit();
+    var categoryDao = Get.find<CategoryListDao>();
+    categoryList = await categoryDao.getCategoryList();
+    isLoading.value = false;
+    update();
+  }
 
   void getImage(ImageSource imageSource) async {
     final pickedFile = await ImagePicker().pickImage(source: imageSource);

@@ -40,8 +40,8 @@ class ProductListPage extends StatelessWidget {
               var item = "item";
               return GestureDetector(
                 onTap: () async {
-                  await Get.to(ProductDetailPage(),
-                      binding: ProductDetailBinding());
+                  await Get.to(ProductDetailPage(product: controller.products[index],),
+                      binding: ProductDetailBinding())?.then((value) => controller.onInit());
                 },
                 child: Card(
                   child: Padding(
@@ -61,21 +61,6 @@ class ProductListPage extends StatelessWidget {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            // Text(
-                            //   controller.products.value[index].name,
-                            //   style: TextStyle(
-                            //     fontSize: 16,
-                            //   ),
-                            // ),
-                            // SizedBox(
-                            //   height: 5,
-                            // ),
-                            // Text(
-                            //   controller.products.value[index].description,
-                            //   style: TextStyle(
-                            //     color: ColorTheme.COLOR_GREY,
-                            //   ),
-                            // ),
                             Text(
                               controller.products[index].name,
                               style: TextStyle(

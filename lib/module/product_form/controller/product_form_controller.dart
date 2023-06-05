@@ -23,7 +23,9 @@ class ProductFormLogic extends GetxController {
   /// 3 = Stock
   ///
   /// 4 = Description
-  List<TextEditingController> textController = List.generate(5, (index) => TextEditingController());
+  ///
+  /// 5 = Category (Text)
+  List<TextEditingController> textController = List.generate(6, (index) => TextEditingController());
 
   void getImage(ImageSource imageSource) async {
     final pickedFile = await ImagePicker().pickImage(source: imageSource);

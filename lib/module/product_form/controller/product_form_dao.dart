@@ -8,4 +8,9 @@ class ProductFormDao{
     Database db = await DatabaseProvider().database;
     await db.insert(DatabaseProvider.productTable, productForm.toJson(), conflictAlgorithm: ConflictAlgorithm.replace);
   }
+
+  Future<void> editItem(ProductModel productForm) async {
+    Database db = await DatabaseProvider().database;
+    await db.update(DatabaseProvider.productTable, productForm.toJson(), conflictAlgorithm: ConflictAlgorithm.replace);
+  }
 }
