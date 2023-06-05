@@ -22,7 +22,7 @@ export 'package:pos_app_skripsi/module/category_list/view/category_list_page.dar
 export 'package:pos_app_skripsi/module/home/widget/profile_view.dart';
 export 'package:pos_app_skripsi/module/purchase_order/controller/purchase_order_controller.dart';
 export 'package:pos_app_skripsi/module/purchase_order/view/purchase_order_view.dart';
-export 'package:pos_app_skripsi/module/home/widget/purchase_order_view.dart';
+export 'package:pos_app_skripsi/module/home/widget/transaction_view.dart';
 export 'package:pos_app_skripsi/module/sales_transaction/controller/sales_transaction_controller.dart';
 export 'package:pos_app_skripsi/module/sales_transaction/view/sales_transaction_view.dart';
 export 'package:pos_app_skripsi/module/stock_report/controller/stock_report_controller.dart';

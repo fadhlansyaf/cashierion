@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:pos_app_skripsi/core.dart';
 
-class PurchaseOrderDetailView extends StatelessWidget {
-  const PurchaseOrderDetailView({Key? key}) : super(key: key);
+class TransactionDetailView extends StatelessWidget {
+  const TransactionDetailView({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

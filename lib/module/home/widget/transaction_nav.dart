@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:pos_app_skripsi/core.dart';
-import 'purchase_order_view.dart';
-import 'purchase_order_detail.dart';
+import 'transaction_view.dart';
+import 'transaction_detail.dart';
 
-class PurchaseOrderNavView extends StatelessWidget {
-  var _pages = [PurchaseOrderView(),PurchaseOrderDetailView()];
+class TransactionNavView extends StatelessWidget {
+  var _pages = [TransactionView(),TransactionDetailView()];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("PurchaseOrder"),
+        title: const Text("Transaction"),
         actions: const [],
+        elevation: 0,
       ),
       body: PageView(
         children: _pages,

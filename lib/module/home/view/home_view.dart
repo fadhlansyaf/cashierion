@@ -8,10 +8,8 @@ import 'package:pos_app_skripsi/theme/theme_constants.dart';
 
 import '../widget/dashboard_view.dart';
 import '../widget/profile_view.dart';
-import '../widget/purchase_order_nav.dart';
-import '../widget/sales_transaction_nav.dart';
+import '../widget/transaction_nav.dart';
 import '../controller/home_controller.dart';
-import '../widget/sales_transaction_view.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -30,7 +28,7 @@ class HomePage extends StatelessWidget {
             index: controller.selectedIndex.value,
             children: [
               DashboardView(),
-              PurchaseOrderNavView(),
+              TransactionNavView(),
               // SalesTransactionNavView(),
               ProfileView()
             ],
