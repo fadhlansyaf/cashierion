@@ -20,7 +20,7 @@ class CategoryListPage extends StatelessWidget {
           actions: const [],
         ),
         floatingActionButton: FloatingActionButton(
-          child: const Icon(Icons.add),
+          child: const Icon(Icons.add, color: ColorTheme.COLOR_WHITE,),
           onPressed: () async {
             await Get.to(CategoryFormPage(), binding: CategoryFormBinding())
                 ?.then((value) => controller.onInit());

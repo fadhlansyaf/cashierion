@@ -24,7 +24,7 @@ class ProductListPage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: ColorTheme.COLOR_PRIMARY,
-        child: const Icon(Icons.add),
+        child: const Icon(Icons.add, color: ColorTheme.COLOR_WHITE,),
         onPressed: () async {
           Get.to(() => ProductFormPage(), binding: ProductFormBinding())
               ?.then((value) => controller.onInit());
