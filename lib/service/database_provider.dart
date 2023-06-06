@@ -53,7 +53,7 @@ class DatabaseProvider {
   static const paymentType = 'PaymentType';
   static const paymentDetail = 'PaymentDetail';
   static const transactionTable = 'Transactions';
-  static const transactionDetailTable = 'TransactionsDetail';
+  static const transactionDetailTable = 'TransactionDetails';
 
   static final List<String> _initScript = [
     '''
