@@ -183,6 +183,338 @@ class BottomSheets {
     );
   }
 
+  static void paymentTypeModalBottomSheet(
+      BuildContext context,
+      // CategoryListLogic controller,
+      // CategoryFormLogic categoryFormController,
+      void Function(CategoryModel category) onSelected) {
+    showModalBottomSheet<void>(
+      isScrollControlled: true,
+      context: context,
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+            //Masukin setState bottomsheet ini ke GetX
+            // controller.setState.value ??= setState;
+            return Scaffold(
+              appBar: SearchAppBar(
+                title: Title(
+                  color: ColorTheme.COLOR_WHITE,
+                  child: Text("Search Payment Type"),
+                ),
+                height: MediaQuery.of(context).size.height * 0.175,
+              ),
+              body: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.all(10),
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            addPaymentTypeModalBottomSheet(context);
+                            // .then((value) => controller
+                            //     .onInit()
+                            //     .then((value) => controller.setState));
+                          },
+                          child: Text("Add Payment Type"),
+                        ),
+                      ),
+                    ),
+                    ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: 0,
+                      shrinkWrap: true,
+                      padding: EdgeInsets.zero,
+                      clipBehavior: Clip.none,
+                      itemBuilder: (context, index) {
+                        return InkWell(
+                          onTap: () {
+                            // onSelected(controller.categoryList[index]);
+                            Navigator.pop(context);
+                          },
+                          child: Card(
+                            child: Padding(
+                              padding: EdgeInsets.all(15),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "controller.categoryList[index].name",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  static Future<void> addPaymentTypeModalBottomSheet(
+    BuildContext context,
+    // CategoryFormLogic controller,
+    // ntar ganti aja
+    // void Function(CategoryModel category) onSelected
+  ) async {
+    await showModalBottomSheet<void>(
+      isScrollControlled: true,
+      context: context,
+      builder: (BuildContext context) {
+        return Scaffold(
+          appBar: AppBar(
+            bottom: PreferredSize(
+              preferredSize: Size.fromHeight(40),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Row(
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: Icon(Icons.arrow_back),
+                      ),
+                      Text(
+                        "Add Payment Type",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Spacer(),
+                      IconButton(
+                        onPressed: () async {
+                          // controller.insertOrUpdateCategory();
+                        },
+                        icon: const Icon(
+                          Icons.check,
+                          size: 24.0,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            elevation: 0,
+            automaticallyImplyLeading: false,
+            toolbarHeight: 40,
+            actions: [
+              IconButton(
+                onPressed: () async {
+                  // controller.insertOrUpdateCategory();
+                },
+                icon: const Icon(
+                  Icons.check,
+                  size: 24.0,
+                ),
+              ),
+            ],
+          ),
+          body: Container(
+            padding: EdgeInsets.all(10),
+            child: Column(
+              children: [
+                // CustomTextFieldOld(
+                //   controller: controller.textController[0],
+                //   keyboardType: TextInputType.text,
+                //   label: "Category Name",
+                // ),
+                // CustomTextFieldOld(
+                //   controller: controller.textController[1],
+                //   keyboardType: TextInputType.text,
+                //   label: "Description",
+                // ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  static void paymentMethodModalBottomSheet(
+      BuildContext context,
+      // CategoryListLogic controller,
+      // CategoryFormLogic categoryFormController,
+      void Function(CategoryModel category) onSelected) {
+    showModalBottomSheet<void>(
+      isScrollControlled: true,
+      context: context,
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+            //Masukin setState bottomsheet ini ke GetX
+            // controller.setState.value ??= setState;
+            return Scaffold(
+              appBar: SearchAppBar(
+                title: Title(
+                  color: ColorTheme.COLOR_WHITE,
+                  child: Text("Search Payment Method"),
+                ),
+                height: MediaQuery.of(context).size.height * 0.175,
+              ),
+              body: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.all(10),
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            addPaymentTypeModalBottomSheet(context);
+                            // .then((value) => controller
+                            //     .onInit()
+                            //     .then((value) => controller.setState));
+                          },
+                          child: Text("Add Payment Method"),
+                        ),
+                      ),
+                    ),
+                    ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: 0,
+                      shrinkWrap: true,
+                      padding: EdgeInsets.zero,
+                      clipBehavior: Clip.none,
+                      itemBuilder: (context, index) {
+                        return InkWell(
+                          onTap: () {
+                            // onSelected(controller.categoryList[index]);
+                            Navigator.pop(context);
+                          },
+                          child: Card(
+                            child: Padding(
+                              padding: EdgeInsets.all(15),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "controller.categoryList[index].name",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  static Future<void> addPaymentMethodModalBottomSheet(
+    BuildContext context,
+    // CategoryFormLogic controller,
+    // ntar ganti aja
+    // void Function(CategoryModel category) onSelected
+  ) async {
+    await showModalBottomSheet<void>(
+      isScrollControlled: true,
+      context: context,
+      builder: (BuildContext context) {
+        return Scaffold(
+          appBar: AppBar(
+            bottom: PreferredSize(
+              preferredSize: Size.fromHeight(40),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Row(
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: Icon(Icons.arrow_back),
+                      ),
+                      Text(
+                        "Add Payment Method",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Spacer(),
+                      IconButton(
+                        onPressed: () async {
+                          // controller.insertOrUpdateCategory();
+                        },
+                        icon: const Icon(
+                          Icons.check,
+                          size: 24.0,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            elevation: 0,
+            automaticallyImplyLeading: false,
+            toolbarHeight: 40,
+            actions: [
+              IconButton(
+                onPressed: () async {
+                  // controller.insertOrUpdateCategory();
+                },
+                icon: const Icon(
+                  Icons.check,
+                  size: 24.0,
+                ),
+              ),
+            ],
+          ),
+          body: Container(
+            padding: EdgeInsets.all(10),
+            child: Column(
+              children: [
+                // CustomTextFieldOld(
+                //   controller: controller.textController[0],
+                //   keyboardType: TextInputType.text,
+                //   label: "Category Name",
+                // ),
+                // CustomTextFieldOld(
+                //   controller: controller.textController[1],
+                //   keyboardType: TextInputType.text,
+                //   label: "Description",
+                // ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   static Future<dynamic> spinner({
     required BuildContext context,
     required String title,
