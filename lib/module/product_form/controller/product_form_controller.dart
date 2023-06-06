@@ -54,9 +54,9 @@ class ProductFormLogic extends GetxController {
       await dao.insertItem(ProductModel(
           name: textController[0].text,
           price: double.parse(textController[1].text),
-          sellingPrice: double.parse(textController[1].text),
-          stock: 0,
-          description: textController[2].text,
+          sellingPrice: double.parse(textController[2].text),
+          stock: int.parse(textController[3].text),
+          description: textController[4].text,
           image: compressed,
           productCategoryId: selectedCategory.value?.id));
     }else{
@@ -65,9 +65,9 @@ class ProductFormLogic extends GetxController {
           name: textController[0].text,
           price: double.parse(textController[1].text),
           sellingPrice:
-          double.parse(textController[1].text),
-          stock: 0,
-          description: textController[2].text,
+          double.parse(textController[2].text),
+          stock: int.parse(textController[3].text),
+          description: textController[4].text,
           image: compressed,
           productCategoryId: selectedCategory.value?.id));
       Get.back();

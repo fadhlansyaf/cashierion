@@ -1,17 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:pos_app_skripsi/core.dart';
 import 'package:pos_app_skripsi/theme/theme_constants.dart';
+import 'package:pos_app_skripsi/utils/helper.dart';
 import 'toggle_button.dart';
 
 class TransactionView extends StatelessWidget {
-  TransactionView({
+  const TransactionView({
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
-    var height = MediaQuery.of(context).size.height;
+    var controller = Get.find<HomeLogic>();
+    var width = MediaQuery
+        .of(context)
+        .size
+        .width;
+    var height = MediaQuery
+        .of(context)
+        .size
+        .height;
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: Container(
@@ -24,7 +33,11 @@ class TransactionView extends StatelessWidget {
         child: FloatingActionButton(
           elevation: 0,
           backgroundColor: ColorTheme.COLOR_WHITE.withOpacity(0),
-          child: Text("Next",style: TextStyle( color: ColorTheme.COLOR_WHITE),), //child widget inside this button
+          child: Text(
+            "Next",
+            style: TextStyle(color: ColorTheme.COLOR_WHITE),
+          ),
+          //child widget inside this button
           shape: BeveledRectangleBorder(borderRadius: BorderRadius.zero),
           onPressed: () {
             print("Button is pressed.");
@@ -82,144 +95,168 @@ class TransactionView extends StatelessWidget {
                 // onChanged: onChanged,
               ),
             ),
-            ListView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: 1,
-              shrinkWrap: true,
-              padding: EdgeInsets.zero,
-              clipBehavior: Clip.none,
-              itemBuilder: (context, index) {
-                var item = {};
-                return Padding(
-                  padding: EdgeInsets.all(10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.all(10),
-                        child: Text(
-                          "Kategori 1",
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
+            Obx(() {
+              return ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: controller.categoryList.length,
+                shrinkWrap: true,
+                padding: EdgeInsets.zero,
+                clipBehavior: Clip.none,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: EdgeInsets.all(10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.all(10),
+                          child: Text(
+                            controller.categoryList[index].name,
+                            style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
-                      ),
-                      GridView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        gridDelegate:
-                            const SliverGridDelegateWithMaxCrossAxisExtent(
-                                maxCrossAxisExtent: 200,
-                                childAspectRatio: 6 / 4,
-                                crossAxisSpacing: 10,
-                                mainAxisSpacing: 10),
-                        itemCount: 3,
-                        itemBuilder: (BuildContext ctx, index) {
-                          return GestureDetector(
-                            onTap: () async {
-                              // await Get.to(
-                              //         CategoryDetailPage(
-                              //             category: controller.categoryList[index],
-                              //             ),
-                              //         binding: CategoryDetailBinding())
-                              //     ?.then((value) => controller.onInit());
-                            },
-                            child: Container(
-                              padding: EdgeInsets.all(10),
-                              alignment: Alignment.centerLeft,
-                              decoration: BoxDecoration(
-                                  color: ColorTheme.COLOR_CARD,
-                                  borderRadius: BorderRadius.circular(5)),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    child: Row(
+                        GridView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          gridDelegate:
+                          const SliverGridDelegateWithMaxCrossAxisExtent(
+                              maxCrossAxisExtent: 200,
+                              childAspectRatio: 6 / 4,
+                              crossAxisSpacing: 10,
+                              mainAxisSpacing: 10),
+                          itemCount: controller.productList
+                              .where((p0) =>
+                          p0.productCategoryId ==
+                              controller.categoryList[index].id)
+                              .length,
+                          itemBuilder: (BuildContext context, secondIndex) {
+                            var products = controller.productList.where((p0) =>
+                            p0.productCategoryId ==
+                                controller.categoryList[index].id).toList();
+                            return GestureDetector(
+                              onTap: () async {},
+                              //TODO: Ganti warna product kalo quantity udah lebih dari satu (dhanis)
+                              //Pake validasi products[secondIndex].quantity.value.obs > 0 aja
+                              child: Container(
+                                padding: EdgeInsets.all(10),
+                                alignment: Alignment.centerLeft,
+                                decoration: BoxDecoration(
+                                    color: ColorTheme.COLOR_CARD,
+                                    borderRadius: BorderRadius.circular(5)),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      child: Row(
+                                        children: [
+                                          CircleAvatar(
+                                            backgroundColor: Colors.grey[200],
+                                            backgroundImage: null,
+                                            radius: 15,
+                                          ),
+                                          SizedBox(
+                                            width: 15,
+                                          ),
+                                          Column(
+                                            crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                products[secondIndex].name,
+                                                // style: TextStyle(
+                                                //   fontSize: ,
+                                                // ),
+                                              ),
+                                              //TODO: Ganti harga tergantung order/restock
+                                              Text(
+                                                FunctionHelper
+                                                    .convertPriceWithComma(
+                                                    products[secondIndex]
+                                                        .sellingPrice),
+                                                style: TextStyle(
+                                                  color: ColorTheme.COLOR_GREY,
+                                                ),
+                                              ),
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                    Spacer(),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
                                         CircleAvatar(
-                                          backgroundColor: Colors.grey[200],
-                                          backgroundImage: null,
-                                          radius: 15,
-                                        ),
-                                        SizedBox(
-                                          width: 15,
-                                        ),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "Product Name",
-                                              // style: TextStyle(
-                                              //   fontSize: ,
-                                              // ),
-                                            ),
-                                            Text(
-                                              "Description",
-                                              style: TextStyle(
-                                                color: ColorTheme.COLOR_GREY,
+                                          backgroundColor:
+                                          ColorTheme.COLOR_PRIMARY,
+                                          radius: 12.0,
+                                          child: Center(
+                                            child: IconButton(
+                                              onPressed: () {
+                                                if(products[secondIndex].quantity
+                                                    .value > 0) {
+                                                  products[secondIndex].quantity
+                                                    .value--;
+                                                }
+                                              },
+                                              icon: const Icon(
+                                                Icons.remove,
+                                                color: Colors.white,
+                                                size: 9.0,
                                               ),
                                             ),
-                                          ],
-                                        )
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.all(8.0),
+                                          child: Obx(() {
+                                            return Text(
+                                              products[secondIndex].quantity
+                                                  .value.toString(),
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                              ),
+                                            );
+                                          }),
+                                        ),
+                                        CircleAvatar(
+                                          backgroundColor:
+                                          ColorTheme.COLOR_PRIMARY,
+                                          radius: 12.0,
+                                          child: Center(
+                                            child: IconButton(
+                                              onPressed: () {
+                                                if(products[secondIndex].quantity
+                                                    .value < products[secondIndex].stock) {
+                                                  products[secondIndex].quantity
+                                                    .value++;
+                                                }
+                                              },
+                                              icon: const Icon(
+                                                Icons.add,
+                                                color: Colors.white,
+                                                size: 9.0,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
                                       ],
                                     ),
-                                  ),
-                                  Spacer(),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      CircleAvatar(
-                                        backgroundColor: ColorTheme.COLOR_PRIMARY,
-                                        radius: 12.0,
-                                        child: Center(
-                                          child: IconButton(
-                                            onPressed: () {},
-                                            icon: const Icon(
-                                              Icons.remove,
-                                              color: Colors.white,
-                                              size: 9.0,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      const Padding(
-                                        padding: EdgeInsets.all(8.0),
-                                        child: Text(
-                                          "1",
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                          ),
-                                        ),
-                                      ),
-                                      CircleAvatar(
-                                        backgroundColor: ColorTheme.COLOR_PRIMARY,
-                                        radius: 12.0,
-                                        child: Center(
-                                          child: IconButton(
-                                            onPressed: () {},
-                                            icon: const Icon(
-                                              Icons.add,
-                                              color: Colors.white,
-                                              size: 9.0,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              );
+            }),
           ],
         ),
       ),

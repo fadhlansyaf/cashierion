@@ -3,6 +3,9 @@ import 'dart:async';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
+export 'package:sqflite/sqflite.dart';
+
+
 class DatabaseProvider {
   Database? _database;
 
@@ -84,6 +87,9 @@ class DatabaseProvider {
       payment_type_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
       payment_name TEXT NOT NULL
     )
+    ''',
+    '''
+      INSERT INTO PaymentType (payment_name) VALUES('Cash')
     ''',
     '''
     CREATE TABLE $paymentDetail (
