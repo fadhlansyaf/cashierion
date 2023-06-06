@@ -334,7 +334,7 @@ class BottomSheets {
                 // CustomTextFieldOld(
                 //   controller: controller.textController[0],
                 //   keyboardType: TextInputType.text,
-                //   label: "Category Name",
+                //   label: "Payment Type",
                 // ),
                 // CustomTextFieldOld(
                 //   controller: controller.textController[1],
@@ -500,7 +500,7 @@ class BottomSheets {
                 // CustomTextFieldOld(
                 //   controller: controller.textController[0],
                 //   keyboardType: TextInputType.text,
-                //   label: "Category Name",
+                //   label: "Payment Method",
                 // ),
                 // CustomTextFieldOld(
                 //   controller: controller.textController[1],
