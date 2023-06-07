@@ -5,16 +5,6 @@ import 'package:pos_app_skripsi/theme/theme_constants.dart';
 
 /// Flutter code sample for [ToggleButtons].
 
-// class ToggleButtonsExampleApp extends StatelessWidget {
-//   const ToggleButtonsExampleApp({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return const MaterialApp(
-//       home: ToggleButtonsSample(title: 'ToggleButtons Sample'),
-//     );
-//   }
-// }
 
 class TransactionToggleButtons extends StatefulWidget {
   const TransactionToggleButtons({super.key, required this.title});
@@ -50,15 +40,9 @@ class _TransactionToggleButtonsState extends State<TransactionToggleButtons> {
               }
             });
           },
-          // borderRadius: const BorderRadius.all(Radius.circular(8)),
-          // selectedBorderColor: Colors.red[700],
           selectedColor: ColorTheme.COLOR_WHITE,
           fillColor: ColorTheme.COLOR_ACTIVE,
           color: ColorTheme.COLOR_WHITE,
-          // constraints: const BoxConstraints(
-          //   minHeight: double.infinity,
-          //   minWidth: MediaQuery.of(context).size.width,
-          // ),
           isSelected: _selectedTransaction,
           children: [
             Container(

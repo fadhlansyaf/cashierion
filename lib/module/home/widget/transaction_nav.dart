@@ -4,7 +4,9 @@ import 'transaction_view.dart';
 import 'transaction_detail.dart';
 
 class TransactionNavView extends StatelessWidget {
-  var _pages = [TransactionView(),TransactionDetailView()];
+  static PageController pageController = PageController();
+  final _pages = [TransactionView(pageController: pageController,),TransactionDetailView()];
+  
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +17,7 @@ class TransactionNavView extends StatelessWidget {
         elevation: 0,
       ),
       body: PageView(
+        controller: pageController,
         children: _pages,
       ),
       // bottomNavigationBar: Container(

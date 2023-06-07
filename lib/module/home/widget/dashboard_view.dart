@@ -12,11 +12,10 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../sales_report/controller/sales_report_binding.dart';
 
-class DashboardView extends StatefulWidget {
+class DashboardView extends StatelessWidget {
   const DashboardView({Key? key}) : super(key: key);
 
-  Widget build(context, DashboardController oldController) {
-    oldController.view = this;
+  Widget build(BuildContext context) {
     var controller = Get.find<HomeLogic>();
 
     return Scaffold(
@@ -340,7 +339,4 @@ class DashboardView extends StatefulWidget {
       ),
     );
   }
-
-  @override
-  State<DashboardView> createState() => DashboardController();
 }

@@ -8,19 +8,17 @@ import 'toggle_button.dart';
 class TransactionView extends StatelessWidget {
   const TransactionView({
     Key? key,
+    required this.pageController,
   }) : super(key: key);
+
+  final PageController pageController;
 
   @override
   Widget build(BuildContext context) {
     var controller = Get.find<HomeLogic>();
-    var width = MediaQuery
-        .of(context)
-        .size
-        .width;
-    var height = MediaQuery
-        .of(context)
-        .size
-        .height;
+    bool isZero = true;
+    var width = MediaQuery.of(context).size.width;
+    var height = MediaQuery.of(context).size.height;
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: Container(
@@ -40,7 +38,10 @@ class TransactionView extends StatelessWidget {
           //child widget inside this button
           shape: BeveledRectangleBorder(borderRadius: BorderRadius.zero),
           onPressed: () {
-            print("Button is pressed.");
+            pageController.animateToPage(2,
+                        duration: const Duration(milliseconds: 400),
+                        curve: Curves.easeInOut,);
+
             //task to execute when this button is pressed
           },
         ),
@@ -122,132 +123,193 @@ class TransactionView extends StatelessWidget {
                           physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
                           gridDelegate:
-                          const SliverGridDelegateWithMaxCrossAxisExtent(
-                              maxCrossAxisExtent: 200,
-                              childAspectRatio: 6 / 4,
-                              crossAxisSpacing: 10,
-                              mainAxisSpacing: 10),
+                              const SliverGridDelegateWithMaxCrossAxisExtent(
+                                  maxCrossAxisExtent: 200,
+                                  childAspectRatio: 6 / 4,
+                                  crossAxisSpacing: 10,
+                                  mainAxisSpacing: 10),
                           itemCount: controller.productList
                               .where((p0) =>
-                          p0.productCategoryId ==
-                              controller.categoryList[index].id)
+                                  p0.productCategoryId ==
+                                  controller.categoryList[index].id)
                               .length,
                           itemBuilder: (BuildContext context, secondIndex) {
-                            var products = controller.productList.where((p0) =>
-                            p0.productCategoryId ==
-                                controller.categoryList[index].id).toList();
+                            var products = controller.productList
+                                .where((p0) =>
+                                    p0.productCategoryId ==
+                                    controller.categoryList[index].id)
+                                .toList();
                             return GestureDetector(
                               onTap: () async {},
                               //TODO: Ganti warna product kalo quantity udah lebih dari satu (dhanis)
                               //Pake validasi products[secondIndex].quantity.value.obs > 0 aja
-                              child: Container(
-                                padding: EdgeInsets.all(10),
-                                alignment: Alignment.centerLeft,
-                                decoration: BoxDecoration(
-                                    color: ColorTheme.COLOR_CARD,
-                                    borderRadius: BorderRadius.circular(5)),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      child: Row(
-                                        children: [
-                                          CircleAvatar(
-                                            backgroundColor: Colors.grey[200],
-                                            backgroundImage: null,
-                                            radius: 15,
-                                          ),
-                                          SizedBox(
-                                            width: 15,
-                                          ),
-                                          Column(
-                                            crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                products[secondIndex].name,
-                                                // style: TextStyle(
-                                                //   fontSize: ,
-                                                // ),
-                                              ),
-                                              //TODO: Ganti harga tergantung order/restock
-                                              Text(
-                                                FunctionHelper
-                                                    .convertPriceWithComma(
-                                                    products[secondIndex]
-                                                        .sellingPrice),
-                                                style: TextStyle(
-                                                  color: ColorTheme.COLOR_GREY,
-                                                ),
-                                              ),
-                                            ],
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                    Spacer(),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        CircleAvatar(
-                                          backgroundColor:
-                                          ColorTheme.COLOR_PRIMARY,
-                                          radius: 12.0,
-                                          child: Center(
-                                            child: IconButton(
-                                              onPressed: () {
-                                                if(products[secondIndex].quantity
-                                                    .value > 0) {
-                                                  products[secondIndex].quantity
-                                                    .value--;
-                                                }
-                                              },
-                                              icon: const Icon(
-                                                Icons.remove,
-                                                color: Colors.white,
-                                                size: 9.0,
-                                              ),
+                              child: Obx(() {
+                                return Container(
+                                  padding: EdgeInsets.all(10),
+                                  alignment: Alignment.centerLeft,
+                                  decoration:
+                                      products[secondIndex].quantity.value.obs >
+                                              0
+                                          ? BoxDecoration(
+                                              color: ColorTheme.COLOR_PRIMARY,
+                                              borderRadius:
+                                                  BorderRadius.circular(5))
+                                          : BoxDecoration(
+                                              color: ColorTheme.COLOR_CARD,
+                                              borderRadius:
+                                                  BorderRadius.circular(5)),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        child: Row(
+                                          children: [
+                                            CircleAvatar(
+                                              backgroundColor: Colors.grey[200],
+                                              backgroundImage: null,
+                                              radius: 15,
                                             ),
-                                          ),
+                                            SizedBox(
+                                              width: 15,
+                                            ),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  products[secondIndex].name,
+                                                  // style: TextStyle(
+                                                  //   fontSize: ,
+                                                  // ),
+                                                ),
+                                                //TODO: Ganti harga tergantung order/restock
+                                                Text(
+                                                  FunctionHelper
+                                                      .convertPriceWithComma(
+                                                          products[secondIndex]
+                                                              .sellingPrice),
+                                                  style: TextStyle(
+                                                    color:
+                                                        ColorTheme.COLOR_GREY,
+                                                  ),
+                                                ),
+                                              ],
+                                            )
+                                          ],
                                         ),
-                                        Padding(
-                                          padding: EdgeInsets.all(8.0),
-                                          child: Obx(() {
-                                            return Text(
-                                              products[secondIndex].quantity
-                                                  .value.toString(),
-                                              style: TextStyle(
-                                                fontSize: 14,
+                                      ),
+                                      Spacer(),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          Obx(() {
+                                            return CircleAvatar(
+                                              backgroundColor:
+                                                  products[secondIndex]
+                                                              .quantity
+                                                              .value
+                                                              .obs >
+                                                          0
+                                                      ? ColorTheme.COLOR_CARD
+                                                      : ColorTheme
+                                                          .COLOR_PRIMARY,
+                                              radius: 12.0,
+                                              child: Center(
+                                                child: IconButton(
+                                                  onPressed: () {
+                                                    if (products[secondIndex]
+                                                            .quantity
+                                                            .value >
+                                                        0) {
+                                                      products[secondIndex]
+                                                          .quantity
+                                                          .value--;
+                                                      if (products[secondIndex]
+                                                              .quantity
+                                                              .value
+                                                              .obs >
+                                                          0) {
+                                                        isZero = false;
+                                                      } else {
+                                                        isZero = true;
+                                                      }
+                                                      ;
+                                                    }
+                                                  },
+                                                  icon: const Icon(
+                                                    Icons.remove,
+                                                    color: Colors.white,
+                                                    size: 9.0,
+                                                  ),
+                                                ),
                                               ),
                                             );
                                           }),
-                                        ),
-                                        CircleAvatar(
-                                          backgroundColor:
-                                          ColorTheme.COLOR_PRIMARY,
-                                          radius: 12.0,
-                                          child: Center(
-                                            child: IconButton(
-                                              onPressed: () {
-                                                if(products[secondIndex].quantity
-                                                    .value < products[secondIndex].stock) {
-                                                  products[secondIndex].quantity
-                                                    .value++;
-                                                }
-                                              },
-                                              icon: const Icon(
-                                                Icons.add,
-                                                color: Colors.white,
-                                                size: 9.0,
-                                              ),
-                                            ),
+                                          Padding(
+                                            padding: EdgeInsets.all(8.0),
+                                            child: Obx(() {
+                                              return Text(
+                                                products[secondIndex]
+                                                    .quantity
+                                                    .value
+                                                    .toString(),
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                ),
+                                              );
+                                            }),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
+                                          Obx(() {
+                                            return CircleAvatar(
+                                              backgroundColor:
+                                                  products[secondIndex]
+                                                              .quantity
+                                                              .value >
+                                                          0
+                                                      ? ColorTheme.COLOR_CARD
+                                                      : ColorTheme
+                                                          .COLOR_PRIMARY,
+                                              radius: 12.0,
+                                              child: Center(
+                                                child: IconButton(
+                                                  onPressed: () {
+                                                    if (products[secondIndex]
+                                                            .quantity
+                                                            .value <
+                                                        products[secondIndex]
+                                                            .stock) {
+                                                      products[secondIndex]
+                                                          .quantity
+                                                          .value++;
+                                                      if (products[secondIndex]
+                                                              .quantity
+                                                              .value
+                                                              .obs >
+                                                          0) {
+                                                        isZero = false;
+                                                      } else {
+                                                        isZero = true;
+                                                      }
+                                                      ;
+                                                    }
+                                                  },
+                                                  icon: const Icon(
+                                                    Icons.add,
+                                                    color: Colors.white,
+                                                    size: 9.0,
+                                                  ),
+                                                ),
+                                              ),
+                                            );
+                                          }),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              }),
                             );
                           },
                         ),
