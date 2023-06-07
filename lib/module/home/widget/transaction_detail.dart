@@ -14,7 +14,8 @@ class TransactionDetailView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var controller = Get.find<HomeLogic>();
-    var selectedProducts = controller.productList.where((p0) => p0.quantity > 0).toList();
+    var selectedProducts =
+        controller.productList.where((p0) => p0.quantity > 0).toList();
     return Scaffold(
       body: Container(
         width: MediaQuery.of(context).size.width,
@@ -76,7 +77,11 @@ class TransactionDetailView extends StatelessWidget {
                                 ),
                                 //TODO: ganti price sesuai order/restock
                                 Text(
-                                  FunctionHelper.convertPriceWithComma(selectedProducts[index].sellingPrice*selectedProducts[index].quantity.value),
+                                  FunctionHelper.convertPriceWithComma(
+                                      selectedProducts[index].sellingPrice *
+                                          selectedProducts[index]
+                                              .quantity
+                                              .value),
                                   style: TextStyle(
                                     color: ColorTheme.COLOR_WHITE,
                                   ),
@@ -109,7 +114,8 @@ class TransactionDetailView extends StatelessWidget {
                             child: Row(
                               children: [
                                 Expanded(child: Text("Payment Type")),
-                                Text(controller.selectedPaymentType.value.paymentName),
+                                Text(controller
+                                    .selectedPaymentType.value.paymentName),
                                 Icon(
                                   Icons.edit,
                                   size: 15,
@@ -151,7 +157,8 @@ class TransactionDetailView extends StatelessWidget {
                               Expanded(
                                 child: Text("Total"),
                               ),
-                              Text(FunctionHelper.convertPriceWithComma(controller.countTotal(selectedProducts))),
+                              Text(FunctionHelper.convertPriceWithComma(
+                                  controller.countTotal(selectedProducts))),
                             ],
                           ),
                           SizedBox(
@@ -162,7 +169,8 @@ class TransactionDetailView extends StatelessWidget {
                               Expanded(
                                 child: Text("Tax 10%"),
                               ),
-                              Text(FunctionHelper.convertPriceWithComma(controller.tax.value)),
+                              Text(FunctionHelper.convertPriceWithComma(
+                                  controller.tax.value)),
                             ],
                           ),
                           Divider(
@@ -171,7 +179,9 @@ class TransactionDetailView extends StatelessWidget {
                           Row(
                             children: [
                               Expanded(child: Text("Total Price")),
-                              Text(FunctionHelper.convertPriceWithComma(controller.countTotal(selectedProducts) + controller.tax.value)),
+                              Text(FunctionHelper.convertPriceWithComma(
+                                  controller.countTotal(selectedProducts) +
+                                      controller.tax.value)),
                             ],
                           ),
                         ],
@@ -189,6 +199,18 @@ class TransactionDetailView extends StatelessWidget {
                         //         .then((value) => controller.setState));
                       },
                       child: Text("Create Transaction"),
+                    ),
+                  ),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: ColorTheme.COLOR_DISABLED),
+                      onPressed: () {},
+                      child: Text(
+                        "Create Transaction",
+                        style: TextStyle(color: ColorTheme.COLOR_TEXT_DISABLED),
+                      ),
                     ),
                   ),
                 ],
