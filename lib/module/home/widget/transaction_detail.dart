@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:pos_app_skripsi/core.dart';
 import 'package:pos_app_skripsi/theme/theme_constants.dart';
+import 'package:pos_app_skripsi/utils/helper.dart';
 
 import '/utils/bottom_sheet.dart';
 
@@ -11,99 +13,88 @@ class TransactionDetailView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var controller = Get.find<HomeLogic>();
+    var selectedProducts = controller.productList.where((p0) => p0.quantity > 0).toList();
     return Scaffold(
       body: Container(
+        width: MediaQuery.of(context).size.width,
         padding: const EdgeInsets.all(10.0),
         child: Column(
           children: [
             Expanded(
-              flex: 4,
-              child: Container(
-                child: ListView.builder(
-                  itemCount: 2,
-                  shrinkWrap: true,
-                  padding: EdgeInsets.zero,
-                  clipBehavior: Clip.none,
-                  itemBuilder: (context, index) {
-                    var item = "item";
-                    return GestureDetector(
-                      onTap: () async {
-                        // await Get.to(ProductDetailPage(product: controller.products[index],),
-                        //     binding: ProductDetailBinding())?.then((value) => controller.onInit());
-                      },
-                      child: Card(
-                        child: Padding(
-                          padding: EdgeInsets.all(15),
-                          child: Row(
-                            children: [
-                              CircleAvatar(
-                                backgroundColor: Colors.grey[200],
-                                backgroundImage: null,
-                                radius: 20,
-                              ),
-                              SizedBox(
-                                width: 15,
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Name",
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                    ),
+              child: ListView.builder(
+                itemCount: selectedProducts.length,
+                shrinkWrap: true,
+                padding: EdgeInsets.zero,
+                clipBehavior: Clip.none,
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: () async {
+                      // await Get.to(ProductDetailPage(product: controller.products[index],),
+                      //     binding: ProductDetailBinding())?.then((value) => controller.onInit());
+                    },
+                    child: Card(
+                      child: Padding(
+                        padding: EdgeInsets.all(15),
+                        child: Row(
+                          children: [
+                            CircleAvatar(
+                              backgroundColor: Colors.grey[200],
+                              backgroundImage: null,
+                              radius: 20,
+                            ),
+                            SizedBox(
+                              width: 15,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  selectedProducts[index].name,
+                                  style: TextStyle(
+                                    fontSize: 16,
                                   ),
-                                  SizedBox(
-                                    height: 5,
+                                ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                //TODO: ganti price sesuai order/restock
+                                Text(
+                                  '${FunctionHelper.convertPriceWithComma(selectedProducts[index].sellingPrice)} x ${selectedProducts[index].quantity}',
+                                  style: TextStyle(
+                                    color: ColorTheme.COLOR_WHITE,
                                   ),
-                                  Text(
-                                    "Rp.10000",
-                                    style: TextStyle(
-                                      color: ColorTheme.COLOR_WHITE,
-                                    ),
+                                ),
+                              ],
+                            ),
+                            Spacer(),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                //TODO: ganti price sesuai order/restock
+                                Text(
+                                  FunctionHelper.convertPriceWithComma(selectedProducts[index].sellingPrice*selectedProducts[index].quantity.value),
+                                  style: TextStyle(
+                                    color: ColorTheme.COLOR_WHITE,
                                   ),
-                                ],
-                              ),
-                              Spacer(),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                  Text(
-                                    "Rp.10000",
-                                    style: TextStyle(
-                                      color: ColorTheme.COLOR_WHITE,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
-
-                        // ListTile(
-                        //   leading: CircleAvatar(
-                        //     backgroundColor: Colors.grey[200],
-                        //     backgroundImage: const NetworkImage(
-                        //       "https://i.ibb.co/QrTHd59/woman.jpg",
-                        //     ),
-                        //   ),
-                        //   title: Text(controller.products.value[index].name),
-                        //   subtitle: Text(controller.products.value[index].description),
-                        //   // title: Text("Product Name"),
-                        //   // subtitle: Text("Product Description"),
-                        // ),
                       ),
-                    );
-                  },
-                ),
+                    ),
+                  );
+                },
               ),
             ),
-            Expanded(
-              flex: 3,
+            Container(
+              width: MediaQuery.of(context).size.width,
               child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   Card(
                     child: Padding(
@@ -113,13 +104,12 @@ class TransactionDetailView extends StatelessWidget {
                           GestureDetector(
                             onTap: () {
                               BottomSheets.paymentTypeModalBottomSheet(
-                                  context, (category) {});
+                                  context, controller, (category) {});
                             },
                             child: Row(
                               children: [
-                                Text("Payment Type"),
-                                Spacer(),
-                                Text("Transafer"),
+                                Expanded(child: Text("Payment Type")),
+                                Text(controller.selectedPaymentType.value.paymentName),
                                 Icon(
                                   Icons.edit,
                                   size: 15,
@@ -139,7 +129,7 @@ class TransactionDetailView extends StatelessWidget {
                               children: [
                                 Text("Payment Method"),
                                 Spacer(),
-                                Text("Cash"),
+                                Text("Test"),
                                 Icon(
                                   Icons.edit,
                                   size: 15,
@@ -159,13 +149,9 @@ class TransactionDetailView extends StatelessWidget {
                           Row(
                             children: [
                               Expanded(
-                                flex: 3,
                                 child: Text("Total"),
                               ),
-                              Expanded(
-                                flex: 1,
-                                child: Text("Rp. 40.000"),
-                              ),
+                              Text(FunctionHelper.convertPriceWithComma(controller.countTotal(selectedProducts))),
                             ],
                           ),
                           SizedBox(
@@ -174,13 +160,9 @@ class TransactionDetailView extends StatelessWidget {
                           Row(
                             children: [
                               Expanded(
-                                flex: 3,
                                 child: Text("Tax 10%"),
                               ),
-                              Expanded(
-                                flex: 1,
-                                child: Text("Rp. 4.000"),
-                              ),
+                              Text(FunctionHelper.convertPriceWithComma(controller.tax.value)),
                             ],
                           ),
                           Divider(
@@ -188,21 +170,14 @@ class TransactionDetailView extends StatelessWidget {
                           ),
                           Row(
                             children: [
-                              Expanded(
-                                flex: 3,
-                                child: Text("Total Price"),
-                              ),
-                              Expanded(
-                                flex: 1,
-                                child: Text("Rp. 44.000"),
-                              ),
+                              Expanded(child: Text("Total Price")),
+                              Text(FunctionHelper.convertPriceWithComma(controller.countTotal(selectedProducts) + controller.tax.value)),
                             ],
                           ),
                         ],
                       ),
                     ),
                   ),
-                  Spacer(),
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(

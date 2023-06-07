@@ -12,7 +12,7 @@ class ProductListLogic extends GetxController {
   Future<void> onInit() async {
     super.onInit();
     products.clear();
-    products.value = await ProductListDao().getAllItem();
+    products.value = await ProductListDao().getAllProducts();
     isLoaded.value = true;
   }
 }

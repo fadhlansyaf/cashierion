@@ -6,6 +6,7 @@ import 'package:pos_app_skripsi/core.dart';
 import 'package:pos_app_skripsi/theme/theme_constants.dart';
 
 import '../model/database/category.dart';
+import '../model/database/database_model.dart';
 import '../module/product_form/widget/search_appbar.dart';
 import 'no_overscroll.dart';
 import '/widgets/custom_text_field.dart';
@@ -185,9 +186,8 @@ class BottomSheets {
 
   static void paymentTypeModalBottomSheet(
       BuildContext context,
-      // CategoryListLogic controller,
-      // CategoryFormLogic categoryFormController,
-      void Function(CategoryModel category) onSelected) {
+      HomeLogic controller,
+      void Function(PaymentTypeModel paymentType) onSelected) {
     showModalBottomSheet<void>(
       isScrollControlled: true,
       context: context,
@@ -195,7 +195,7 @@ class BottomSheets {
         return StatefulBuilder(
           builder: (BuildContext context, StateSetter setState) {
             //Masukin setState bottomsheet ini ke GetX
-            // controller.setState.value ??= setState;
+            controller.setState.value ??= setState;
             return Scaffold(
               appBar: SearchAppBar(
                 title: Title(
@@ -224,14 +224,14 @@ class BottomSheets {
                     ),
                     ListView.builder(
                       physics: const NeverScrollableScrollPhysics(),
-                      itemCount: 0,
+                      itemCount: controller.paymentType.length,
                       shrinkWrap: true,
                       padding: EdgeInsets.zero,
                       clipBehavior: Clip.none,
                       itemBuilder: (context, index) {
                         return InkWell(
                           onTap: () {
-                            // onSelected(controller.categoryList[index]);
+                            onSelected(controller.paymentType[index]);
                             Navigator.pop(context);
                           },
                           child: Card(
@@ -241,7 +241,7 @@ class BottomSheets {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "controller.categoryList[index].name",
+                                    controller.paymentType[index].paymentName,
                                     style: TextStyle(
                                       fontSize: 16,
                                     ),

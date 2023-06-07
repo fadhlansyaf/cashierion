@@ -1,3 +1,5 @@
+import 'package:get/get.dart';
+
 class ProductModel {
   final int id;
   final int? productCategoryId;
@@ -7,6 +9,8 @@ class ProductModel {
   final double sellingPrice;
   final int stock;
   final String description;
+  /// Quantity hanya digunakan ketika transaction
+  Rx<int> quantity = 0.obs;
 
   ProductModel(
       {required this.name,
@@ -15,7 +19,7 @@ class ProductModel {
       required this.price,
       required this.description,
       required this.sellingPrice,
-      required this.stock});
+      required this.stock,});
 
   factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
       name: json["name"] ?? '',

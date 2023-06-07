@@ -15,8 +15,9 @@ import '../../sales_report/controller/sales_report_binding.dart';
 class DashboardView extends StatefulWidget {
   const DashboardView({Key? key}) : super(key: key);
 
-  Widget build(context, DashboardController controller) {
-    controller.view = this;
+  Widget build(context, DashboardController oldController) {
+    oldController.view = this;
+    var controller = Get.find<HomeLogic>();
 
     return Scaffold(
       appBar: AppBar(
@@ -51,13 +52,13 @@ class DashboardView extends StatefulWidget {
                         "icon": "assets/icons8-product-32.png",
                         "label": "Products\n",
                         "onTap": () => Get.to(ProductListPage(),
-                            binding: ProductListBinding()),
+                            binding: ProductListBinding())?.then((value) => controller.onInit()),
                       },
                       {
                         "icon": "assets/icons8-category-32.png",
                         "label": "Categories\n",
                         "onTap": () => Get.to(CategoryListPage(),
-                            binding: CategoryListBinding()),
+                            binding: CategoryListBinding())?.then((value) => controller.onInit()),
                       },
                       {
                         "icon": "assets/icons8-transaction-32.png",
@@ -68,7 +69,7 @@ class DashboardView extends StatefulWidget {
                         "icon": "assets/icons8-report-32.png",
                         "label": "Transaction\nReport",
                         "onTap": () => Get.to(StockReportPage(),
-                            binding: StockReportBinding()),
+                            binding: StockReportBinding())?.then((value) => controller.onInit()),
                       },
                     ];
 

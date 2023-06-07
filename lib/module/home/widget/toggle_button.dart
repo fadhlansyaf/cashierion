@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:pos_app_skripsi/core.dart';
 import 'package:pos_app_skripsi/theme/theme_constants.dart';
 
 /// Flutter code sample for [ToggleButtons].
@@ -30,20 +32,21 @@ class _TransactionToggleButtonsState extends State<TransactionToggleButtons> {
 
   @override
   Widget build(BuildContext context) {
-    // final ThemeData theme = Theme.of(context);
     double width = MediaQuery.of(context).size.width;
-
+    var controller = Get.find<HomeLogic>();
     return Column(
-      // mainAxisSize: MainAxisSize.min,
-      // mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         ToggleButtons(
-          direction: vertical ? Axis.vertical : Axis.horizontal,
+          direction: Axis.horizontal,
           onPressed: (int index) {
             setState(() {
               // The button that is tapped is set to true, and the others to false.
               for (int i = 0; i < _selectedTransaction.length; i++) {
                 _selectedTransaction[i] = i == index;
+                //Jika i = 0 (Order) maka set isOrder value pada controller
+                if(i == 0){
+                  controller.isOrder.value = i == index;
+                }
               }
             });
           },
