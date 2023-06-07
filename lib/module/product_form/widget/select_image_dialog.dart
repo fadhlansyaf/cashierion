@@ -92,7 +92,7 @@ class SelectImageDialog extends StatelessWidget {
                           SizedBox(
                             height: 10,
                           ),
-                          Text("Gallery"),
+                          Text("Camera"),
                         ],
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center),

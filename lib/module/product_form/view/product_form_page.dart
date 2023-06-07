@@ -96,10 +96,11 @@ class ProductFormPage extends StatelessWidget {
                           children: [
                             Container(
                               width: (MediaQuery.of(context).size.width) / 2,
+                              height: (MediaQuery.of(context).size.width) / 2,
                               child: controller.selectedImageBytes != null
-                                  ? Image.memory(controller.selectedImageBytes!)
+                                  ? Image.memory(controller.selectedImageBytes!,fit: BoxFit.cover,)
                                   : Image.file(
-                                      File(controller.selectedImagePath.value)),
+                                      File(controller.selectedImagePath.value),fit: BoxFit.cover,),
                             ),
                             SizedBox(
                               height: 20,

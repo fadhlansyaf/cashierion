@@ -100,7 +100,8 @@ class ProductDetailPage extends StatelessWidget {
                           children: [
                             Container(
                               width: (MediaQuery.of(context).size.width) / 2,
-                              child: Image.memory(base64Decode(product.image)),
+                              height: (MediaQuery.of(context).size.width) / 2,
+                              child: Image.memory(base64Decode(product.image),fit: BoxFit.cover,),
                             ),
                             SizedBox(
                               height: 20,
