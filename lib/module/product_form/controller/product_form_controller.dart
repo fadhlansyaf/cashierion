@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pos_app_skripsi/model/database/category.dart';
 
+import '../../../core.dart';
 import '../../../model/database/product.dart';
 import 'product_form_dao.dart';
 
@@ -17,7 +18,7 @@ class ProductFormLogic extends GetxController {
   var selectedImagePath = ''.obs;
   var selectedImageSize = ''.obs;
   Uint8List? selectedImageBytes;
-  Rx<CategoryModel?> selectedCategory = Rx<CategoryModel?>(null);
+  late Rx<CategoryModel> selectedCategory;
 
   /// 0 = Product Name
   ///
@@ -31,6 +32,15 @@ class ProductFormLogic extends GetxController {
   ///
   /// 5 = Category (Text)
   List<TextEditingController> textController = List.generate(6, (index) => TextEditingController());
+
+  @override
+  Future<void> onInit() async {
+    final categoryController = Get.find<CategoryListLogic>();
+    var categoryList = await categoryController.getCategoryList();
+    selectedCategory = categoryList.first.obs;
+    textController[5].text = selectedCategory.value.name;
+    super.onInit();
+  }
 
   void getImage(ImageSource imageSource) async {
     final pickedFile = await ImagePicker().pickImage(source: imageSource);

@@ -28,6 +28,10 @@ class CategoryFormLogic extends GetxController {
           name: textController[0].text, description: textController[1].text));
       Get.back();
     }
+    //Clear text
+    for(var e in textController){
+      e.text = '';
+    }
     Get.back();
   }
 }

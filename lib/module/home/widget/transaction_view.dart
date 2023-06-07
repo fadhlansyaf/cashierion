@@ -21,34 +21,6 @@ class TransactionView extends StatelessWidget {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      // floatingActionButton: Container(
-      //   height: 35,
-      //   width: width - 10,
-      //   decoration: BoxDecoration(
-      //     color: ColorTheme.COLOR_PRIMARY,
-      //     borderRadius: BorderRadius.circular(5),
-      //   ),
-      //   child: FloatingActionButton(
-      //     elevation: 0,
-      //     backgroundColor: ColorTheme.COLOR_WHITE.withOpacity(0),
-      //     child: Text(
-      //       "Next",
-      //       style: TextStyle(color: ColorTheme.COLOR_WHITE),
-      //     ),
-      //     //child widget inside this button
-      //     shape: BeveledRectangleBorder(borderRadius: BorderRadius.zero),
-      //     onPressed: () {
-      //       pageController.animateToPage(
-      //         2,
-      //         duration: const Duration(milliseconds: 400),
-      //         curve: Curves.easeInOut,
-      //       );
-
-      //       //task to execute when this button is pressed
-      //     },
-      //   ),
-      // ),
       body: Column(
         children: [
           Expanded(
@@ -148,23 +120,33 @@ class TransactionView extends StatelessWidget {
                                       .toList();
                                   return GestureDetector(
                                     onTap: () async {},
-                                    //TODO: Ganti warna product kalo quantity udah lebih dari satu (dhanis)
-                                    //Pake validasi products[secondIndex].quantity.value.obs > 0 aja
                                     child: Obx(() {
                                       return Container(
                                         padding: EdgeInsets.all(10),
                                         alignment: Alignment.centerLeft,
                                         decoration: products[secondIndex]
-                                                    .quantity
-                                                    .value
-                                                    .obs >
+                                                    .stock >
                                                 0
-                                            ? BoxDecoration(
-                                                color: ColorTheme.COLOR_PRIMARY,
-                                                borderRadius:
-                                                    BorderRadius.circular(5))
+                                            ? products[secondIndex]
+                                                        .quantity
+                                                        .value
+                                                        .obs >
+                                                    0
+                                                ? BoxDecoration(
+                                                    color: ColorTheme
+                                                        .COLOR_PRIMARY,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5))
+                                                : BoxDecoration(
+                                                    color:
+                                                        ColorTheme.COLOR_CARD,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5))
+                                            //TODO (dhanis): Stock habis
                                             : BoxDecoration(
-                                                color: ColorTheme.COLOR_CARD,
+                                                color: Colors.grey,
                                                 borderRadius:
                                                     BorderRadius.circular(5)),
                                         child: Column(
@@ -203,13 +185,16 @@ class TransactionView extends StatelessWidget {
                                                         //   fontSize: ,
                                                         // ),
                                                       ),
-                                                      //TODO: Ganti harga tergantung order/restock
                                                       Text(
-                                                        FunctionHelper
-                                                            .convertPriceWithComma(
-                                                                products[
+                                                        FunctionHelper.convertPriceWithComma(
+                                                            controller.isOrder
+                                                                    .value
+                                                                ? products[
                                                                         secondIndex]
-                                                                    .sellingPrice),
+                                                                    .sellingPrice
+                                                                : products[
+                                                                        secondIndex]
+                                                                    .price),
                                                         style: TextStyle(
                                                           color: ColorTheme
                                                               .COLOR_GREY,
@@ -260,7 +245,6 @@ class TransactionView extends StatelessWidget {
                                                             } else {
                                                               isZero = true;
                                                             }
-                                                            ;
                                                           }
                                                         },
                                                         icon: const Icon(
@@ -301,13 +285,14 @@ class TransactionView extends StatelessWidget {
                                                     child: Center(
                                                       child: IconButton(
                                                         onPressed: () {
-                                                          if (products[
-                                                                      secondIndex]
-                                                                  .quantity
-                                                                  .value <
-                                                              products[
-                                                                      secondIndex]
-                                                                  .stock) {
+                                                          if (products[secondIndex]
+                                                                      .quantity
+                                                                      .value <
+                                                                  products[
+                                                                          secondIndex]
+                                                                      .stock &&
+                                                              controller.isOrder
+                                                                  .value) {
                                                             products[
                                                                     secondIndex]
                                                                 .quantity
@@ -315,14 +300,17 @@ class TransactionView extends StatelessWidget {
                                                             if (products[
                                                                         secondIndex]
                                                                     .quantity
-                                                                    .value
-                                                                    .obs >
+                                                                    .value >
                                                                 0) {
                                                               isZero = false;
                                                             } else {
                                                               isZero = true;
                                                             }
-                                                            ;
+                                                          } else {
+                                                            products[
+                                                                    secondIndex]
+                                                                .quantity
+                                                                .value++;
                                                           }
                                                         },
                                                         icon: const Icon(

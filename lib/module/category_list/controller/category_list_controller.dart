@@ -26,4 +26,9 @@ class CategoryListLogic extends GetxController {
     isLoading.value = false;
     update();
   }
+
+  Future<RxList<CategoryModel>> getCategoryList() async {
+    final dao = Get.find<CategoryListDao>();
+    return await dao.getCategoryList();
+  }
 }
