@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pos_app_skripsi/core.dart';
@@ -167,7 +168,7 @@ class TransactionView extends StatelessWidget {
                                           children: [
                                             CircleAvatar(
                                               backgroundColor: Colors.grey[200],
-                                              backgroundImage: null,
+                                              backgroundImage: products[secondIndex].image.isNotEmpty ? MemoryImage(base64Decode(products[secondIndex].image)) : null,
                                               radius: 15,
                                             ),
                                             SizedBox(
