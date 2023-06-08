@@ -8,14 +8,16 @@ import '/utils/bottom_sheet.dart';
 
 class TransactionDetailView extends StatelessWidget {
   const TransactionDetailView({
-    Key? key,
+    Key? key, required this.pageController,
   }) : super(key: key);
+  final PageController pageController;
 
   @override
   Widget build(BuildContext context) {
     var controller = Get.find<HomeLogic>();
     var selectedProducts =
         controller.productList.where((p0) => p0.quantity > 0).toList();
+    controller.countTotal(selectedProducts);
     return Scaffold(
       body: Container(
         width: MediaQuery.of(context).size.width,
@@ -143,7 +145,7 @@ class TransactionDetailView extends StatelessWidget {
                                     children: [
                                       Expanded(child: Text("Payment Method")),
                                       Text(controller.selectedPaymentDetail
-                                          .value.description),
+                                          .value?.description ?? ''),
                                       Icon(
                                         Icons.edit,
                                         size: 15,
@@ -168,7 +170,7 @@ class TransactionDetailView extends StatelessWidget {
                                 child: Text("Total"),
                               ),
                               Text(FunctionHelper.convertPriceWithComma(
-                                  controller.countTotal(selectedProducts))),
+                                  controller.totalAmount.value)),
                             ],
                           ),
                           SizedBox(
@@ -190,7 +192,7 @@ class TransactionDetailView extends StatelessWidget {
                             children: [
                               Expanded(child: Text("Total Price")),
                               Text(FunctionHelper.convertPriceWithComma(
-                                  controller.countTotal(selectedProducts) +
+                                  controller.totalAmount.value +
                                       controller.tax.value)),
                             ],
                           ),
@@ -203,11 +205,7 @@ class TransactionDetailView extends StatelessWidget {
                     child: ElevatedButton(
                       onPressed: selectedProducts.isNotEmpty
                           ? () {
-                              // addCategoryModalBottomSheet(
-                              //         context, categoryFormController)
-                              //     .then((value) => controller
-                              //         .onInit()
-                              //         .then((value) => controller.setState));
+                              controller.insertTransaction(pageController);
                             }
                           : null,
                       child: Text("Create Transaction"),

@@ -12,6 +12,8 @@ import 'package:syncfusion_flutter_xlsio/xlsio.dart' as xcel;
 import 'package:open_file/open_file.dart';
 import 'package:pos_app_skripsi/module/home/controller/home_binding.dart';
 
+import 'utils/preferences.dart';
+
 ThemeManager _themeManager = ThemeManager();
 
 void main() async{
@@ -20,7 +22,7 @@ void main() async{
     var path = await getTemporaryDirectory();
     Hive.init(path.path);
   }
-
+  await Preferences.getInstance().init();
 
   var mainStorage = await Hive.openBox('mainStorage');
   runApp(GetMaterialApp(

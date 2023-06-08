@@ -5,7 +5,7 @@ import 'transaction_detail.dart';
 
 class TransactionNavView extends StatelessWidget {
   static PageController pageController = PageController();
-  final _pages = [TransactionView(pageController: pageController,),TransactionDetailView()];
+  final _pages = [TransactionView(pageController: pageController,),TransactionDetailView(pageController: pageController,)];
   
 
   @override

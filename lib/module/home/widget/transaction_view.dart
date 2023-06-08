@@ -361,7 +361,7 @@ class TransactionView extends StatelessWidget {
                 shape: BeveledRectangleBorder(borderRadius: BorderRadius.zero),
                 onPressed: () {
                   pageController.animateToPage(
-                    2,
+                    1,
                     duration: const Duration(milliseconds: 400),
                     curve: Curves.easeInOut,
                   );

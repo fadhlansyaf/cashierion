@@ -39,4 +39,27 @@ class ProductModel {
         "image": image,
         "product_category_id": productCategoryId ?? 0
       };
+
+  ProductModel copyWith({
+    int? id,
+    int? productCategoryId,
+    String? name,
+    String? image,
+    double? price,
+    double? sellingPrice,
+    int? stock,
+    String? description,
+    Rx<int>? quantity,
+  }) {
+    return ProductModel(
+      id: id ?? this.id,
+      productCategoryId: productCategoryId ?? this.productCategoryId,
+      name: name ?? this.name,
+      image: image ?? this.image,
+      price: price ?? this.price,
+      sellingPrice: sellingPrice ?? this.sellingPrice,
+      stock: stock ?? this.stock,
+      description: description ?? this.description,
+    )..quantity = quantity ?? this.quantity;
+  }
 }
