@@ -222,7 +222,7 @@ class TransactionView extends StatelessWidget {
                                                                 .COLOR_CARD
                                                             : ColorTheme
                                                                 .COLOR_PRIMARY,
-                                                    radius: 12.0,
+                                                    radius: 15.0,
                                                     child: Center(
                                                       child: IconButton(
                                                         onPressed: () {
@@ -281,7 +281,7 @@ class TransactionView extends StatelessWidget {
                                                                 .COLOR_CARD
                                                             : ColorTheme
                                                                 .COLOR_PRIMARY,
-                                                    radius: 12.0,
+                                                    radius: 15.0,
                                                     child: Center(
                                                       child: IconButton(
                                                         onPressed: () {
