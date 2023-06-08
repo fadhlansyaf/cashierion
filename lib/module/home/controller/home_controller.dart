@@ -159,7 +159,7 @@ class HomeLogic extends GetxController {
               invoice: await generateInvoiceNumber(),
               dates: DateFormat(DateTimeFormat.standard).format(DateTime.now()),
               sales: totalAmount.value),
-          productList);
+          productList.where((p0) => p0.quantity.value > 0).toList());
       //TODO (dhanis) buat dialog buat transaksi berhasil. mungkin pake GetDialog aja? cobain aja enaknya gimana
 
       for(var e in productList){
@@ -176,6 +176,5 @@ class HomeLogic extends GetxController {
     } catch (e) {
       print(e);
     }
-
   }
 }

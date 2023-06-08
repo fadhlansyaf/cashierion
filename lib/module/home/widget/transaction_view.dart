@@ -345,7 +345,6 @@ class TransactionView extends StatelessWidget {
                     duration: const Duration(milliseconds: 400),
                     curve: Curves.easeInOut,
                   );
-
                   //task to execute when this button is pressed
                 },
               ),

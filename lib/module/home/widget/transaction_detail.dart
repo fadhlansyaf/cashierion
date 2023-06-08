@@ -211,18 +211,6 @@ class TransactionDetailView extends StatelessWidget {
                       child: Text("Create Transaction"),
                     ),
                   ),
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: ColorTheme.COLOR_DISABLED),
-                      onPressed: () {},
-                      child: Text(
-                        "Create Transaction",
-                        style: TextStyle(color: ColorTheme.COLOR_TEXT_DISABLED),
-                      ),
-                    ),
-                  ),
                 ],
               ),
             ),

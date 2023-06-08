@@ -5,5 +5,5 @@ enum SharedPreferenceKey{
 }
 
 class DateTimeFormat{
-  static const String standard = 'yyyy-MM-dd hh:mm';
+  static const String standard = 'yyyy-MM-dd HH:mm';
 }
