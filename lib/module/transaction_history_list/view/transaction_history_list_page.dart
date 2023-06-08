@@ -1,11 +1,14 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:pos_app_skripsi/core.dart';
+import 'package:pos_app_skripsi/module/transaction_history_detail/view/transaction_history_detail_page.dart';
 import 'package:pos_app_skripsi/theme/theme_constants.dart';
 
 import '../controller/transaction_history_list_controller.dart';
 import '../widget/date_picker.dart';
 import '/utils/bottom_sheet.dart';
+import 'package:pos_app_skripsi/module/transaction_history_detail/view/transaction_history_detail_page.dart';
+import 'package:pos_app_skripsi/module/transaction_history_detail/controller/transaction_history_detail_binding.dart';
 // import 'package:pos_app_skripsi/module/category_form/controller/category_form_binding.dart';
 // import 'package:pos_app_skripsi/module/category_detail/controller/category_detail_binding.dart';
 
@@ -114,12 +117,12 @@ class TransactionHistoryListPage extends StatelessWidget {
                       itemBuilder: (BuildContext ctx, index) {
                         return GestureDetector(
                           onTap: () async {
-                            // await Get.to(
-                            //         CategoryDetailPage(
-                            //             category: controller.categoryList[index],
-                            //             ),
-                            //         binding: CategoryDetailBinding())
-                            //     ?.then((value) => controller.onInit());
+                            await Get.to(
+                                    TransactionHistoryDetailPage(
+                                        // category: controller.categoryList[index],
+                                        ),
+                                    binding: TransactionHistoryDetailBinding())
+                                ?.then((value) => controller.onInit());
                           },
                           child: Container(
                             padding: EdgeInsets.all(15),
