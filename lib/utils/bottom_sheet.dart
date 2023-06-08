@@ -212,9 +212,8 @@ class BottomSheets {
                         child: ElevatedButton(
                           onPressed: () {
                             addPaymentTypeModalBottomSheet(context, controller)
-                            .then((value) => controller
-                                .initPayments()
-                                .then((value) => controller.setStatePaymentType));
+                                .then((value) => controller.initPayments().then(
+                                    (value) => controller.setStatePaymentType));
                           },
                           child: Text("Add Payment Type"),
                         ),
@@ -369,10 +368,11 @@ class BottomSheets {
                         width: double.infinity,
                         child: ElevatedButton(
                           onPressed: () {
-                            addPaymentMethodModalBottomSheet(context, controller)
-                            .then((value) => controller
-                                .initPayments()
-                                .then((value) => controller.setStatePaymentDetail));
+                            addPaymentMethodModalBottomSheet(
+                                    context, controller)
+                                .then((value) => controller.initPayments().then(
+                                    (value) =>
+                                        controller.setStatePaymentDetail));
                           },
                           child: Text("Add Payment Method"),
                         ),
@@ -498,6 +498,118 @@ class BottomSheets {
               ],
             ),
           ),
+        );
+      },
+    );
+  }
+
+  static void filterModalBottomSheet(
+      BuildContext context,
+      // CategoryListLogic controller,
+      // CategoryFormLogic categoryFormController,
+      void Function(CategoryModel category) onSelected) {
+    showModalBottomSheet<void>(
+      isScrollControlled: true,
+      context: context,
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+            //Masukin setState bottomsheet ini ke GetX
+            // controller.setState.value ??= setState;
+            return Scaffold(
+              appBar: AppBar(
+                bottom: PreferredSize(
+                  preferredSize: Size.fromHeight(40),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 30,
+                      ),
+                      Row(
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            icon: Icon(Icons.arrow_back),
+                          ),
+                          Text(
+                            "Select Filter",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Spacer(),
+                          IconButton(
+                            onPressed: () async {
+                              // controller.insertPaymentDetail();
+                            },
+                            icon: const Icon(
+                              Icons.check,
+                              size: 24.0,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                elevation: 0,
+                automaticallyImplyLeading: false,
+                toolbarHeight: 40,
+                actions: [
+                  IconButton(
+                    onPressed: () async {
+                      // controller.insertPaymentDetail();
+                    },
+                    icon: const Icon(
+                      Icons.check,
+                      size: 24.0,
+                    ),
+                  ),
+                ],
+              ),
+              body: 
+              // Obx(
+              //   () {
+              //     return 
+                  ListView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    // itemCount: controller.categoryList.length,
+                    itemCount: 2,
+                    shrinkWrap: true,
+                    padding: EdgeInsets.zero,
+                    clipBehavior: Clip.none,
+                    itemBuilder: (context, index) {
+                      return InkWell(
+                        onTap: () {
+                          // onSelected(controller.categoryList[index]);
+                          // Navigator.pop(context);
+                        },
+                        child: Card(
+                          child: Padding(
+                            padding: EdgeInsets.all(15),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Sales",
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+              //   },
+              // ),
+            );
+          },
         );
       },
     );

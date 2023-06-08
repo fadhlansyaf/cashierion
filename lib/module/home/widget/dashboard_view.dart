@@ -3,8 +3,7 @@ import 'package:get/get.dart';
 import 'package:pos_app_skripsi/core.dart';
 import 'package:pos_app_skripsi/module/category_list/controller/category_list_binding.dart';
 import 'package:pos_app_skripsi/module/product_list/controller/product_list_binding.dart';
-import 'package:pos_app_skripsi/module/purchase_order/controller/purchase_order_binding.dart';
-import 'package:pos_app_skripsi/module/sales_transaction/controller/sales_transaction_binding.dart';
+import 'package:pos_app_skripsi/module/transaction_history_list/controller/transaction_history_list_binding.dart';
 import 'package:pos_app_skripsi/module/stock_report/controller/stock_report_binding.dart';
 import 'package:pos_app_skripsi/theme/theme_constants.dart';
 import '../../dashboard/controller/dashboard_controller.dart';
@@ -62,7 +61,8 @@ class DashboardView extends StatelessWidget {
                       {
                         "icon": "assets/icons8-transaction-32.png",
                         "label": "Transaction\nDetail",
-                        "onTap": () => {}
+                        "onTap": () => Get.to(TransactionHistoryListPage(),
+                            binding: TransactionHistoryListBinding())?.then((value) => controller.onInit()),
                       },
                       {
                         "icon": "assets/icons8-report-32.png",

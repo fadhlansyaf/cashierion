@@ -17,6 +17,8 @@ export 'package:pos_app_skripsi/module/product_form/controller/product_form_cont
 export 'package:pos_app_skripsi/module/product_form/view/product_form_page.dart';
 export 'package:pos_app_skripsi/module/product_list/controller/product_list_controller.dart';
 export 'package:pos_app_skripsi/module/product_list/view/product_list_page.dart';
+export 'package:pos_app_skripsi/module/transaction_history_list/controller/transaction_history_list_controller.dart';
+export 'package:pos_app_skripsi/module/transaction_history_list/view/transaction_history_list_page.dart';
 export 'package:pos_app_skripsi/module/purchase_order/controller/purchase_order_controller.dart';
 export 'package:pos_app_skripsi/module/purchase_order/view/purchase_order_view.dart';
 export 'package:pos_app_skripsi/module/sales_report/controller/sales_report_controller.dart';
