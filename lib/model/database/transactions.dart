@@ -23,7 +23,7 @@ class TransactionModel {
           paymentTypeId: json["payment_type_id"] ?? 0,
           paymentDetailId: json["payment_detail_id"],
           invoice: json["invoice"] ?? '',
-          dates: json["dates"] ?? DateFormat(DateTimeFormat.standard).format(DateTime.now()),
+          dates: json["dates"] ?? DateTime.now().toIso8601String(),
           sales: json["sales"] ?? 0);
 
   Map<String, dynamic> toJson() => {

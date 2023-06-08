@@ -157,7 +157,7 @@ class HomeLogic extends GetxController {
               paymentTypeId: selectedPaymentType.value.id,
               paymentDetailId: selectedPaymentDetail.value?.id,
               invoice: await generateInvoiceNumber(),
-              dates: DateFormat(DateTimeFormat.standard).format(DateTime.now()),
+              dates: DateTime.now().toIso8601String(),
               sales: totalAmount.value),
           productList);
       //TODO (dhanis) buat dialog buat transaksi berhasil. mungkin pake GetDialog aja? cobain aja enaknya gimana
