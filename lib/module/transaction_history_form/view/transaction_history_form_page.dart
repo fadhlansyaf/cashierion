@@ -122,17 +122,6 @@ class TransactionHistoryFormPage extends StatelessWidget {
                                     //           secondIndex]
                                     //       .quantity
                                     //       .value--;
-                                    //   if (products[
-                                    //               secondIndex]
-                                    //           .quantity
-                                    //           .value
-                                    //           .obs >
-                                    //       0) {
-                                    //     isZero = false;
-                                    //   } else {
-                                    //     isZero = true;
-                                    //   }
-                                    // }
                                   },
                                   icon: const Icon(
                                     Icons.remove,
@@ -185,21 +174,6 @@ class TransactionHistoryFormPage extends StatelessWidget {
                                     //           secondIndex]
                                     //       .quantity
                                     //       .value++;
-                                    //   if (products[
-                                    //               secondIndex]
-                                    //           .quantity
-                                    //           .value >
-                                    //       0) {
-                                    //     isZero = false;
-                                    //   } else {
-                                    //     isZero = true;
-                                    //   }
-                                    // } else {
-                                    //   products[
-                                    //           secondIndex]
-                                    //       .quantity
-                                    //       .value++;
-                                    // }
                                   },
                                   icon: const Icon(
                                     Icons.add,

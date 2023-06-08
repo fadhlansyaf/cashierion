@@ -540,16 +540,6 @@ class BottomSheets {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          Spacer(),
-                          IconButton(
-                            onPressed: () async {
-                              // controller.insertPaymentDetail();
-                            },
-                            icon: const Icon(
-                              Icons.check,
-                              size: 24.0,
-                            ),
-                          ),
                         ],
                       ),
                     ],

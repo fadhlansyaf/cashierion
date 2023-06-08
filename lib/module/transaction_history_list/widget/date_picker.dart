@@ -18,7 +18,8 @@ class _DatePickerState extends State<DatePicker> with RestorationMixin {
   @override
   String? get restorationId => widget.restorationId;
 
-  final RestorableDateTimeN _startDate = RestorableDateTimeN(DateTime(2023, 6, 2));
+  final RestorableDateTimeN _startDate =
+      RestorableDateTimeN(DateTime(2023, 6, 2));
   final RestorableDateTimeN _endDate =
       RestorableDateTimeN(DateTime(2023, 6, 5));
   late final RestorableRouteFuture<DateTimeRange?>
@@ -85,7 +86,6 @@ class _DatePickerState extends State<DatePicker> with RestorationMixin {
     return null;
   }
 
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -95,17 +95,30 @@ class _DatePickerState extends State<DatePicker> with RestorationMixin {
       child: Card(
         child: Container(
           padding: EdgeInsets.all(10),
-          height: 80,
+          height: 70,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 children: [
-                  Text("Date"),
+                  Text(
+                    "Date",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                   Spacer(),
                   Icon(Icons.keyboard_arrow_down),
                 ],
               ),
-              Text("12/05/2023 - 24/05/2023"),
+              Spacer(),
+              Text(
+                "12/05/2023 - 24/05/2023",
+                style: TextStyle(
+                  fontSize: 12,
+                ),
+              ),
             ],
           ),
         ),

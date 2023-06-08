@@ -17,7 +17,6 @@ class TransactionView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var controller = Get.find<HomeLogic>();
-    bool isZero = true;
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -235,16 +234,6 @@ class TransactionView extends StatelessWidget {
                                                                     secondIndex]
                                                                 .quantity
                                                                 .value--;
-                                                            if (products[
-                                                                        secondIndex]
-                                                                    .quantity
-                                                                    .value
-                                                                    .obs >
-                                                                0) {
-                                                              isZero = false;
-                                                            } else {
-                                                              isZero = true;
-                                                            }
                                                           }
                                                         },
                                                         icon: const Icon(
@@ -297,15 +286,6 @@ class TransactionView extends StatelessWidget {
                                                                     secondIndex]
                                                                 .quantity
                                                                 .value++;
-                                                            if (products[
-                                                                        secondIndex]
-                                                                    .quantity
-                                                                    .value >
-                                                                0) {
-                                                              isZero = false;
-                                                            } else {
-                                                              isZero = true;
-                                                            }
                                                           } else {
                                                             products[
                                                                     secondIndex]
