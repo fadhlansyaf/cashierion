@@ -101,8 +101,6 @@ class BottomSheets {
   static Future<void> addCategoryModalBottomSheet(
     BuildContext context,
     CategoryFormLogic controller,
-    // ntar ganti aja
-    // void Function(CategoryModel category) onSelected
   ) async {
     await showModalBottomSheet<void>(
       isScrollControlled: true,
@@ -195,7 +193,7 @@ class BottomSheets {
         return StatefulBuilder(
           builder: (BuildContext context, StateSetter setState) {
             //Masukin setState bottomsheet ini ke GetX
-            controller.setState.value ??= setState;
+            controller.setStatePaymentType.value ??= setState;
             return Scaffold(
               appBar: SearchAppBar(
                 title: Title(
@@ -213,10 +211,10 @@ class BottomSheets {
                         width: double.infinity,
                         child: ElevatedButton(
                           onPressed: () {
-                            addPaymentTypeModalBottomSheet(context);
-                            // .then((value) => controller
-                            //     .onInit()
-                            //     .then((value) => controller.setState));
+                            addPaymentTypeModalBottomSheet(context, controller)
+                            .then((value) => controller
+                                .initPayments()
+                                .then((value) => controller.setStatePaymentType));
                           },
                           child: Text("Add Payment Type"),
                         ),
@@ -265,9 +263,7 @@ class BottomSheets {
 
   static Future<void> addPaymentTypeModalBottomSheet(
     BuildContext context,
-    // CategoryFormLogic controller,
-    // ntar ganti aja
-    // void Function(CategoryModel category) onSelected
+    HomeLogic controller,
   ) async {
     await showModalBottomSheet<void>(
       isScrollControlled: true,
@@ -300,7 +296,7 @@ class BottomSheets {
                       Spacer(),
                       IconButton(
                         onPressed: () async {
-                          // controller.insertOrUpdateCategory();
+                          controller.insertPaymentType();
                         },
                         icon: const Icon(
                           Icons.check,
@@ -318,7 +314,7 @@ class BottomSheets {
             actions: [
               IconButton(
                 onPressed: () async {
-                  // controller.insertOrUpdateCategory();
+                  await controller.insertPaymentType();
                 },
                 icon: const Icon(
                   Icons.check,
@@ -331,16 +327,11 @@ class BottomSheets {
             padding: EdgeInsets.all(10),
             child: Column(
               children: [
-                // CustomTextFieldOld(
-                //   controller: controller.textController[0],
-                //   keyboardType: TextInputType.text,
-                //   label: "Payment Type",
-                // ),
-                // CustomTextFieldOld(
-                //   controller: controller.textController[1],
-                //   keyboardType: TextInputType.text,
-                //   label: "Description",
-                // ),
+                CustomTextFieldOld(
+                  controller: controller.paymentTypeController,
+                  keyboardType: TextInputType.text,
+                  label: "Payment Type",
+                ),
               ],
             ),
           ),
@@ -351,9 +342,8 @@ class BottomSheets {
 
   static void paymentMethodModalBottomSheet(
       BuildContext context,
-      // CategoryListLogic controller,
-      // CategoryFormLogic categoryFormController,
-      void Function(CategoryModel category) onSelected) {
+      HomeLogic controller,
+      void Function(PaymentDetailModel paymentDetail) onSelected) {
     showModalBottomSheet<void>(
       isScrollControlled: true,
       context: context,
@@ -361,7 +351,7 @@ class BottomSheets {
         return StatefulBuilder(
           builder: (BuildContext context, StateSetter setState) {
             //Masukin setState bottomsheet ini ke GetX
-            // controller.setState.value ??= setState;
+            controller.setStatePaymentDetail.value ??= setState;
             return Scaffold(
               appBar: SearchAppBar(
                 title: Title(
@@ -379,10 +369,10 @@ class BottomSheets {
                         width: double.infinity,
                         child: ElevatedButton(
                           onPressed: () {
-                            addPaymentTypeModalBottomSheet(context);
-                            // .then((value) => controller
-                            //     .onInit()
-                            //     .then((value) => controller.setState));
+                            addPaymentMethodModalBottomSheet(context, controller)
+                            .then((value) => controller
+                                .initPayments()
+                                .then((value) => controller.setStatePaymentDetail));
                           },
                           child: Text("Add Payment Method"),
                         ),
@@ -390,14 +380,14 @@ class BottomSheets {
                     ),
                     ListView.builder(
                       physics: const NeverScrollableScrollPhysics(),
-                      itemCount: 0,
+                      itemCount: controller.paymentDetail.length,
                       shrinkWrap: true,
                       padding: EdgeInsets.zero,
                       clipBehavior: Clip.none,
                       itemBuilder: (context, index) {
                         return InkWell(
                           onTap: () {
-                            // onSelected(controller.categoryList[index]);
+                            onSelected(controller.paymentDetail[index]);
                             Navigator.pop(context);
                           },
                           child: Card(
@@ -407,7 +397,7 @@ class BottomSheets {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "controller.categoryList[index].name",
+                                    controller.paymentDetail[index].description,
                                     style: TextStyle(
                                       fontSize: 16,
                                     ),
@@ -431,9 +421,7 @@ class BottomSheets {
 
   static Future<void> addPaymentMethodModalBottomSheet(
     BuildContext context,
-    // CategoryFormLogic controller,
-    // ntar ganti aja
-    // void Function(CategoryModel category) onSelected
+    HomeLogic controller,
   ) async {
     await showModalBottomSheet<void>(
       isScrollControlled: true,
@@ -466,7 +454,7 @@ class BottomSheets {
                       Spacer(),
                       IconButton(
                         onPressed: () async {
-                          // controller.insertOrUpdateCategory();
+                          controller.insertPaymentDetail();
                         },
                         icon: const Icon(
                           Icons.check,
@@ -484,7 +472,7 @@ class BottomSheets {
             actions: [
               IconButton(
                 onPressed: () async {
-                  // controller.insertOrUpdateCategory();
+                  controller.insertPaymentDetail();
                 },
                 icon: const Icon(
                   Icons.check,

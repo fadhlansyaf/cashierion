@@ -2,7 +2,7 @@ class PaymentTypeModel {
   final int id;
   final String paymentName;
 
-  PaymentTypeModel({required this.id, required this.paymentName});
+  PaymentTypeModel({this.id = 0, required this.paymentName});
 
   factory PaymentTypeModel.fromJson(Map<String, dynamic> json) =>
       PaymentTypeModel(

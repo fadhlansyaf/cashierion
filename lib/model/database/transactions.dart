@@ -1,13 +1,16 @@
+import 'package:intl/intl.dart';
+import 'package:pos_app_skripsi/utils/constant.dart';
+
 class TransactionModel {
   final int id;
   final int paymentTypeId;
   final int? paymentDetailId;
   final String invoice;
-  final DateTime dates;
+  final String dates;
   final double sales;
 
   TransactionModel(
-      {required this.id,
+      {this.id = 0,
       required this.paymentTypeId,
       this.paymentDetailId,
       required this.invoice,
@@ -20,7 +23,7 @@ class TransactionModel {
           paymentTypeId: json["payment_type_id"] ?? 0,
           paymentDetailId: json["payment_detail_id"],
           invoice: json["invoice"] ?? '',
-          dates: json["dates"] ?? DateTime.now(),
+          dates: json["dates"] ?? DateFormat(DateTimeFormat.standard).format(DateTime.now()),
           sales: json["sales"] ?? 0);
 
   Map<String, dynamic> toJson() => {

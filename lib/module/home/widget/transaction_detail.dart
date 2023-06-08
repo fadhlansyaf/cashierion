@@ -8,14 +8,16 @@ import '/utils/bottom_sheet.dart';
 
 class TransactionDetailView extends StatelessWidget {
   const TransactionDetailView({
-    Key? key,
+    Key? key, required this.pageController,
   }) : super(key: key);
+  final PageController pageController;
 
   @override
   Widget build(BuildContext context) {
     var controller = Get.find<HomeLogic>();
     var selectedProducts =
         controller.productList.where((p0) => p0.quantity > 0).toList();
+    controller.countTotal(selectedProducts);
     return Scaffold(
       body: Container(
         width: MediaQuery.of(context).size.width,
@@ -59,9 +61,8 @@ class TransactionDetailView extends StatelessWidget {
                                 SizedBox(
                                   height: 5,
                                 ),
-                                //TODO: ganti price sesuai order/restock
                                 Text(
-                                  '${FunctionHelper.convertPriceWithComma(selectedProducts[index].sellingPrice)} x ${selectedProducts[index].quantity}',
+                                  '${FunctionHelper.convertPriceWithComma(controller.isOrder.value ? selectedProducts[index].sellingPrice : selectedProducts[index].price)} x ${selectedProducts[index].quantity}',
                                   style: TextStyle(
                                     color: ColorTheme.COLOR_WHITE,
                                   ),
@@ -75,13 +76,14 @@ class TransactionDetailView extends StatelessWidget {
                                 SizedBox(
                                   height: 20,
                                 ),
-                                //TODO: ganti price sesuai order/restock
                                 Text(
                                   FunctionHelper.convertPriceWithComma(
-                                      selectedProducts[index].sellingPrice *
-                                          selectedProducts[index]
-                                              .quantity
-                                              .value),
+                                      controller.isOrder.value
+                                          ? selectedProducts[index].sellingPrice
+                                          : selectedProducts[index].price *
+                                              selectedProducts[index]
+                                                  .quantity
+                                                  .value),
                                   style: TextStyle(
                                     color: ColorTheme.COLOR_WHITE,
                                   ),
@@ -104,47 +106,57 @@ class TransactionDetailView extends StatelessWidget {
                   Card(
                     child: Padding(
                       padding: EdgeInsets.all(15),
-                      child: Column(
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              BottomSheets.paymentTypeModalBottomSheet(
-                                  context, controller, (category) {});
-                            },
-                            child: Row(
-                              children: [
-                                Expanded(child: Text("Payment Type")),
-                                Text(controller
-                                    .selectedPaymentType.value.paymentName),
-                                Icon(
-                                  Icons.edit,
-                                  size: 15,
-                                )
-                              ],
+                      child: Obx(() {
+                        return Column(
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                BottomSheets.paymentTypeModalBottomSheet(
+                                    context, controller, (paymentType) {
+                                  controller.selectedPaymentType.value =
+                                      paymentType;
+                                  controller
+                                      .reinitializeSelectedPaymentDetail();
+                                });
+                              },
+                              child: Row(
+                                children: [
+                                  Expanded(child: Text("Payment Type")),
+                                  Text(controller
+                                      .selectedPaymentType.value.paymentName),
+                                  Icon(
+                                    Icons.edit,
+                                    size: 15,
+                                  )
+                                ],
+                              ),
                             ),
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              BottomSheets.paymentMethodModalBottomSheet(
-                                  context, (category) {});
-                            },
-                            child: Row(
-                              children: [
-                                Text("Payment Method"),
-                                Spacer(),
-                                Text("Test"),
-                                Icon(
-                                  Icons.edit,
-                                  size: 15,
-                                )
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
+                            if (controller.paymentDetail.isNotEmpty)
+                              Padding(
+                                padding: const EdgeInsets.only(top: 15.0),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    BottomSheets.paymentMethodModalBottomSheet(
+                                        context,
+                                        controller,
+                                        (paymentDetail) {});
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Expanded(child: Text("Payment Method")),
+                                      Text(controller.selectedPaymentDetail
+                                          .value?.description ?? ''),
+                                      Icon(
+                                        Icons.edit,
+                                        size: 15,
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                          ],
+                        );
+                      }),
                     ),
                   ),
                   Card(
@@ -158,7 +170,7 @@ class TransactionDetailView extends StatelessWidget {
                                 child: Text("Total"),
                               ),
                               Text(FunctionHelper.convertPriceWithComma(
-                                  controller.countTotal(selectedProducts))),
+                                  controller.totalAmount.value)),
                             ],
                           ),
                           SizedBox(
@@ -180,7 +192,7 @@ class TransactionDetailView extends StatelessWidget {
                             children: [
                               Expanded(child: Text("Total Price")),
                               Text(FunctionHelper.convertPriceWithComma(
-                                  controller.countTotal(selectedProducts) +
+                                  controller.totalAmount.value +
                                       controller.tax.value)),
                             ],
                           ),
@@ -191,13 +203,11 @@ class TransactionDetailView extends StatelessWidget {
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: () {
-                        // addCategoryModalBottomSheet(
-                        //         context, categoryFormController)
-                        //     .then((value) => controller
-                        //         .onInit()
-                        //         .then((value) => controller.setState));
-                      },
+                      onPressed: selectedProducts.isNotEmpty
+                          ? () {
+                              controller.insertTransaction(pageController);
+                            }
+                          : null,
                       child: Text("Create Transaction"),
                     ),
                   ),

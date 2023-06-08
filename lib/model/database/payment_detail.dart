@@ -4,7 +4,7 @@ class PaymentDetailModel {
   final String description;
 
   PaymentDetailModel(
-      {required this.id,
+      {this.id = 0,
       required this.paymentTypeId,
       required this.description});
 

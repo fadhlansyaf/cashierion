@@ -69,7 +69,7 @@ class DatabaseProvider {
     '''
   CREATE TABLE $productTable (
     product_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-    product_category_id INTEGER,
+    product_category_id INTEGER NOT NULL,
     name TEXT NOT NULL,
     image TEXT,
     price REAL,
@@ -105,7 +105,7 @@ class DatabaseProvider {
       payment_type_id INTEGER NOT NULL,
       payment_detail_id INTEGER,
       invoice TEXT NOT NULL,
-      dates DATE NOT NULL,
+      dates TEXT NOT NULL,
       sales REAL NOT NULL,
       FOREIGN KEY(payment_type_id) REFERENCES $paymentType(payment_type_id),
       FOREIGN KEY(payment_detail_id) REFERENCES $paymentDetail(payment_detail_id)
