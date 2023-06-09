@@ -8,6 +8,23 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:syncfusion_flutter_xlsio/xlsio.dart' as xcel;
 import 'package:open_file/open_file.dart';
 
+class CreateExcel {
+  static Future<void> createExcel() async {
+    final xcel.Workbook workbook = xcel.Workbook();
+    final xcel.Worksheet sheet = workbook.worksheets[0];
+    sheet.getRangeByIndex(1, 1).setText("Title");
+    sheet.getRangeByIndex(1, 2).setText("Links");
+
+    final List<int> bytes = workbook.saveAsStream();
+    FileStorage.writeCounter(bytes, "stock_report.xlsx");
+    Get.snackbar('Success', 'stock_report.xlsx has been saved',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.green,
+        colorText: Colors.white);
+    workbook.dispose();
+  }
+}
+
 class FileStorage {
   static Future<String> getExternalDocumentPath() async {
     // To check whether permission is given for this app or not.
