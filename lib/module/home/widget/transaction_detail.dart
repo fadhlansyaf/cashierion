@@ -8,7 +8,8 @@ import '/utils/bottom_sheet.dart';
 
 class TransactionDetailView extends StatelessWidget {
   const TransactionDetailView({
-    Key? key, required this.pageController,
+    Key? key,
+    required this.pageController,
   }) : super(key: key);
   final PageController pageController;
 
@@ -145,7 +146,8 @@ class TransactionDetailView extends StatelessWidget {
                                     children: [
                                       Expanded(child: Text("Payment Method")),
                                       Text(controller.selectedPaymentDetail
-                                          .value?.description ?? ''),
+                                              .value?.description ??
+                                          ''),
                                       Icon(
                                         Icons.edit,
                                         size: 15,
@@ -206,6 +208,11 @@ class TransactionDetailView extends StatelessWidget {
                       onPressed: selectedProducts.isNotEmpty
                           ? () {
                               controller.insertTransaction(pageController);
+                              Get.snackbar(
+                                  'Success', 'Transaction has been successfully inserted',
+                                  snackPosition: SnackPosition.BOTTOM,
+                                  backgroundColor: Colors.green,
+                                  colorText: Colors.white);
                             }
                           : null,
                       child: Text("Create Transaction"),
