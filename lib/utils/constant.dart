@@ -7,3 +7,7 @@ enum SharedPreferenceKey{
 class DateTimeFormat{
   static const String standard = 'yyyy-MM-dd HH:mm';
 }
+
+class ApiUrl{
+  static const prediction = '/cashierion';
+}
