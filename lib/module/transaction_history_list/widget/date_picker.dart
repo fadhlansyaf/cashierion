@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:pos_app_skripsi/core.dart';
+import 'package:pos_app_skripsi/utils/constant.dart';
 
 /// Flutter code sample for [showDatePicker].
 
 class DatePicker extends StatefulWidget {
-  const DatePicker({super.key, this.restorationId});
+  const DatePicker({super.key, this.restorationId, required this.startDate, required this.endDate, required this.controller});
+  final Rx<DateTime> startDate;
+  final Rx<DateTime> endDate;
+  final TransactionHistoryListLogic controller;
 
   final String? restorationId;
 
@@ -18,10 +25,10 @@ class _DatePickerState extends State<DatePicker> with RestorationMixin {
   @override
   String? get restorationId => widget.restorationId;
 
-  final RestorableDateTimeN _startDate =
-      RestorableDateTimeN(DateTime(2023, 6, 2));
-  final RestorableDateTimeN _endDate =
-      RestorableDateTimeN(DateTime(2023, 6, 5));
+  late final RestorableDateTimeN _startDate =
+      RestorableDateTimeN(widget.startDate.value);
+  late final RestorableDateTimeN _endDate =
+      RestorableDateTimeN(widget.endDate.value);
   late final RestorableRouteFuture<DateTimeRange?>
       _restorableDateRangePickerRouteFuture =
       RestorableRouteFuture<DateTimeRange?>(
@@ -35,11 +42,20 @@ class _DatePickerState extends State<DatePicker> with RestorationMixin {
     },
   );
 
+  @override
+  void initState() {
+    super.initState();
+
+  }
+
   void _selectDateRange(DateTimeRange? newSelectedDate) {
     if (newSelectedDate != null) {
       setState(() {
         _startDate.value = newSelectedDate.start;
+        widget.startDate.value = newSelectedDate.start;
         _endDate.value = newSelectedDate.end;
+        widget.endDate.value = newSelectedDate.end;
+        widget.controller.onInit();
       });
     }
   }
@@ -60,13 +76,14 @@ class _DatePickerState extends State<DatePicker> with RestorationMixin {
     return DialogRoute<DateTimeRange?>(
       context: context,
       builder: (BuildContext context) {
+        var now = DateTime.now();
         return DateRangePickerDialog(
           restorationId: 'date_picker_dialog',
           initialDateRange:
               _initialDateTimeRange(arguments! as Map<dynamic, dynamic>),
-          firstDate: DateTime(2022),
+          firstDate: DateTime(now.year - 10),
           currentDate: DateTime.now(),
-          lastDate: DateTime(2025),
+          lastDate: DateTime(now.year + 10),
         );
       },
     );
@@ -95,9 +112,10 @@ class _DatePickerState extends State<DatePicker> with RestorationMixin {
       child: Card(
         child: Container(
           padding: EdgeInsets.all(10),
-          height: 70,
+          constraints: BoxConstraints(minHeight: 70),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Row(
                 children: [
@@ -112,11 +130,12 @@ class _DatePickerState extends State<DatePicker> with RestorationMixin {
                   Icon(Icons.keyboard_arrow_down),
                 ],
               ),
-              Spacer(),
-              Text(
-                "12/05/2023 - 24/05/2023",
-                style: TextStyle(
-                  fontSize: 12,
+              FittedBox(
+                child: Text(
+                  "${DateFormat(DateTimeFormat.standardNoTime).format(widget.startDate.value)} - ${DateFormat(DateTimeFormat.standardNoTime).format(widget.endDate.value)}",
+                  style: TextStyle(
+                    fontSize: 16,
+                  ),
                 ),
               ),
             ],

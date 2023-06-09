@@ -45,7 +45,7 @@ class HomeLogic extends GetxController {
       selectedPaymentDetail = paymentDetail.first.obs;
     }
     var test = await homeDao.manipulateData();
-    ApiManager.getPrediction(prediction: test);
+    // ApiManager.getPrediction(prediction: test);
     super.onInit();
   }
 

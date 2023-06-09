@@ -1,21 +1,23 @@
 import 'package:get/get.dart';
-// import 'package:pos_app_skripsi/model/database/category.dart';
+import 'package:intl/intl.dart';
+import 'package:pos_app_skripsi/model/database/database_model.dart';
+import 'package:pos_app_skripsi/utils/constant.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../../../model/database/product.dart';
 import '../../../service/database_provider.dart';
 
 class TransactionHistoryListDao{
-  // Future<RxList<CategoryModel>> getCategoryList() async {
-  //   Database db = await DatabaseProvider().database;
-  //   var query = await db.query(DatabaseProvider.productCategoryTable);
-  //   var category = query.map((e) => CategoryModel.fromJson(e)).toList();
-  //   return category.obs;
-  // }
+  Future<RxList<TransactionModel>> getTransactionList(DateTime dateStart, DateTime dateEnd, int type) async {
+    Database db = await DatabaseProvider().database;
+    var query = await db.query(DatabaseProvider.transactionTable, where: 'dates >= ? AND dates <= ?', whereArgs: [DateFormat(DateTimeFormat.standard).format(dateStart), DateFormat(DateTimeFormat.standard).format(dateEnd)]);
+    var transactions = query.map((e) => TransactionModel.fromJson(e)).toList().where((e) => e.invoice.startsWith(type == 0 ? 'CO' : 'CS')).toList();
+    return transactions.obs;
+  }
 
-  // Future<int> checkCategoryCount(CategoryModel category) async{
-  //   Database db = await DatabaseProvider().database;
-  //   var query = await db.query(DatabaseProvider.productTable, where: 'product_category_id = ?', whereArgs: [category.id]);
-  //   return query.map((e) => ProductModel.fromJson(e)).toList().length;
-  // }
+  Future<int> checkTransactionDetailCount(TransactionModel transaction) async{
+    Database db = await DatabaseProvider().database;
+    var query = await db.query(DatabaseProvider.transactionDetailTable, where: 'transaction_id = ?', whereArgs: [transaction.id]);
+    return query.map((e) => TransactionDetailModel.fromJson(e)).toList().length;
+  }
 }
