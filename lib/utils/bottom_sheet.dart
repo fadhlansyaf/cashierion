@@ -613,6 +613,90 @@ class BottomSheets {
     );
   }
 
+  static Future<void> changeTaxModalBottomSheet(
+    BuildContext context,
+    // HomeLogic controller,
+  ) async {
+    await showModalBottomSheet<void>(
+      isScrollControlled: true,
+      context: context,
+      builder: (BuildContext context) {
+        return Scaffold(
+          appBar: AppBar(
+            bottom: PreferredSize(
+              preferredSize: Size.fromHeight(40),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Row(
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: Icon(Icons.arrow_back),
+                      ),
+                      Text(
+                        "Add Payment Method",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Spacer(),
+                      IconButton(
+                        onPressed: () async {
+                          // controller.insertPaymentDetail();
+                        },
+                        icon: const Icon(
+                          Icons.check,
+                          size: 24.0,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            elevation: 0,
+            automaticallyImplyLeading: false,
+            toolbarHeight: 40,
+            actions: [
+              IconButton(
+                onPressed: () async {
+                  // controller.insertPaymentDetail();
+                },
+                icon: const Icon(
+                  Icons.check,
+                  size: 24.0,
+                ),
+              ),
+            ],
+          ),
+          body: Container(
+            padding: EdgeInsets.all(10),
+            child: Column(
+              children: [
+                // CustomTextFieldOld(
+                //   controller: controller.textController[0],
+                //   keyboardType: TextInputType.text,
+                //   label: "Payment Method",
+                // ),
+                // CustomTextFieldOld(
+                //   controller: controller.textController[1],
+                //   keyboardType: TextInputType.text,
+                //   label: "Description",
+                // ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   static Future<dynamic> spinner({
     required BuildContext context,
     required String title,

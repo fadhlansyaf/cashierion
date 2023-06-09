@@ -5,10 +5,10 @@ import 'package:pos_app_skripsi/module/store_profile_form/controller/store_profi
 import 'package:pos_app_skripsi/module/store_profile_form/view/store_profile_form_page.dart';
 
 import 'profile_detail_widget.dart';
+import '/utils/bottom_sheet.dart';
 
 class ProfileView extends StatelessWidget {
   const ProfileView({Key? key}) : super(key: key);
-  
 
   @override
   Widget build(context) {
@@ -77,7 +77,10 @@ class ProfileView extends StatelessWidget {
                     // padding: EdgeInsets.all(10),
                     width: MediaQuery.of(context).size.width,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        BottomSheets.changeTaxModalBottomSheet(
+                            context,);
+                      },
                       child: Text("Edit Tax"),
                     ),
                   ),
