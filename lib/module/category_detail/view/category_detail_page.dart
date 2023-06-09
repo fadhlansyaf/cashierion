@@ -12,6 +12,7 @@ import 'package:pos_app_skripsi/module/category_form/controller/category_form_bi
 
 import '../controller/category_detail_controller.dart';
 import '../widget/category_detail_widget.dart';
+import '/utils/dialog.dart';
 
 class CategoryDetailPage extends StatelessWidget {
   const CategoryDetailPage({Key? key, required this.category})
@@ -30,8 +31,9 @@ class CategoryDetailPage extends StatelessWidget {
             onPressed: () async {
               Get.to(
                       () => CategoryFormPage(
-                          category: category,
-                          isEditing: true,),
+                            category: category,
+                            isEditing: true,
+                          ),
                       binding: CategoryFormBinding())
                   ?.then((value) => controller.onInit());
             },
@@ -42,33 +44,7 @@ class CategoryDetailPage extends StatelessWidget {
           ),
           IconButton(
             onPressed: () async {
-              final result = await showDialog<bool>(
-                context: context,
-                builder: (context) => AlertDialog(
-                  title: const Text('Are you sure?'),
-                  content: const Text(
-                      'This action will permanently delete this data'),
-                  actions: [
-                    TextButton(
-                      onPressed: () => Navigator.pop(context, false),
-                      child: const Text(
-                        'Cancel',
-                        style: TextStyle(color: ColorTheme.COLOR_PRIMARY),
-                      ),
-                    ),
-                    TextButton(
-                      onPressed: () => Navigator.pop(context, true),
-                      child: const Text(
-                        'Delete',
-                        style: TextStyle(color: ColorTheme.COLOR_PRIMARY),
-                      ),
-                    ),
-                  ],
-                ),
-              );
-              if (result == true) {
-                controller.deleteCategory(category);
-              }
+              Dialogs.deleteCategoryDialog(context, controller, category);
             },
             icon: const Icon(
               Icons.delete,

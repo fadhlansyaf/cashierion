@@ -12,6 +12,7 @@ import 'package:pos_app_skripsi/module/product_form/controller/product_form_bind
 
 import '../controller/product_detail_controller.dart';
 import '../widget/product_detail_widget.dart';
+import '/utils/dialog.dart';
 
 class ProductDetailPage extends StatelessWidget {
   const ProductDetailPage({Key? key, required this.product}) : super(key: key);
@@ -42,33 +43,7 @@ class ProductDetailPage extends StatelessWidget {
           ),
           IconButton(
             onPressed: () async {
-              final result = await showDialog<bool>(
-                context: context,
-                builder: (context) => AlertDialog(
-                  title: const Text('Are you sure?'),
-                  content: const Text(
-                      'This action will permanently delete this data'),
-                  actions: [
-                    TextButton(
-                      onPressed: () => Navigator.pop(context, false),
-                      child: const Text(
-                        'Cancel',
-                        style: TextStyle(color: ColorTheme.COLOR_PRIMARY),
-                      ),
-                    ),
-                    TextButton(
-                      onPressed: () => Navigator.pop(context, true),
-                      child: const Text(
-                        'Delete',
-                        style: TextStyle(color: ColorTheme.COLOR_PRIMARY),
-                      ),
-                    ),
-                  ],
-                ),
-              );
-              if (result == true) {
-                controller.deleteItem(product);
-              }
+              Dialogs.deleteProductsDialog(context, controller, product);
             },
             icon: const Icon(
               Icons.delete,
@@ -101,7 +76,10 @@ class ProductDetailPage extends StatelessWidget {
                             Container(
                               width: (MediaQuery.of(context).size.width) / 2,
                               height: (MediaQuery.of(context).size.width) / 2,
-                              child: Image.memory(base64Decode(product.image),fit: BoxFit.cover,),
+                              child: Image.memory(
+                                base64Decode(product.image),
+                                fit: BoxFit.cover,
+                              ),
                             ),
                             SizedBox(
                               height: 20,

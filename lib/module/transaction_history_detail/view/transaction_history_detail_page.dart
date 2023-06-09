@@ -13,13 +13,14 @@ import 'package:pos_app_skripsi/module/transaction_history_form/controller/trans
 
 import '../controller/transaction_history_detail_controller.dart';
 import '../widget/transaction_history_detail_widget.dart';
+import '/utils/dialog.dart';
 
 class TransactionHistoryDetailPage extends StatelessWidget {
   const TransactionHistoryDetailPage({
     Key? key,
-    // required this.category
+    // required this.transaction
   }) : super(key: key);
-  // final CategoryModel category;
+  // final TransactionModel transaction;
 
   @override
   Widget build(BuildContext context) {
@@ -33,8 +34,9 @@ class TransactionHistoryDetailPage extends StatelessWidget {
             onPressed: () async {
               Get.to(
                       () => TransactionHistoryFormPage(
-                          // category: category,
-                          isEditing: true,),
+                            // category: category,
+                            isEditing: true,
+                          ),
                       binding: TransactionHistoryFormBinding())
                   ?.then((value) => controller.onInit());
             },
@@ -45,33 +47,7 @@ class TransactionHistoryDetailPage extends StatelessWidget {
           ),
           IconButton(
             onPressed: () async {
-              final result = await showDialog<bool>(
-                context: context,
-                builder: (context) => AlertDialog(
-                  title: const Text('Are you sure?'),
-                  content: const Text(
-                      'This action will permanently delete this data'),
-                  actions: [
-                    TextButton(
-                      onPressed: () => Navigator.pop(context, false),
-                      child: const Text(
-                        'Cancel',
-                        style: TextStyle(color: ColorTheme.COLOR_PRIMARY),
-                      ),
-                    ),
-                    TextButton(
-                      onPressed: () => Navigator.pop(context, true),
-                      child: const Text(
-                        'Delete',
-                        style: TextStyle(color: ColorTheme.COLOR_PRIMARY),
-                      ),
-                    ),
-                  ],
-                ),
-              );
-              if (result == true) {
-                // controller.deleteCategory(category);
-              }
+              Dialogs.deletetransactionHistoryDialog(context, controller);
             },
             icon: const Icon(
               Icons.delete,
