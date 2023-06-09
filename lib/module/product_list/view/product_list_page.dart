@@ -93,7 +93,21 @@ class ProductListPage extends StatelessWidget {
                               ),
                             ),
                           ],
-                        )
+                        ),
+                        Spacer(),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              height: 25,
+                            ),
+                            Text(
+                              "Stock: " + controller.products[index].stock.toString(),
+                              style: TextStyle(
+                              ),
+                            ),
+                          ],
+                        ),
                       ],
                     ),
                   ),

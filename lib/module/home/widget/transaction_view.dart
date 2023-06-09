@@ -208,6 +208,13 @@ class TransactionView extends StatelessWidget {
                                                                   .COLOR_GREY,
                                                             ),
                                                           ),
+                                                          Text(
+                                                            "Stock: " + products[secondIndex].stock.toString(),
+                                                            style: TextStyle(
+                                                              color: ColorTheme
+                                                                  .COLOR_GREY,
+                                                            ),
+                                                          ),
                                                         ],
                                                       )
                                                     ],
