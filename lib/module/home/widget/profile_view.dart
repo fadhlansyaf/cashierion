@@ -1,82 +1,126 @@
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:pos_app_skripsi/core.dart';
+import 'package:pos_app_skripsi/module/store_profile_form/controller/store_profile_form_binding.dart';
+import 'package:pos_app_skripsi/module/store_profile_form/view/store_profile_form_page.dart';
+
+import 'profile_detail_widget.dart';
 
 class ProfileView extends StatelessWidget {
   const ProfileView({Key? key}) : super(key: key);
+  
 
   @override
   Widget build(context) {
-
     return Scaffold(
       appBar: AppBar(
         title: const Text("Profile"),
-        actions: const [],
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          padding: const EdgeInsets.all(10.0),
-          child: Column(
-            children: [
-              SizedBox(height: 20),
-              CircleAvatar(
-                radius: OldGet.width / 6,
-                backgroundImage: NetworkImage(
-                  "https://i.ibb.co/PGv8ZzG/me.jpg",
-                ),
-              ),
-              Text(
-                "Dhaniswaw",
-                style: TextStyle(
-                  fontSize: 20.0,
-                ),
-              ),
-              Text(
-                "email@email.com",
-                style: TextStyle(
-                  fontSize: 12.0,
-                ),
-              ),
-              SizedBox(height: 4),
-              Text(
-                "programmer",
-                style: TextStyle(
-                  fontSize: 10.0,
-                ),
-              ),
-              SizedBox(height: 20),
-              Card(
-                child: ListTile(
-                  title: const Text("Settings"),
-                  subtitle: const Text("App Settings"),
-                  trailing: const Icon(Icons.chevron_right),
-                ),
-              ),
-              Card(
-                child: ListTile(
-                  title: const Text("Tos"),
-                  subtitle: const Text("Terms of service"),
-                  trailing: const Icon(Icons.chevron_right),
-                ),
-              ),
-              Card(
-                child: ListTile(
-                  title: const Text("Privacy Policy"),
-                  subtitle: const Text("-"),
-                  trailing: const Icon(Icons.chevron_right),
-                ),
-              ),
-              SizedBox(height: 20),
-              ElevatedButton.icon(
-                icon: const Icon(Icons.logout),
-                label: const Text("Logout"),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.red,
-                ),
-                onPressed: () {},
-              ),
-            ],
+        actions: [
+          IconButton(
+            onPressed: () async {
+              Get.to(
+                  () => StoreProfileFormPage(
+                        // product: product,
+                        isEditing: true,
+                        // categories:
+                      ),
+                  binding: StoreProfileFormBinding());
+            },
+            icon: const Icon(
+              Icons.edit,
+              size: 24.0,
+            ),
           ),
+        ],
+      ),
+      body: Container(
+        width: MediaQuery.of(context).size.width,
+        padding: const EdgeInsets.all(10.0),
+        child: Column(
+          children: [
+            Expanded(
+              flex: 11,
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: ProfileDetailWidget(
+                          title: 'Store Name',
+                          subtitle: 'Store Name',
+                        ),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: ProfileDetailWidget(
+                          title: 'Phone Number',
+                          subtitle: 'Phone Number',
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  ProfileDetailWidget(title: 'Address', subtitle: 'Address'),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  ProfileDetailWidget(
+                      title: 'Description', subtitle: 'Description'),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    // padding: EdgeInsets.all(10),
+                    width: MediaQuery.of(context).size.width,
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      child: Text("Edit Tax"),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    // padding: EdgeInsets.all(10),
+                    width: MediaQuery.of(context).size.width,
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      child: Text("Edit Payment Type"),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    // padding: EdgeInsets.all(10),
+                    width: MediaQuery.of(context).size.width,
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      child: Text("Edit Payment Method"),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                child: ElevatedButton.icon(
+                  icon: const Icon(Icons.delete),
+                  label: const Text("Delete Data"),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.red,
+                  ),
+                  onPressed: () {},
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
