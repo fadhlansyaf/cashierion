@@ -20,6 +20,7 @@ class HomeLogic extends GetxController {
   var tax = 0.obs;
   var isOrder = true.obs;
   var totalAmount = 0.0.obs;
+  var pageIndex = 0.obs;
 
   //variabel untuk bottomsheet
   ///Panggil jika butuh setstate pada bottomsheet

@@ -7,6 +7,8 @@ import '../controller/category_list_controller.dart';
 import 'package:pos_app_skripsi/module/category_form/controller/category_form_binding.dart';
 import 'package:pos_app_skripsi/module/category_detail/controller/category_detail_binding.dart';
 
+import '/widgets/search_appbar.dart';
+
 class CategoryListPage extends StatelessWidget {
   const CategoryListPage({Key? key}) : super(key: key);
 
@@ -15,10 +17,13 @@ class CategoryListPage extends StatelessWidget {
     final controller = Get.find<CategoryListLogic>();
 
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("Categories"),
-          actions: const [],
+        appBar: SearchAppBar(
+        title: Title(
+          color: ColorTheme.COLOR_WHITE,
+          child: Text("Category"),
         ),
+        height: MediaQuery.of(context).size.height * 0.14,
+      ),
         floatingActionButton: FloatingActionButton(
           child: const Icon(Icons.add, color: ColorTheme.COLOR_WHITE,),
           onPressed: () async {

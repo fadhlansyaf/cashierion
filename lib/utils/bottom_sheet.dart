@@ -331,6 +331,14 @@ class BottomSheets {
                   keyboardType: TextInputType.text,
                   label: "Payment Type",
                 ),
+                CustomTextFieldOld(
+                  controller: controller.paymentTypeController,
+                  onTap: () {
+                    paymentMethodModalBottomSheet(
+                        context, controller, (paymentDetail) {});
+                  },
+                  label: "Payment Method",
+                ),
               ],
             ),
           ),
@@ -560,42 +568,42 @@ class BottomSheets {
                   ),
                 ],
               ),
-              body: 
-              // Obx(
-              //   () {
-              //     return 
+              body:
+                  // Obx(
+                  //   () {
+                  //     return
                   ListView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    // itemCount: controller.categoryList.length,
-                    itemCount: 2,
-                    shrinkWrap: true,
-                    padding: EdgeInsets.zero,
-                    clipBehavior: Clip.none,
-                    itemBuilder: (context, index) {
-                      return InkWell(
-                        onTap: () {
-                          // onSelected(controller.categoryList[index]);
-                          // Navigator.pop(context);
-                        },
-                        child: Card(
-                          child: Padding(
-                            padding: EdgeInsets.all(15),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Sales",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      );
+                physics: const NeverScrollableScrollPhysics(),
+                // itemCount: controller.categoryList.length,
+                itemCount: 2,
+                shrinkWrap: true,
+                padding: EdgeInsets.zero,
+                clipBehavior: Clip.none,
+                itemBuilder: (context, index) {
+                  return InkWell(
+                    onTap: () {
+                      // onSelected(controller.categoryList[index]);
+                      // Navigator.pop(context);
                     },
-                  ),
+                    child: Card(
+                      child: Padding(
+                        padding: EdgeInsets.all(15),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Sales",
+                              style: TextStyle(
+                                fontSize: 16,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
               //   },
               // ),
             );
