@@ -12,6 +12,9 @@ class ProfileView extends StatelessWidget {
 
   @override
   Widget build(context) {
+    var controller = Get.find<HomeLogic>();
+    bool isEdit = true;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Profile"),
@@ -79,7 +82,8 @@ class ProfileView extends StatelessWidget {
                     child: ElevatedButton(
                       onPressed: () {
                         BottomSheets.changeTaxModalBottomSheet(
-                            context,);
+                          context,
+                        );
                       },
                       child: Text("Edit Tax"),
                     ),
@@ -91,7 +95,10 @@ class ProfileView extends StatelessWidget {
                     // padding: EdgeInsets.all(10),
                     width: MediaQuery.of(context).size.width,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        BottomSheets.paymentTypeModalBottomSheet(
+                            context, controller, isEdit, (paymentType) {});
+                      },
                       child: Text("Edit Payment Type"),
                     ),
                   ),
@@ -102,7 +109,10 @@ class ProfileView extends StatelessWidget {
                     // padding: EdgeInsets.all(10),
                     width: MediaQuery.of(context).size.width,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        BottomSheets.paymentMethodModalBottomSheet(
+                            context, controller, isEdit, (paymentDetail) {});
+                      },
                       child: Text("Edit Payment Method"),
                     ),
                   ),

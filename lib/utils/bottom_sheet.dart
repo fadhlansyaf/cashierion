@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:pos_app_skripsi/core.dart';
 import 'package:pos_app_skripsi/theme/theme_constants.dart';
+import 'package:pos_app_skripsi/utils/dialog.dart';
 
 import '../model/database/category.dart';
 import '../model/database/database_model.dart';
@@ -185,6 +186,7 @@ class BottomSheets {
   static void paymentTypeModalBottomSheet(
       BuildContext context,
       HomeLogic controller,
+      bool isEdit,
       void Function(PaymentTypeModel paymentType) onSelected) {
     showModalBottomSheet<void>(
       isScrollControlled: true,
@@ -211,7 +213,8 @@ class BottomSheets {
                         width: double.infinity,
                         child: ElevatedButton(
                           onPressed: () {
-                            addPaymentTypeModalBottomSheet(context, controller)
+                            addPaymentTypeModalBottomSheet(
+                                    context, controller, false)
                                 .then((value) => controller.initPayments().then(
                                     (value) => controller.setStatePaymentType));
                           },
@@ -228,8 +231,17 @@ class BottomSheets {
                       itemBuilder: (context, index) {
                         return InkWell(
                           onTap: () {
-                            onSelected(controller.paymentType[index]);
-                            Navigator.pop(context);
+                            if (!isEdit) {
+                              onSelected(controller.paymentType[index]);
+                              Navigator.pop(context);
+                            } else {
+                              addPaymentTypeModalBottomSheet(
+                                      context, controller, isEdit)
+                                  .then(
+                                (value) => controller.initPayments().then(
+                                    (value) => controller.setStatePaymentType),
+                              );
+                            }
                           },
                           child: Card(
                             child: Padding(
@@ -261,9 +273,7 @@ class BottomSheets {
   }
 
   static Future<void> addPaymentTypeModalBottomSheet(
-    BuildContext context,
-    HomeLogic controller,
-  ) async {
+      BuildContext context, HomeLogic controller, bool isEdit) async {
     await showModalBottomSheet<void>(
       isScrollControlled: true,
       context: context,
@@ -293,6 +303,24 @@ class BottomSheets {
                         ),
                       ),
                       Spacer(),
+                      isEdit == true
+                          ? IconButton(
+                              onPressed: () async {
+                                Dialogs.deletePaymentTypeDialog(context);
+                              },
+                              icon: const Icon(
+                                Icons.delete,
+                                size: 24.0,
+                              ),
+                            )
+                          : IconButton(
+                              onPressed: () async {},
+                              icon: Icon(
+                                Icons.delete,
+                                size: 24.0,
+                                color: ColorTheme.COLOR_WHITE.withOpacity(0),
+                              ),
+                            ),
                       IconButton(
                         onPressed: () async {
                           controller.insertPaymentType();
@@ -335,7 +363,7 @@ class BottomSheets {
                   controller: controller.paymentTypeController,
                   onTap: () {
                     paymentMethodModalBottomSheet(
-                        context, controller, (paymentDetail) {});
+                        context, controller, false, (paymentDetail) {});
                   },
                   label: "Payment Method",
                 ),
@@ -350,6 +378,7 @@ class BottomSheets {
   static void paymentMethodModalBottomSheet(
       BuildContext context,
       HomeLogic controller,
+      bool isEdit,
       void Function(PaymentDetailModel paymentDetail) onSelected) {
     showModalBottomSheet<void>(
       isScrollControlled: true,
@@ -377,7 +406,7 @@ class BottomSheets {
                         child: ElevatedButton(
                           onPressed: () {
                             addPaymentMethodModalBottomSheet(
-                                    context, controller)
+                                    context, controller, false)
                                 .then((value) => controller.initPayments().then(
                                     (value) =>
                                         controller.setStatePaymentDetail));
@@ -395,8 +424,17 @@ class BottomSheets {
                       itemBuilder: (context, index) {
                         return InkWell(
                           onTap: () {
-                            onSelected(controller.paymentDetail[index]);
-                            Navigator.pop(context);
+                            if (!isEdit) {
+                              onSelected(controller.paymentDetail[index]);
+                              Navigator.pop(context);
+                            } else {
+                              addPaymentMethodModalBottomSheet(
+                                      context, controller, isEdit)
+                                  .then((value) => controller
+                                      .initPayments()
+                                      .then((value) =>
+                                          controller.setStatePaymentDetail));
+                            }
                           },
                           child: Card(
                             child: Padding(
@@ -430,6 +468,7 @@ class BottomSheets {
   static Future<void> addPaymentMethodModalBottomSheet(
     BuildContext context,
     HomeLogic controller,
+    bool isEdit,
   ) async {
     await showModalBottomSheet<void>(
       isScrollControlled: true,
@@ -460,6 +499,24 @@ class BottomSheets {
                         ),
                       ),
                       Spacer(),
+                      isEdit == true
+                          ? IconButton(
+                              onPressed: () async {
+                                Dialogs.deletePaymentMethodDialog(context);
+                              },
+                              icon: const Icon(
+                                Icons.delete,
+                                size: 24.0,
+                              ),
+                            )
+                          : IconButton(
+                              onPressed: () async {},
+                              icon: Icon(
+                                Icons.delete,
+                                size: 24.0,
+                                color: ColorTheme.COLOR_WHITE.withOpacity(0),
+                              ),
+                            ),
                       IconButton(
                         onPressed: () async {
                           controller.insertPaymentDetail();
