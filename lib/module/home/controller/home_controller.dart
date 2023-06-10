@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pos_app_skripsi/core.dart';
 
+import '../../../api/api_manager.dart';
 import '../../../model/database/database_model.dart';
 import '../../../utils/constant.dart';
 import '../../../utils/preferences.dart';
@@ -43,6 +44,8 @@ class HomeLogic extends GetxController {
     if (paymentDetail.isNotEmpty) {
       selectedPaymentDetail = paymentDetail.first.obs;
     }
+    var test = await homeDao.manipulateData();
+    // ApiManager.getPrediction(prediction: test);
     super.onInit();
   }
 

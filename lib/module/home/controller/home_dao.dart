@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pos_app_skripsi/utils/constant.dart';
@@ -62,7 +64,7 @@ class HomeDao {
   }
 
   //TODO: Ganti price berdasarkan order/restock
-  Future<List<PredictionModel>> manipulateData() async {
+  Future<Map<String, dynamic>> manipulateData() async {
     Database db = await DatabaseProvider().database;
 
     var query = '''
@@ -73,8 +75,10 @@ class HomeDao {
 
     final dateRange = await db.rawQuery(
         'SELECT MIN(dates) AS minDate, MAX(dates) AS maxDate FROM ${DatabaseProvider.transactionTable}');
-    final minDate = DateTime.parse(dateRange.first['minDate'] as String);
-    final maxDate = DateTime.parse(dateRange.first['maxDate'] as String);
+    final minDateRaw = DateTime.parse(dateRange.first['minDate'] as String);
+    final minDate = DateTime(minDateRaw.year, minDateRaw.month, minDateRaw.day, 0, 0);
+    final maxDateRaw = DateTime.parse(dateRange.first['maxDate'] as String);
+    final maxDate = DateTime(maxDateRaw.year, maxDateRaw.month, maxDateRaw.day, 23, 59);
 
     final startDateRaw = maxDate
         .subtract(Duration(days: 2 * 365)); // Starting date two years earlier
@@ -93,17 +97,26 @@ class HomeDao {
       final currentDate =
           startDate.add(Duration(days: (i * durationDays).toInt()));
       final endDateLoop = currentDate.add(Duration(days: durationDays.toInt()));
-      final dateDiff = endDateLoop.difference(currentDate).inDays;
+      final dateDiff = currentDate.difference(startDate).inDays;
       for (var e in records) {
         var model = PredictionModel.fromJson(e);
-        final manipulatedDate = DateTime.parse(model.dates).add(Duration(days: dateDiff));
+        final firstManipulatedDate = model.dateTime.add(Duration(days: dateDiff));
+        final manipulatedDate = DateTime(currentDate.year, firstManipulatedDate.month, firstManipulatedDate.day);
         if (model.dateTime.isAfter(currentDate) &&
             model.dateTime.isBefore(endDate)) {
           manipulatedData.add(PredictionModel(item: model.item, sales: model.sales, dates: DateFormat(DateTimeFormat.standard).format(manipulatedDate)));
         }
       }
     }
-
-    return manipulatedData;
+    Map<String, int> item = {};
+    Map<String, double> sales = {};
+    Map<String, String> dates = {};
+    for(int i=0; i<manipulatedData.length; i++){
+      var e = manipulatedData[i];
+      item.addAll({i.toString() : e.item});
+      sales.addAll({i.toString() : e.sales});
+      dates.addAll({i.toString() : e.dates.split(' ').first});
+    }
+    return {"data" : jsonEncode({"item": item, "sales": sales, "dates": dates})};
   }
 }

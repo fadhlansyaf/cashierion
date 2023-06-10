@@ -19,7 +19,7 @@ class TransactionModel {
 
   factory TransactionModel.fromJson(Map<String, dynamic> json) =>
       TransactionModel(
-          id: json["id"] ?? 0,
+          id: json["transaction_id"] ?? 0,
           paymentTypeId: json["payment_type_id"] ?? 0,
           paymentDetailId: json["payment_detail_id"],
           invoice: json["invoice"] ?? '',

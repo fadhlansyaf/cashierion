@@ -6,4 +6,9 @@ enum SharedPreferenceKey{
 
 class DateTimeFormat{
   static const String standard = 'yyyy-MM-dd HH:mm';
+  static const String standardNoTime = 'yyyy-MM-dd';
+}
+
+class ApiUrl{
+  static const prediction = '/cashierion';
 }
