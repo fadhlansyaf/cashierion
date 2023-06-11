@@ -33,4 +33,22 @@ class TransactionModel {
     "dates": dates,
     "sales": sales
   };
+
+  TransactionModel copyWith({
+    int? id,
+    int? paymentTypeId,
+    int? paymentDetailId,
+    String? invoice,
+    String? dates,
+    double? sales,
+  }) {
+    return TransactionModel(
+      id: id ?? this.id,
+      paymentTypeId: paymentTypeId ?? this.paymentTypeId,
+      paymentDetailId: paymentDetailId ?? this.paymentDetailId,
+      invoice: invoice ?? this.invoice,
+      dates: dates ?? this.dates,
+      sales: sales ?? this.sales,
+    );
+  }
 }

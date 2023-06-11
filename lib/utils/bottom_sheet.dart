@@ -513,9 +513,9 @@ class BottomSheets {
 
   static void filterModalBottomSheet(
       BuildContext context,
-      // CategoryListLogic controller,
-      // CategoryFormLogic categoryFormController,
-      void Function(CategoryModel category) onSelected) {
+      ///TransactionHistoryListLogic/TransactionReportLogic
+      dynamic controller,
+      void Function(int selectedFilter) onSelected) {
     showModalBottomSheet<void>(
       isScrollControlled: true,
       context: context,
@@ -523,7 +523,7 @@ class BottomSheets {
         return StatefulBuilder(
           builder: (BuildContext context, StateSetter setState) {
             //Masukin setState bottomsheet ini ke GetX
-            // controller.setState.value ??= setState;
+            controller.setState.value ??= setState;
             return Scaffold(
               appBar: AppBar(
                 bottom: PreferredSize(
@@ -568,44 +568,40 @@ class BottomSheets {
                   ),
                 ],
               ),
-              body:
-                  // Obx(
-                  //   () {
-                  //     return
-                  ListView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                // itemCount: controller.categoryList.length,
-                itemCount: 2,
-                shrinkWrap: true,
-                padding: EdgeInsets.zero,
-                clipBehavior: Clip.none,
-                itemBuilder: (context, index) {
-                  return InkWell(
-                    onTap: () {
-                      // onSelected(controller.categoryList[index]);
-                      // Navigator.pop(context);
-                    },
-                    child: Card(
-                      child: Padding(
-                        padding: EdgeInsets.all(15),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Sales",
-                              style: TextStyle(
-                                fontSize: 16,
+              body: Obx(
+                () {
+                  return ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: controller.filter.length,
+                      shrinkWrap: true,
+                      padding: EdgeInsets.zero,
+                      clipBehavior: Clip.none,
+                      itemBuilder: (context, index) {
+                        return InkWell(
+                          onTap: () {
+                            onSelected(index);
+                            Navigator.pop(context);
+                          },
+                          child: Card(
+                            child: Padding(
+                              padding: EdgeInsets.all(15),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    controller.filter[index],
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
+                          ),
+                        );
+                      });
                 },
               ),
-              //   },
-              // ),
             );
           },
         );
@@ -735,67 +731,6 @@ class BottomSheets {
           });
         });
   }
-
-  @override
-  static Widget CategoryBottomSheet(context) {
-    // final controller = Get.find<ProductFormLogic>();
-
-    return Scaffold(
-      appBar: AppBar(
-        bottom: PreferredSize(
-          child: Column(
-            children: [
-              SizedBox(
-                height: 30,
-              ),
-              Row(
-                children: [
-                  IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: Icon(Icons.arrow_back),
-                  ),
-                  Text(
-                    "Search Category",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  )
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [],
-              ),
-            ],
-          ),
-          preferredSize: Size.fromHeight(100),
-        ),
-        elevation: 0,
-        automaticallyImplyLeading: false,
-        toolbarHeight: 130,
-      ),
-      body: ListView.builder(
-        itemCount: 2,
-        shrinkWrap: true,
-        padding: EdgeInsets.zero,
-        clipBehavior: Clip.none,
-        itemBuilder: (context, index) {
-          var item = "item";
-          return Card(
-            child: ListTile(
-              title: const Text("Jessica Doe"),
-            ),
-          );
-        },
-      ),
-    );
-  }
-
-// @override
-// Size get preferredSize => Size.fromHeight(getHeight());
 }
 
 class SpinnerItem {

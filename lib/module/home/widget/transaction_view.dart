@@ -305,7 +305,7 @@ class TransactionView extends StatelessWidget {
                                                                         secondIndex]
                                                                     .quantity
                                                                     .value++;
-                                                              } else {
+                                                              } else if(!controller.isOrder.value) {
                                                                 products[
                                                                         secondIndex]
                                                                     .quantity

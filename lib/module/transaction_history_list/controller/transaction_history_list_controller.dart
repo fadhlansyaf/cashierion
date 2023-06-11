@@ -17,34 +17,21 @@ class TransactionHistoryListLogic extends GetxController {
   late var endDate = DateTime(now.year, now.month, now.day, 23, 59).obs;
   var filter = ['Order', 'Restock'].obs;
   var selectedFilter = 0.obs;
+  var selectedTransaction = Rx<TransactionModel?>(null);
   ///Panggil jika butuh setstate pada bottomsheet
   Rx<StateSetter?> setState = Rx<StateSetter?>(null);
 
   @override
   Future<void> onInit() async {
+    isLoading.value = true;
     var dao = Get.find<TransactionHistoryListDao>();
-    transactionList = await dao.getTransactionList(startDate.value, endDate.value, selectedFilter.value);
+    transactionList.value = await dao.getTransactionList(startDate.value, endDate.value, selectedFilter.value);
+    transactionCount.clear();
     for(var e in transactionList){
       transactionCount.add(await dao.checkTransactionDetailCount(e));
     }
+    isLoading.value = false;
+    update();
     super.onInit();
   }
-
-  // @override
-  // Future<void> onInit() async {
-  //   super.onInit();
-  //   isLoading.value = true;
-  //   final dao = Get.find<CategoryListDao>();
-  //   categoryList = await dao.getCategoryList();
-  //   for(int i=0; i<categoryList.length; i++){
-  //     categoryCount.add(await dao.checkCategoryCount(categoryList[i]));
-  //   }
-  //   isLoading.value = false;
-  //   update();
-  // }
-
-  // Future<RxList<CategoryModel>> getCategoryList() async {
-  //   final dao = Get.find<CategoryListDao>();
-  //   return await dao.getCategoryList();
-  // }
 }

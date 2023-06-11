@@ -53,7 +53,9 @@ class TransactionReportPage extends StatelessWidget {
                                 child: GestureDetector(
                                   onTap: () {
                                     BottomSheets.filterModalBottomSheet(
-                                        context, (category) {});
+                                        context, controller, (selectedFilter) {
+                                          controller.selectedFilter.value;
+                                        },);
                                   },
                                   child: Card(
                                     child: Container(

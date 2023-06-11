@@ -79,7 +79,7 @@ class Dialogs {
     }
   }
 
-  static void deletetransactionHistoryDialog(
+  static void deleteTransactionHistoryDialog(
     BuildContext context,
     TransactionHistoryDetailLogic controller,
     // TransactionModel transaction,
@@ -108,7 +108,7 @@ class Dialogs {
       ),
     );
     if (result == true) {
-      // controller.deleteItem(product);
+      controller.deleteTransaction();
     }
   }
 

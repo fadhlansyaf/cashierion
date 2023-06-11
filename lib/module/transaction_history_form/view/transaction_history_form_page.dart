@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
@@ -5,33 +6,41 @@ import 'package:pos_app_skripsi/core.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pos_app_skripsi/model/database/database_model.dart';
 
+import '../../../theme/theme_constants.dart';
+import '../../../utils/helper.dart';
 import '../controller/transaction_history_form_controller.dart';
 import '/widgets/custom_text_field.dart';
 
 class TransactionHistoryFormPage extends StatelessWidget {
-  const TransactionHistoryFormPage({
-    Key? key,
-    this.isEditing = false,
-    //  this.category
-  }) : super(key: key);
+  const TransactionHistoryFormPage(
+      {Key? key,
+      this.isEditing = true,
+      required this.transactionDetail,
+      required this.transaction,
+      required this.products})
+      : super(key: key);
   final bool isEditing;
-  // final CategoryModel? category;
+  final List<TransactionDetailModel> transactionDetail;
+  final List<ProductModel> products;
+  final TransactionModel transaction;
 
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<TransactionHistoryFormLogic>();
-    // if(isEditing && category != null){
-    //   controller.textController[0].text = category!.name;
-    //   controller.textController[1].text = category!.description;
-    // }
+    //TODO(dhanis): masukin textController[index] ke buat deskripsi nanti
+    controller.textController = List.generate(
+        transactionDetail.length,
+        (index) => TextEditingController()
+          ..text = transactionDetail[index].description);
+
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Transaction History Form"),
+        title: Text("Edit ${transaction.invoice}"),
         actions: [
           IconButton(
             onPressed: () {
-              // controller.insertOrUpdateCategory(category);
+              controller.editTransaction(transactionDetail, products, transaction);
             },
             icon: const Icon(
               Icons.check,
@@ -43,12 +52,11 @@ class TransactionHistoryFormPage extends StatelessWidget {
       body: Container(
         padding: const EdgeInsets.all(10.0),
         child: ListView.builder(
-          itemCount: 20,
+          itemCount: transactionDetail.length,
           shrinkWrap: true,
           padding: EdgeInsets.zero,
           clipBehavior: Clip.none,
           itemBuilder: (context, index) {
-            var item = "item";
             return Card(
               child: Padding(
                 padding: EdgeInsets.all(10),
@@ -56,7 +64,9 @@ class TransactionHistoryFormPage extends StatelessWidget {
                   children: [
                     CircleAvatar(
                       backgroundColor: Colors.grey[200],
-                      backgroundImage: null,
+                      backgroundImage: products[index].image.isNotEmpty
+                          ? MemoryImage(base64Decode(products[index].image))
+                          : null,
                       radius: 20,
                     ),
                     SizedBox(
@@ -66,8 +76,7 @@ class TransactionHistoryFormPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          // controller.products[index].name,
-                          "Name",
+                          products[index].name,
                           // style: TextStyle(
                           //   fontSize: 16,
                           //   fontWeight: FontWeight.bold,
@@ -77,8 +86,8 @@ class TransactionHistoryFormPage extends StatelessWidget {
                           height: 5,
                         ),
                         Text(
-                          // controller.products[index].description,
-                          "Rp 10.000",
+                          FunctionHelper.convertPriceWithComma(
+                              products[index].price),
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
@@ -92,98 +101,72 @@ class TransactionHistoryFormPage extends StatelessWidget {
                         SizedBox(
                           height: 25,
                         ),
-                        // Text("data"),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            // Obx(() {
-                            //   return
-                            CircleAvatar(
-                              // backgroundColor:
-                              //     products[secondIndex]
-                              //                 .quantity
-                              //                 .value
-                              //                 .obs >
-                              //             0
-                              //         ? ColorTheme
-                              //             .COLOR_CARD
-                              //         : ColorTheme
-                              //             .COLOR_PRIMARY,
-                              radius: 15.0,
-                              child: Center(
-                                child: IconButton(
-                                  onPressed: () {
-                                    // if (products[
-                                    //             secondIndex]
-                                    //         .quantity
-                                    //         .value >
-                                    //     0) {
-                                    //   products[
-                                    //           secondIndex]
-                                    //       .quantity
-                                    //       .value--;
-                                  },
-                                  icon: const Icon(
-                                    Icons.remove,
-                                    color: Colors.white,
-                                    size: 9.0,
+                            Obx(() {
+                              return CircleAvatar(
+                                backgroundColor:
+                                    products[index].quantity.value.obs > 0
+                                        ? ColorTheme.COLOR_CARD
+                                        : ColorTheme.COLOR_PRIMARY,
+                                radius: 15.0,
+                                child: Center(
+                                  child: IconButton(
+                                    onPressed: () {
+                                      if (products[index].quantity.value > 0) {
+                                        products[index].quantity.value--;
+                                      }
+                                    },
+                                    icon: const Icon(
+                                      Icons.remove,
+                                      color: Colors.white,
+                                      size: 9.0,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ),
-                            // }),
+                              );
+                            }),
                             Padding(
-                                padding: EdgeInsets.all(8.0), child: Text("1")
-                                // Obx(() {
-                                //   return Text(
-                                //     products[secondIndex]
-                                //         .quantity
-                                //         .value
-                                //         .toString(),
-                                //     style: TextStyle(
-                                //       fontSize: 14,
-                                //     ),
-                                //   );
-                                // }),
-                                ),
-                            // Obx(() {
-                            //   return
-                            CircleAvatar(
-                              // backgroundColor:
-                              //     products[secondIndex]
-                              //                 .quantity
-                              //                 .value >
-                              //             0
-                              //         ? ColorTheme
-                              //             .COLOR_CARD
-                              //         : ColorTheme
-                              //             .COLOR_PRIMARY,
-                              radius: 15.0,
-                              child: Center(
-                                child: IconButton(
-                                  onPressed: () {
-                                    // if (products[secondIndex]
-                                    //             .quantity
-                                    //             .value <
-                                    //         products[
-                                    //                 secondIndex]
-                                    //             .stock &&
-                                    //     controller.isOrder
-                                    //         .value) {
-                                    //   products[
-                                    //           secondIndex]
-                                    //       .quantity
-                                    //       .value++;
-                                  },
-                                  icon: const Icon(
-                                    Icons.add,
-                                    color: Colors.white,
-                                    size: 9.0,
+                              padding: EdgeInsets.all(8.0),
+                              child: Obx(() {
+                                return Text(
+                                  products[index].quantity.value.toString(),
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                  ),
+                                );
+                              }),
+                            ),
+                            Obx(() {
+                              return CircleAvatar(
+                                backgroundColor:
+                                    products[index].quantity.value > 0
+                                        ? ColorTheme.COLOR_CARD
+                                        : ColorTheme.COLOR_PRIMARY,
+                                radius: 15.0,
+                                child: Center(
+                                  child: IconButton(
+                                    onPressed: () {
+                                      if (products[index].quantity.value <
+                                              products[index].stock+transactionDetail[index].quantity &&
+                                          transaction.invoice
+                                              .startsWith('CO')) {
+                                        products[index].quantity.value++;
+                                      } else if (!transaction.invoice
+                                          .startsWith('CO')) {
+                                        products[index].quantity.value++;
+                                      }
+                                    },
+                                    icon: const Icon(
+                                      Icons.add,
+                                      color: Colors.white,
+                                      size: 9.0,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ),
-                            // }),
+                              );
+                            }),
                           ],
                         ),
                       ],

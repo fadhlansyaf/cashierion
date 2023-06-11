@@ -11,6 +11,8 @@ class TransactionReportLogic extends GetxController {
   // var categoryList = <CategoryModel>[].obs;
   var categoryCount = <int>[].obs;
   var isLoading = true.obs;
+  var filter = ['Order', 'Restock'].obs;
+  var selectedFilter = 0.obs;
   ///Panggil jika butuh setstate pada bottomsheet
   Rx<StateSetter?> setState = Rx<StateSetter?>(null);
 

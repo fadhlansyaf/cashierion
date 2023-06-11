@@ -54,6 +54,8 @@ class HomeLogic extends GetxController {
     for (var e in products) {
       if (isOrder.value) {
         total += e.sellingPrice * e.quantity.value;
+      }else{
+        total += e.price * e.quantity.value;
       }
     }
     totalAmount.value = total;
@@ -131,24 +133,24 @@ class HomeLogic extends GetxController {
     final bool isNewDay =
         lastResetDate.millisecondsSinceEpoch < todayStart.millisecondsSinceEpoch;
 
-    int counter = 0;
+    int counter = 1;
     // Reset the counter if it's a new day
     if (!isNewDay) {
       var prefsCounter = Preferences.getInstance().getInt(SharedPreferenceKey.INVOICE_COUNTER);
       if(prefsCounter != null){
         counter = prefsCounter;
       }else{
-        Preferences.getInstance().setInt(SharedPreferenceKey.INVOICE_COUNTER, 0);
+        Preferences.getInstance().setInt(SharedPreferenceKey.INVOICE_COUNTER, 1);
       }
     }else{
-      Preferences.getInstance().setInt(SharedPreferenceKey.INVOICE_COUNTER, 0);
+      Preferences.getInstance().setInt(SharedPreferenceKey.INVOICE_COUNTER, 1);
     }
 
     String transactionType = isOrder.value ? 'O' : 'S';
 
     // Generate the invoice number
     final invoiceNumber =
-        'C$transactionType-${now.day.toString().padLeft(2, '0')}${now.month.toString().padLeft(2, '0')}${now.year.toString().substring(2)}-${counter.toString().padLeft(5, '0')}';
+        'C$transactionType-${now.day.toString().padLeft(2, '0')}${now.month.toString().padLeft(2, '0')}${now.year.toString().substring(2)}-${counter.toString().padLeft(4, '0')}';
     Preferences.getInstance().setInt(SharedPreferenceKey.INVOICE_COUNTER, counter+=1);
     return invoiceNumber;
   }
@@ -163,8 +165,7 @@ class HomeLogic extends GetxController {
               invoice: await generateInvoiceNumber(),
               dates: DateFormat(DateTimeFormat.standard).format(DateTime.now()),
               sales: totalAmount.value),
-          productList.where((p0) => p0.quantity.value > 0).toList());
-      //TODO (dhanis) buat dialog buat transaksi berhasil. mungkin pake GetDialog aja? cobain aja enaknya gimana
+          productList.where((p0) => p0.quantity.value > 0).toList(), isOrder.value);
 
       for(var e in productList){
         if(e.quantity.value > 0){

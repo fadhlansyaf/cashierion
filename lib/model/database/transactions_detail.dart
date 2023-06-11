@@ -15,7 +15,7 @@ class TransactionDetailModel {
           transactionId: json["transaction_id"],
           productId: json["product_id"],
           quantity: json["quantity"] ?? 0,
-          description: json["desc"] ?? '');
+          description: json["description"] ?? '');
 
   Map<String, dynamic> toJson() => {
         "transaction_id": transactionId,

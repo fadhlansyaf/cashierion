@@ -10,6 +10,7 @@ import 'package:pos_app_skripsi/module/transaction_history_form/view/transaction
 import 'package:pos_app_skripsi/theme/theme_constants.dart';
 
 import 'package:pos_app_skripsi/module/transaction_history_form/controller/transaction_history_form_binding.dart';
+import 'package:pos_app_skripsi/utils/helper.dart';
 
 import '../controller/transaction_history_detail_controller.dart';
 import '../widget/transaction_history_detail_widget.dart';
@@ -17,10 +18,9 @@ import '/utils/dialog.dart';
 
 class TransactionHistoryDetailPage extends StatelessWidget {
   const TransactionHistoryDetailPage({
-    Key? key,
-    // required this.transaction
+    Key? key,required this.type
   }) : super(key: key);
-  // final TransactionModel transaction;
+  final int type;
 
   @override
   Widget build(BuildContext context) {
@@ -28,16 +28,18 @@ class TransactionHistoryDetailPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Transaction Code"),
+        title: Text(controller.transaction.value.invoice),
         actions: [
           IconButton(
             onPressed: () async {
               Get.to(
-                      () => TransactionHistoryFormPage(
-                            // category: category,
-                            isEditing: true,
-                          ),
-                      binding: TransactionHistoryFormBinding())
+                      () =>
+                      TransactionHistoryFormPage(
+                        transaction: controller.transaction.value,
+                        transactionDetail: controller.transactionDetailList,
+                        products: controller.productList,
+                      ),
+                  binding: TransactionHistoryFormBinding())
                   ?.then((value) => controller.onInit());
             },
             icon: const Icon(
@@ -47,7 +49,7 @@ class TransactionHistoryDetailPage extends StatelessWidget {
           ),
           IconButton(
             onPressed: () async {
-              Dialogs.deletetransactionHistoryDialog(context, controller);
+              Dialogs.deleteTransactionHistoryDialog(context, controller);
             },
             icon: const Icon(
               Icons.delete,
@@ -56,111 +58,132 @@ class TransactionHistoryDetailPage extends StatelessWidget {
           ),
         ],
       ),
-      body: Container(
-        padding: const EdgeInsets.all(10.0),
-        child: Column(
-          children: [
-            Expanded(
-              child: ListView.builder(
-                itemCount: 20,
-                shrinkWrap: true,
-                padding: EdgeInsets.zero,
-                clipBehavior: Clip.none,
-                itemBuilder: (context, index) {
-                  var item = "item";
-                  return Card(
-                    child: Padding(
-                      padding: EdgeInsets.all(10),
-                      child: Row(
-                        children: [
-                          CircleAvatar(
-                            backgroundColor: Colors.grey[200],
-                            backgroundImage: null,
-                            radius: 20,
-                          ),
-                          SizedBox(
-                            width: 15,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+      body: Obx(() {
+        if(!controller.isLoading.value) {
+          return Container(
+            padding: const EdgeInsets.all(10.0),
+            child: Column(
+              children: [
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: controller.transactionDetailList.length,
+                    shrinkWrap: true,
+                    padding: EdgeInsets.zero,
+                    clipBehavior: Clip.none,
+                    itemBuilder: (context, index) {
+                      return Card(
+                        child: Padding(
+                          padding: EdgeInsets.all(10),
+                          child: Row(
                             children: [
-                              Text(
-                                // controller.products[index].name,
-                                "Name",
-                                // style: TextStyle(
-                                //   fontSize: 16,
-                                //   fontWeight: FontWeight.bold,
-                                // ),
+                              CircleAvatar(
+                                backgroundColor: Colors.grey[200],
+                                backgroundImage: controller
+                                        .productList[index].image.isNotEmpty
+                                    ? MemoryImage(base64Decode(
+                                        controller.productList[index].image))
+                                    : null,
+                                radius: 20,
                               ),
                               SizedBox(
-                                height: 5,
+                                width: 15,
                               ),
-                              Text(
-                                // controller.products[index].description,
-                                "Rp 10.000 x 2",
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    controller.productList[index].name,
+                                    // style: TextStyle(
+                                    //   fontSize: 16,
+                                    //   fontWeight: FontWeight.bold,
+                                    // ),
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text(
+                                    // controller.products[index].description,
+                                    "${FunctionHelper.convertPriceWithComma(type == 0 ? controller.productList[index].sellingPrice : controller.productList[index].price)} x ${controller.transactionDetailList[index].quantity}",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Spacer(),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    height: 25,
+                                  ),
+                                  Text(
+                                    FunctionHelper.convertPriceWithComma(
+                                        (type == 0
+                                                ? controller.productList[index]
+                                                    .sellingPrice
+                                                : controller
+                                                    .productList[index].price) *
+                                            controller
+                                                .transactionDetailList[index]
+                                                .quantity),
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
-                          Spacer(),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                height: 25,
-                              ),
-                              Text(
-                                // controller.products[index].description,
-                                "Rp 10.000",
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-            Card(
-              child: Container(
-                padding: EdgeInsets.all(10),
-                child: Column(
-                  children: [
-                    TransactionHistoryDetailWidget(
-                        title: "Total:", subtitle: "Rp 10.000"),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    TransactionHistoryDetailWidget(
-                        title: "Tax (10%):", subtitle: "Rp 4.000"),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    TransactionHistoryDetailWidget(
-                        title: "Total Price:", subtitle: "Rp 14.000"),
-                  ],
+                        ),
+                      );
+                    },
+                  ),
                 ),
-              ),
+                Card(
+                  child: Container(
+                    padding: EdgeInsets.all(10),
+                    child: Column(
+                      children: [
+                        TransactionHistoryDetailWidget(
+                            title: "Total:",
+                            subtitle: FunctionHelper.convertPriceWithComma(
+                                controller.transaction.value.sales)),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        TransactionHistoryDetailWidget(
+                            title: "Tax (10%):",
+                            subtitle: FunctionHelper.convertPriceWithComma(
+                                controller.tax.value)),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        TransactionHistoryDetailWidget(
+                            title: "Total Price:",
+                            subtitle: FunctionHelper.convertPriceWithComma(
+                                controller.transaction.value.sales + controller.tax.value)),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
-        // GetBuilder<CategoryDetailLogic>(builder: (logic) {
-        // if (!logic.isLoading.value) {
-        //   return
+            // GetBuilder<CategoryDetailLogic>(builder: (logic) {
+            // if (!logic.isLoading.value) {
+            //   return
 
-        // } else {
-        //   return const CircularProgressIndicator();
-        // }
-        // }),
-      ),
+            // } else {
+            //   return const CircularProgressIndicator();
+            // }
+            // }),
+          );
+        }else{
+          return CircularProgressIndicator();
+        }
+      }),
     );
   }
 }
