@@ -27,7 +27,7 @@ class HomeLogic extends GetxController {
   ///Panggil jika butuh setstate pada bottomsheet
   Rx<StateSetter?> setStatePaymentType = Rx<StateSetter?>(null);
   Rx<StateSetter?> setStatePaymentDetail = Rx<StateSetter?>(null);
-  final paymentTypeController = TextEditingController();
+  final paymentTypeController = [TextEditingController(), TextEditingController()];
   final paymentDetailController = TextEditingController();
 
   @override
@@ -80,7 +80,7 @@ class HomeLogic extends GetxController {
   Future<void> insertPaymentType() async {
     var homeDao = Get.find<HomeDao>();
     await homeDao.insertPaymentType(
-        PaymentTypeModel(paymentName: paymentTypeController.text));
+        PaymentTypeModel(paymentName: paymentTypeController[0].text));
     Get.back();
   }
 
