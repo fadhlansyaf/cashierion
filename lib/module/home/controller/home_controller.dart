@@ -19,6 +19,7 @@ class HomeLogic extends GetxController {
   Rx<PaymentDetailModel?> selectedPaymentDetail = Rx<PaymentDetailModel?>(null);
   var paymentDetail = <PaymentDetailModel>[].obs;
   var tax = 0.obs;
+  var taxTotal = 0.0.obs;
   var isOrder = true.obs;
   var totalAmount = 0.0.obs;
   var pageIndex = 0.obs;
@@ -35,6 +36,7 @@ class HomeLogic extends GetxController {
     var categoryDao = Get.find<CategoryListDao>();
     var productDao = Get.find<ProductListDao>();
     var homeDao = Get.find<HomeDao>();
+    tax.value = Preferences.getInstance().getInt(SharedPreferenceKey.TAX) ?? 0;
     categoryList = await categoryDao.getCategoryList();
     productList = await productDao.getAllProducts();
     checkEmptyCategory();
@@ -58,6 +60,7 @@ class HomeLogic extends GetxController {
         total += e.price * e.quantity.value;
       }
     }
+    taxTotal.value = total * (tax/100);
     totalAmount.value = total;
   }
 

@@ -150,21 +150,21 @@ class TransactionHistoryDetailPage extends StatelessWidget {
                         TransactionHistoryDetailWidget(
                             title: "Total:",
                             subtitle: FunctionHelper.convertPriceWithComma(
-                                controller.transaction.value.sales)),
+                                controller.totalAmount.value)),
                         SizedBox(
                           height: 5,
                         ),
                         TransactionHistoryDetailWidget(
-                            title: "Tax (10%):",
+                            title: "Tax (${controller.tax.value}%):",
                             subtitle: FunctionHelper.convertPriceWithComma(
-                                controller.tax.value)),
+                                controller.taxTotal.value)),
                         SizedBox(
                           height: 5,
                         ),
                         TransactionHistoryDetailWidget(
                             title: "Total Price:",
                             subtitle: FunctionHelper.convertPriceWithComma(
-                                controller.transaction.value.sales + controller.tax.value)),
+                                controller.totalAmount.value + controller.taxTotal.value)),
                       ],
                     ),
                   ),

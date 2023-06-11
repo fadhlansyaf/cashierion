@@ -183,7 +183,7 @@ class TransactionDetailView extends StatelessWidget {
                           Row(
                             children: [
                               Expanded(
-                                child: Text("Tax 10%"),
+                                child: Text("Tax ${controller.tax.value}%"),
                               ),
                               Text(FunctionHelper.convertPriceWithComma(
                                   controller.tax.value)),

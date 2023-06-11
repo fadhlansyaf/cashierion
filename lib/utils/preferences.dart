@@ -8,9 +8,7 @@ class Preferences {
   Preferences._internal();
   
   static Preferences getInstance() {
-    if (_instance == null) {
-      _instance = Preferences._internal();
-    }
+    _instance ??= Preferences._internal();
     
     return _instance!;
   }
@@ -19,6 +17,9 @@ class Preferences {
 
   init() async {
     sharedPreferences = await SharedPreferences.getInstance();
+    if(getInt(SharedPreferenceKey.TAX) == null){
+      setInt(SharedPreferenceKey.TAX, 10);
+    }
   }
 
   bool? getBool(SharedPreferenceKey sharedPreferenceKey, [bool? defValue]) {
