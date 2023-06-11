@@ -112,6 +112,72 @@ class Dialogs {
     }
   }
 
+  static void deletePaymentTypeDialog(
+    BuildContext context,
+    // TransactionHistoryDetailLogic controller,
+    // TransactionModel transaction,
+  ) async {
+    final result = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Are you sure?'),
+        content: const Text('This action will permanently delete this data'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text(
+              'Cancel',
+              style: TextStyle(color: ColorTheme.COLOR_PRIMARY),
+            ),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: const Text(
+              'Delete',
+              style: TextStyle(color: ColorTheme.COLOR_PRIMARY),
+            ),
+          ),
+        ],
+      ),
+    );
+    if (result == true) {
+      // controller.deleteItem(product);
+    }
+  }
+
+  static void deletePaymentMethodDialog(
+    BuildContext context,
+    // TransactionHistoryDetailLogic controller,
+    // TransactionModel transaction,
+  ) async {
+    final result = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Are you sure?'),
+        content: const Text('This action will permanently delete this data'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text(
+              'Cancel',
+              style: TextStyle(color: ColorTheme.COLOR_PRIMARY),
+            ),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: const Text(
+              'Delete',
+              style: TextStyle(color: ColorTheme.COLOR_PRIMARY),
+            ),
+          ),
+        ],
+      ),
+    );
+    if (result == true) {
+      // controller.deleteItem(product);
+    }
+  }
+
   static void productQuantityDialog(
       BuildContext context, List<ProductModel> products, int index
       // TransactionModel transaction,

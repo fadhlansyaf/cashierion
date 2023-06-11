@@ -5,13 +5,16 @@ import 'package:pos_app_skripsi/module/store_profile_form/controller/store_profi
 import 'package:pos_app_skripsi/module/store_profile_form/view/store_profile_form_page.dart';
 
 import 'profile_detail_widget.dart';
+import '/utils/bottom_sheet.dart';
 
 class ProfileView extends StatelessWidget {
   const ProfileView({Key? key}) : super(key: key);
-  
 
   @override
   Widget build(context) {
+    var controller = Get.find<HomeLogic>();
+    bool isEdit = true;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Profile"),
@@ -77,7 +80,11 @@ class ProfileView extends StatelessWidget {
                     // padding: EdgeInsets.all(10),
                     width: MediaQuery.of(context).size.width,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        BottomSheets.changeTaxModalBottomSheet(
+                          context,
+                        );
+                      },
                       child: Text("Edit Tax"),
                     ),
                   ),
@@ -88,7 +95,10 @@ class ProfileView extends StatelessWidget {
                     // padding: EdgeInsets.all(10),
                     width: MediaQuery.of(context).size.width,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        BottomSheets.paymentTypeModalBottomSheet(
+                            context, controller, isEdit, (paymentType) {});
+                      },
                       child: Text("Edit Payment Type"),
                     ),
                   ),
@@ -99,7 +109,10 @@ class ProfileView extends StatelessWidget {
                     // padding: EdgeInsets.all(10),
                     width: MediaQuery.of(context).size.width,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        BottomSheets.paymentMethodModalBottomSheet(
+                            context, controller, isEdit, (paymentDetail) {});
+                      },
                       child: Text("Edit Payment Method"),
                     ),
                   ),

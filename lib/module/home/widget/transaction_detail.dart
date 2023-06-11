@@ -19,6 +19,7 @@ class TransactionDetailView extends StatelessWidget {
     var selectedProducts =
         controller.productList.where((p0) => p0.quantity > 0).toList();
     controller.countTotal(selectedProducts);
+    bool isEdit = false;
     return Scaffold(
       body: Container(
         width: MediaQuery.of(context).size.width,
@@ -113,7 +114,7 @@ class TransactionDetailView extends StatelessWidget {
                             GestureDetector(
                               onTap: () {
                                 BottomSheets.paymentTypeModalBottomSheet(
-                                    context, controller, (paymentType) {
+                                    context, controller, isEdit, (paymentType) {
                                   controller.selectedPaymentType.value =
                                       paymentType;
                                   controller
@@ -140,6 +141,7 @@ class TransactionDetailView extends StatelessWidget {
                                     BottomSheets.paymentMethodModalBottomSheet(
                                         context,
                                         controller,
+                                        isEdit,
                                         (paymentDetail) {});
                                   },
                                   child: Row(
