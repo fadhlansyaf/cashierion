@@ -28,6 +28,10 @@ class HomeLogic extends GetxController {
   var pageIndex = 0.obs;
   Rx<Uint8List?> predictionImage = Rx<Uint8List?>(null);
   var canPredict = true.obs;
+  var sales = 0.0.obs;
+  var expenditure = 0.0.obs;
+  var todayTransaction = 0.obs;
+  var todaySoldProducts = 0.obs;
 
   //variabel untuk bottomsheet
   ///Panggil jika butuh setstate pada bottomsheet
@@ -51,6 +55,11 @@ class HomeLogic extends GetxController {
       e.clear();
     }
     tax.value = Preferences.getInstance().getInt(SharedPreferenceKey.TAX) ?? 0;
+    sales.value = await homeDao.getFinanceSales();
+    expenditure.value = await homeDao.getFinanceExpenditure();
+    var result = await homeDao.getTodayTransaction();
+    todayTransaction.value = result.first as int;
+    todaySoldProducts.value = result.last as int;
     categoryList = await categoryDao.getCategoryList();
     productList = await productDao.getAllProducts();
     checkEmptyCategory();
