@@ -7,10 +7,7 @@ import '../../../model/database/database_model.dart';
 import 'transaction_history_form_dao.dart';
 
 class TransactionHistoryFormLogic extends GetxController {
-  var selectedIndex = 0.obs;
-
-  var selectedImagePath = ''.obs;
-  var selectedImageSize = ''.obs;
+  var isEdited = false.obs;
 
   List<TextEditingController> textController = [];
 
@@ -43,24 +40,8 @@ class TransactionHistoryFormLogic extends GetxController {
     var updatedTransaction = transaction.copyWith(sales: newTotal);
     await dao.editTransactionDetails(
         editedTransactionDetail, updatedTransaction);
+    isEdited.value = true;
     Get.back();
     //TODO(dhanis): snackbar success edit
   }
-
-  // Future<void> insertOrUpdateCategory([CategoryModel? category]) async {
-  //   var dao = Get.find<CategoryFormDao>();
-  //   if(category == null) {
-  //     await dao.insertCategory(CategoryModel(
-  //         name: textController[0].text, description: textController[1].text));
-  //   }else{
-  //     await dao.editCategory(CategoryModel(id: category.id,
-  //         name: textController[0].text, description: textController[1].text));
-  //     Get.back();
-  //   }
-  //   //Clear text
-  //   for(var e in textController){
-  //     e.text = '';
-  //   }
-  //   Get.back();
-  // }
 }
