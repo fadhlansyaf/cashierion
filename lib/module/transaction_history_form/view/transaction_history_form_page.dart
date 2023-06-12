@@ -64,7 +64,7 @@ class TransactionHistoryFormPage extends StatelessWidget {
                       child: Ink(
                     child: InkWell(
                       onLongPress: () {
-                        Dialogs.productQuantityDialog(context, products, index);
+                        Dialogs.productQuantityDialog(context, products[index]);
                       },
                       child: Container(
                         padding: EdgeInsets.all(10),
