@@ -49,23 +49,24 @@ class TransactionHistoryFormPage extends StatelessWidget {
           ),
         ],
       ),
-      body: Obx(() {
-        if (!controller.isEdited.value) {
-          return Container(
-            padding: const EdgeInsets.all(10.0),
-            child: ListView.builder(
-              itemCount: transactionDetail.length,
-              shrinkWrap: true,
-              padding: EdgeInsets.zero,
-              clipBehavior: Clip.none,
-              itemBuilder: (context, index) {
-                return Ink(
-                  child: InkWell(
-                    onLongPress: () {
-                      Dialogs.productQuantityDialog(context, products[index]);
-                    },
-                    child: Card(
-                      child: Padding(
+      body: Container(
+        padding: const EdgeInsets.all(10.0),
+        child: Column(
+          children: [
+            Expanded(
+              child: ListView.builder(
+                itemCount: transactionDetail.length,
+                shrinkWrap: true,
+                padding: EdgeInsets.zero,
+                clipBehavior: Clip.none,
+                itemBuilder: (context, index) {
+                  return Card(
+                      child: Ink(
+                    child: InkWell(
+                      onLongPress: () {
+                        Dialogs.productQuantityDialog(context, products, index);
+                      },
+                      child: Container(
                         padding: EdgeInsets.all(10),
                         child: Row(
                           children: [
@@ -101,46 +102,70 @@ class TransactionHistoryFormPage extends StatelessWidget {
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                SizedBox(
+                                  width: 150,
+                                  child: Text(
+                                    products[index].description,
+                                    maxLines: 3,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      color: ColorTheme.COLOR_WHITE,
+                                    ),
+                                  ),
+                                ),
                               ],
                             ),
                             Spacer(),
                             Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.max,
                               children: [
                                 SizedBox(
-                                  height: 25,
+                                  height: 5,
+                                ),
+                                SizedBox(
+                                  child: Obx(() {
+                                    return Text(
+                                      '${FunctionHelper.convertPriceWithComma(products[index].quantity * products[index].price)}',
+                                      // "Rp " + (products[index].quantity*products[index].price).toString(),
+                                      maxLines: 3,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    );
+                                  }),
+                                ),
+                                SizedBox(
+                                  height: 10,
                                 ),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
-                                    Obx(() {
-                                      return CircleAvatar(
-                                        backgroundColor:
-                                            products[index].quantity.value.obs >
-                                                    0
-                                                ? ColorTheme.COLOR_CARD
-                                                : ColorTheme.COLOR_PRIMARY,
-                                        radius: 15.0,
-                                        child: Center(
-                                          child: IconButton(
-                                            onPressed: () {
-                                              if (products[index]
-                                                      .quantity
-                                                      .value >
-                                                  0) {
-                                                products[index]
-                                                    .quantity
-                                                    .value--;
-                                              }
-                                            },
-                                            icon: const Icon(
-                                              Icons.remove,
-                                              color: Colors.white,
-                                              size: 9.0,
-                                            ),
+                                    CircleAvatar(
+                                      backgroundColor: ColorTheme.COLOR_PRIMARY,
+                                      radius: 15.0,
+                                      child: Center(
+                                        child: IconButton(
+                                          onPressed: () {
+                                            if (products[index].quantity.value >
+                                                0) {
+                                              products[index].quantity.value--;
+                                            }
+                                          },
+                                          icon: const Icon(
+                                            Icons.remove,
+                                            color: Colors.white,
+                                            size: 9.0,
                                           ),
                                         ),
-                                      );
-                                    }),
+                                      ),
+                                    ),
                                     Padding(
                                       padding: EdgeInsets.all(8.0),
                                       child: Obx(() {
@@ -155,61 +180,91 @@ class TransactionHistoryFormPage extends StatelessWidget {
                                         );
                                       }),
                                     ),
-                                    Obx(() {
-                                      return CircleAvatar(
-                                        backgroundColor:
-                                            products[index].quantity.value > 0
-                                                ? ColorTheme.COLOR_CARD
-                                                : ColorTheme.COLOR_PRIMARY,
-                                        radius: 15.0,
-                                        child: Center(
-                                          child: IconButton(
-                                            onPressed: () {
-                                              if (products[index]
-                                                          .quantity
-                                                          .value <
-                                                      products[index].stock +
-                                                          transactionDetail[
-                                                                  index]
-                                                              .quantity &&
-                                                  transaction.invoice
-                                                      .startsWith('CO')) {
-                                                products[index]
-                                                    .quantity
-                                                    .value++;
-                                              } else if (!transaction.invoice
-                                                  .startsWith('CO')) {
-                                                products[index]
-                                                    .quantity
-                                                    .value++;
-                                              }
-                                            },
-                                            icon: const Icon(
-                                              Icons.add,
-                                              color: Colors.white,
-                                              size: 9.0,
-                                            ),
+                                    CircleAvatar(
+                                      backgroundColor: ColorTheme.COLOR_PRIMARY,
+                                      radius: 15.0,
+                                      child: Center(
+                                        child: IconButton(
+                                          onPressed: () {
+                                            if (products[index].quantity.value <
+                                                    products[index].stock +
+                                                        transactionDetail[index]
+                                                            .quantity &&
+                                                transaction.invoice
+                                                    .startsWith('CO')) {
+                                              products[index].quantity.value++;
+                                            } else if (!transaction.invoice
+                                                .startsWith('CO')) {
+                                              products[index].quantity.value++;
+                                            }
+                                          },
+                                          icon: const Icon(
+                                            Icons.add,
+                                            color: Colors.white,
+                                            size: 9.0,
                                           ),
                                         ),
-                                      );
-                                    }),
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ],
-                            )
+                            ),
                           ],
                         ),
                       ),
                     ),
-                  ),
-                );
-              },
+                  ));
+                },
+              ),
             ),
-          );
-        } else {
-          return Container();
-        }
-      }),
+            Card(
+              child: Padding(
+                padding: EdgeInsets.all(15),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text("Total"),
+                        ),
+                        // Text(FunctionHelper.convertPriceWithComma(
+                        //     transactionDetail.totalAmount.value)),
+                        Text("Rp 10.000"),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text("Tax 10%"),
+                        ),
+                        // Text(FunctionHelper.convertPriceWithComma(
+                        //     controller.tax.value)),
+                        Text("Rp 1.000"),
+                      ],
+                    ),
+                    Divider(
+                      thickness: 2,
+                    ),
+                    Row(
+                      children: [
+                        Expanded(child: Text("Total Price")),
+                        // Text(FunctionHelper.convertPriceWithComma(
+                        //     controller.totalAmount.value +
+                        //         controller.tax.value)),
+                        Text("Rp 11.000"),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
