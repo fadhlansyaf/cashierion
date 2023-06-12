@@ -46,7 +46,7 @@ class TransactionHistoryDetailLogic extends GetxController {
   Future<void> deleteTransaction()async {
     final dao = Get.find<TransactionHistoryDetailDao>();
     var listController = Get.find<TransactionHistoryListLogic>();
-    dao.deleteTransaction(listController.selectedTransaction.value!);
+    await dao.deleteTransaction(listController.selectedTransaction.value!);
     Get.back();
   }
 

@@ -17,12 +17,15 @@ class TransactionDetailView extends StatelessWidget {
   Widget build(BuildContext context) {
     var controller = Get.find<HomeLogic>();
     var selectedProducts =
-        controller.productList.where((p0) => p0.quantity > 0).toList();
+    controller.productList.where((p0) => p0.quantity > 0).toList();
     controller.countTotal(selectedProducts);
     bool isEdit = false;
     return Scaffold(
       body: Container(
-        width: MediaQuery.of(context).size.width,
+        width: MediaQuery
+            .of(context)
+            .size
+            .width,
         padding: const EdgeInsets.all(10.0),
         child: Column(
           children: [
@@ -64,7 +67,12 @@ class TransactionDetailView extends StatelessWidget {
                                   height: 5,
                                 ),
                                 Text(
-                                  '${FunctionHelper.convertPriceWithComma(controller.isOrder.value ? selectedProducts[index].sellingPrice : selectedProducts[index].price)} x ${selectedProducts[index].quantity}',
+                                  '${FunctionHelper.convertPriceWithComma(
+                                      controller.isOrder.value
+                                          ? selectedProducts[index].sellingPrice
+                                          : selectedProducts[index]
+                                          .price)} x ${selectedProducts[index]
+                                      .quantity}',
                                   style: TextStyle(
                                     color: ColorTheme.COLOR_WHITE,
                                   ),
@@ -83,9 +91,9 @@ class TransactionDetailView extends StatelessWidget {
                                       controller.isOrder.value
                                           ? selectedProducts[index].sellingPrice
                                           : selectedProducts[index].price *
-                                              selectedProducts[index]
-                                                  .quantity
-                                                  .value),
+                                          selectedProducts[index]
+                                              .quantity
+                                              .value),
                                   style: TextStyle(
                                     color: ColorTheme.COLOR_WHITE,
                                   ),
@@ -101,7 +109,10 @@ class TransactionDetailView extends StatelessWidget {
               ),
             ),
             Container(
-              width: MediaQuery.of(context).size.width,
+              width: MediaQuery
+                  .of(context)
+                  .size
+                  .width,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -142,13 +153,15 @@ class TransactionDetailView extends StatelessWidget {
                                         context,
                                         controller,
                                         isEdit,
-                                        (paymentDetail) {});
+                                            (paymentDetail) {
+                                          controller.selectedPaymentDetail.value = paymentDetail;
+                                            });
                                   },
                                   child: Row(
                                     children: [
                                       Expanded(child: Text("Payment Method")),
                                       Text(controller.selectedPaymentDetail
-                                              .value?.description ??
+                                          .value?.description ??
                                           ''),
                                       Icon(
                                         Icons.edit,
@@ -164,58 +177,61 @@ class TransactionDetailView extends StatelessWidget {
                     ),
                   ),
                   Card(
-                    child: Padding(
-                      padding: EdgeInsets.all(15),
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Text("Total"),
-                              ),
-                              Text(FunctionHelper.convertPriceWithComma(
-                                  controller.totalAmount.value)),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Text("Tax ${controller.tax.value}%"),
-                              ),
-                              Text(FunctionHelper.convertPriceWithComma(
-                                  controller.tax.value)),
-                            ],
-                          ),
-                          Divider(
-                            thickness: 2,
-                          ),
-                          Row(
-                            children: [
-                              Expanded(child: Text("Total Price")),
-                              Text(FunctionHelper.convertPriceWithComma(
-                                  controller.totalAmount.value +
-                                      controller.tax.value)),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
+                    child: Obx(() {
+                      return Padding(
+                        padding: EdgeInsets.all(15),
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Text("Total"),
+                                ),
+                                Text(FunctionHelper.convertPriceWithComma(
+                                    controller.totalAmount.value)),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 15,
+                            ),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Text("Tax ${controller.tax.value}%"),
+                                ),
+                                Text(FunctionHelper.convertPriceWithComma(
+                                    controller.tax.value)),
+                              ],
+                            ),
+                            Divider(
+                              thickness: 2,
+                            ),
+                            Row(
+                              children: [
+                                Expanded(child: Text("Total Price")),
+                                Text(FunctionHelper.convertPriceWithComma(
+                                    controller.totalAmount.value +
+                                        controller.tax.value)),
+                              ],
+                            ),
+                          ],
+                        ),
+                      );
+                    }),
                   ),
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: selectedProducts.isNotEmpty
                           ? () {
-                              controller.insertTransaction(pageController);
-                              Get.snackbar(
-                                  'Success', 'Transaction has been successfully inserted',
-                                  snackPosition: SnackPosition.BOTTOM,
-                                  backgroundColor: Colors.green,
-                                  colorText: Colors.white);
-                            }
+                        controller.insertTransaction(pageController);
+                        Get.snackbar(
+                            'Success',
+                            'Transaction has been successfully inserted',
+                            snackPosition: SnackPosition.BOTTOM,
+                            backgroundColor: Colors.green,
+                            colorText: Colors.white);
+                      }
                           : null,
                       child: Text("Create Transaction"),
                     ),
