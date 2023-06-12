@@ -28,8 +28,11 @@ class HomeLogic extends GetxController {
   ///Panggil jika butuh setstate pada bottomsheet
   Rx<StateSetter?> setStatePaymentType = Rx<StateSetter?>(null);
   Rx<StateSetter?> setStatePaymentDetail = Rx<StateSetter?>(null);
+
   final paymentTypeController = [TextEditingController(), TextEditingController()];
+  // final paymentDetailController = [TextEditingController(), TextEditingController()];
   final paymentDetailController = TextEditingController();
+
 
   @override
   Future<void> onInit() async {

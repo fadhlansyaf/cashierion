@@ -361,18 +361,7 @@ class BottomSheets {
                       keyboardType: TextInputType.text,
                       label: "Payment Type",
                     ),
-                    CustomTextFieldOld(
-                      controller: controller.paymentTypeController[1],
-                      onTap: () {
-                        paymentMethodModalBottomSheet(
-                            context, controller, false, (paymentDetail) {
-                          controller.selectedPaymentDetail.value = paymentDetail;
-                          controller.paymentTypeController[1].text = paymentDetail.description;
-                          controller.setStatePaymentDetail.value;
-                        });
-                      },
-                      label: "Payment Method",
-                    ),
+                    
                   ],
                 ),
               ),
@@ -558,16 +547,23 @@ class BottomSheets {
             padding: EdgeInsets.all(10),
             child: Column(
               children: [
-                // CustomTextFieldOld(
-                //   controller: controller.textController[0],
-                //   keyboardType: TextInputType.text,
-                //   label: "Payment Method",
-                // ),
-                // CustomTextFieldOld(
-                //   controller: controller.textController[1],
-                //   keyboardType: TextInputType.text,
-                //   label: "Description",
-                // ),
+                CustomTextFieldOld(
+                  controller: controller.paymentDetailController,
+                  keyboardType: TextInputType.text,
+                  label: "Payment Method",
+                ),
+                CustomTextFieldOld(
+                      controller: controller.paymentDetailController,
+                      onTap: () {
+                        paymentTypeModalBottomSheet(
+                            context, controller, false, (paymentDetail) {
+                          // controller.selectedPaymentDetail.value = paymentDetail;
+                          // controller.paymentTypeController[1].text = paymentDetail.description;
+                          // controller.setStatePaymentDetail.value;
+                        });
+                      },
+                      label: "Payment Type",
+                    ),
               ],
             ),
           ),
