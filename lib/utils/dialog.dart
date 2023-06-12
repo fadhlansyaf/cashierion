@@ -275,4 +275,72 @@ class Dialogs {
       // controller.deleteItem(product);
     }
   }
+
+  static void addTaxDialog(
+      BuildContext context
+      // TransactionModel transaction,
+      ) async {
+    final result = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Edit Tax'),
+        content: Container(
+          margin: const EdgeInsets.symmetric(vertical: 10),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextFormField(
+                // onSaved: onSaved,
+                keyboardType: TextInputType.number,
+                // controller: controller,
+                // onTap: onTap,
+                // readOnly: onTap != null,
+                cursorColor: ColorTheme.COLOR_PRIMARY,
+                decoration: InputDecoration(
+                  // helperText: helperText,
+                  labelText: "Tax",
+                  labelStyle: TextStyle(color: ColorTheme.COLOR_GREY),
+                  floatingLabelBehavior: FloatingLabelBehavior.always,
+                  fillColor: ColorTheme.COLOR_CARD,
+                  filled: true,
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: ColorTheme.COLOR_WHITE),
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: ColorTheme.COLOR_PRIMARY),
+                  ),
+                  border: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      width: 0.25,
+                    ),
+                  ),
+                  // suffixIcon: onTap != null ? suffixIcon : null,
+                ),
+              ),
+              
+            ],
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text(
+              'Cancel',
+              style: TextStyle(color: ColorTheme.COLOR_PRIMARY),
+            ),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: const Text(
+              'Ok',
+              style: TextStyle(color: ColorTheme.COLOR_PRIMARY),
+            ),
+          ),
+        ],
+      ),
+    );
+    if (result == true) {
+      // controller.deleteItem(product);
+    }
+  }
 }

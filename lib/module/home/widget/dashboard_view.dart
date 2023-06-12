@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:photo_view/photo_view.dart';
 import 'package:pos_app_skripsi/core.dart';
 import 'package:pos_app_skripsi/module/category_list/controller/category_list_binding.dart';
 import 'package:pos_app_skripsi/module/product_list/controller/product_list_binding.dart';
@@ -51,41 +52,37 @@ class DashboardView extends StatelessWidget {
                       {
                         "icon": "assets/icons8-product-32.png",
                         "label": "Products\n",
-                        "onTap": () =>
-                            Get.to(ProductListPage(),
+                        "onTap": () => Get.to(ProductListPage(),
                                 binding: ProductListBinding())
-                                ?.then((value) => controller.onInit()),
+                            ?.then((value) => controller.onInit()),
                       },
                       {
                         "icon": "assets/icons8-category-32.png",
                         "label": "Categories\n",
-                        "onTap": () =>
-                            Get.to(CategoryListPage(),
+                        "onTap": () => Get.to(CategoryListPage(),
                                 binding: CategoryListBinding())
-                                ?.then((value) => controller.onInit()),
+                            ?.then((value) => controller.onInit()),
                       },
                       {
                         "icon": "assets/icons8-transaction-32.png",
                         "label": "Transaction\nDetail",
-                        "onTap": () =>
-                            Get.to(TransactionHistoryListPage(),
+                        "onTap": () => Get.to(TransactionHistoryListPage(),
                                 binding: TransactionHistoryListBinding())
-                                ?.then((value) => controller.onInit()),
+                            ?.then((value) => controller.onInit()),
                       },
                       {
                         "icon": "assets/icons8-report-32.png",
                         "label": "Transaction\nReport",
-                        "onTap": () =>
-                            Get.to(TransactionReportPage(),
+                        "onTap": () => Get.to(TransactionReportPage(),
                                 binding: TransactionReportBinding())
-                                ?.then((value) => controller.onInit()),
+                            ?.then((value) => controller.onInit()),
                       },
                     ];
 
                     return Wrap(
                       children: List.generate(
                         menus.length,
-                            (index) {
+                        (index) {
                           var item = menus[index];
 
                           var size = constraint.biggest.width / 4;
@@ -97,7 +94,7 @@ class DashboardView extends StatelessWidget {
                               style: ElevatedButton.styleFrom(
                                 foregroundColor: ColorTheme.COLOR_GREY,
                                 animationDuration:
-                                const Duration(milliseconds: 1000),
+                                    const Duration(milliseconds: 1000),
                                 backgroundColor: Colors.transparent,
                                 splashFactory: InkSplash.splashFactory,
                                 shadowColor: Colors.transparent,
@@ -151,12 +148,28 @@ class DashboardView extends StatelessWidget {
                               fontSize: 12,
                               fontWeight: FontWeight.bold),
                         ),
+                        SizedBox(
+                          height: 5,
+                        ),
                         if (controller.predictionImage.value != null)
-                          Image.memory(
-                            controller.predictionImage.value!,
-                            height: 150,
+                          Container(
                             width: double.infinity,
+                            height: 150,
+                            child: InteractiveViewer(
+                              child: Image.memory(
+                                controller.predictionImage.value!,
+                                height: 150,
+                                width: double.infinity,
+                              ),
+                            ),
                           )
+                        else
+                          Container(
+                              width: double.infinity,
+                              height: 150,
+                              alignment: AlignmentDirectional.center,
+                              child: Text(
+                                  "Data range must be greater than 30 days"))
                       ],
                     ),
                   ),
