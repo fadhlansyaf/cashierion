@@ -18,7 +18,7 @@ class ProductFormLogic extends GetxController {
   var selectedImagePath = ''.obs;
   var selectedImageSize = ''.obs;
   Uint8List? selectedImageBytes;
-  late Rx<CategoryModel> selectedCategory;
+  Rx<CategoryModel> selectedCategory = CategoryModel(name: '', description: '').obs;
 
   /// 0 = Product Name
   ///

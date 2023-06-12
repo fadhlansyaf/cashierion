@@ -19,7 +19,8 @@ class HomeLogic extends GetxController {
   late Rx<PaymentTypeModel> selectedPaymentType;
   var paymentType = <PaymentTypeModel>[].obs;
   Rx<PaymentDetailModel?> selectedPaymentDetail = Rx<PaymentDetailModel?>(null);
-  var paymentDetail = <PaymentDetailModel>[].obs;
+  var specificPaymentDetail = <PaymentDetailModel>[].obs;
+  var allPaymentDetail = <PaymentDetailModel>[].obs;
   var tax = 0.obs;
   var taxTotal = 0.0.obs;
   var isOrder = true.obs;
@@ -33,9 +34,9 @@ class HomeLogic extends GetxController {
   Rx<StateSetter?> setStatePaymentType = Rx<StateSetter?>(null);
   Rx<StateSetter?> setStatePaymentDetail = Rx<StateSetter?>(null);
 
-  final paymentTypeController = [TextEditingController(), TextEditingController()];
-  // final paymentDetailController = [TextEditingController(), TextEditingController()];
-  final paymentDetailController = TextEditingController();
+  final paymentTypeController = TextEditingController();
+  final paymentDetailController = [TextEditingController(), TextEditingController()];
+  // final paymentDetailController = TextEditingController();
 
 
   @override
@@ -43,15 +44,22 @@ class HomeLogic extends GetxController {
     var categoryDao = Get.find<CategoryListDao>();
     var productDao = Get.find<ProductListDao>();
     var homeDao = Get.find<HomeDao>();
+    paymentTypeController.clear();
+    specificPaymentDetail.clear();
+    allPaymentDetail.clear();
+    for(var e in paymentDetailController){
+      e.clear();
+    }
     tax.value = Preferences.getInstance().getInt(SharedPreferenceKey.TAX) ?? 0;
     categoryList = await categoryDao.getCategoryList();
     productList = await productDao.getAllProducts();
     checkEmptyCategory();
-    paymentType = await homeDao.getAllPaymentType();
+    paymentType.value = await homeDao.getAllPaymentType();
     selectedPaymentType = paymentType.first.obs;
-    paymentDetail = await homeDao.getPaymentDetail(selectedPaymentType.value);
-    if (paymentDetail.isNotEmpty) {
-      selectedPaymentDetail = paymentDetail.first.obs;
+    allPaymentDetail.value = await homeDao.getAllPaymentDetail();
+    specificPaymentDetail.value = await homeDao.getPaymentDetailUsingPaymentType(selectedPaymentType.value);
+    if (specificPaymentDetail.isNotEmpty) {
+      selectedPaymentDetail = specificPaymentDetail.first.obs;
     }
     var prediction = await homeDao.manipulateData();
     if(prediction["data"] != null) {
@@ -79,31 +87,50 @@ class HomeLogic extends GetxController {
 
   ///Dipanggil ketika user menambahkan payment type/detail baru
   Future<void> initPayments() async {
+    paymentTypeController.clear();
+    specificPaymentDetail.clear();
+    allPaymentDetail.clear();
+    for(var e in paymentDetailController){
+      e.clear();
+    }
     var homeDao = Get.find<HomeDao>();
     paymentType = await homeDao.getAllPaymentType();
-    paymentDetail = await homeDao.getPaymentDetail(selectedPaymentType.value);
+    specificPaymentDetail.value = await homeDao.getPaymentDetailUsingPaymentType(selectedPaymentType.value);
+    allPaymentDetail.value = await homeDao.getAllPaymentDetail();
+    print(allPaymentDetail);
   }
 
   ///Dipanggil ketika user mengubah tipe pembayaran
   Future<void> reinitializeSelectedPaymentDetail() async {
     var homeDao = Get.find<HomeDao>();
-    paymentDetail = await homeDao.getPaymentDetail(selectedPaymentType.value);
-    if (paymentDetail.isNotEmpty) {
-      selectedPaymentDetail = paymentDetail.first.obs;
+    specificPaymentDetail = await homeDao.getPaymentDetailUsingPaymentType(selectedPaymentType.value);
+    if (specificPaymentDetail.isNotEmpty) {
+      selectedPaymentDetail = specificPaymentDetail.first.obs;
     }
+  }
+
+  Future<PaymentTypeModel> getPaymentDetailUsingId(PaymentDetailModel paymentDetail) async {
+    var homeDao = Get.find<HomeDao>();
+    return await homeDao.getPaymentTypeUsingPaymentDetailId(paymentDetail);
   }
 
   Future<void> insertPaymentType() async {
     var homeDao = Get.find<HomeDao>();
     await homeDao.insertPaymentType(
-        PaymentTypeModel(paymentName: paymentTypeController[0].text));
+        PaymentTypeModel(paymentName: paymentTypeController.text));
     Get.back();
   }
 
-  Future<void> insertPaymentDetail() async {
+  Future<void> insertPaymentDetail(PaymentTypeModel paymentType) async {
     var homeDao = Get.find<HomeDao>();
     await homeDao.insertPaymentDetail(PaymentDetailModel(
-        paymentTypeId: 1, description: paymentDetailController.text));
+        paymentTypeId: paymentType.id, description: paymentDetailController[0].text));
+    Get.back();
+  }
+
+  Future<void> editPaymentDetail(PaymentDetailModel paymentDetail) async {
+    var homeDao = Get.find<HomeDao>();
+    await homeDao.editPaymentDetail(paymentDetail);
     Get.back();
   }
 

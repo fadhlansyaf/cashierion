@@ -133,7 +133,7 @@ class TransactionDetailView extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            if (controller.paymentDetail.isNotEmpty)
+                            if (controller.specificPaymentDetail.isNotEmpty)
                               Padding(
                                 padding: const EdgeInsets.only(top: 15.0),
                                 child: GestureDetector(
