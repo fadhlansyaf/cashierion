@@ -7,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:pos_app_skripsi/model/database/database_model.dart';
 
 import '../../../theme/theme_constants.dart';
+import '../../../utils/dialog.dart';
 import '../../../utils/helper.dart';
 import '../controller/transaction_history_form_controller.dart';
 import '/widgets/custom_text_field.dart';
@@ -65,7 +66,7 @@ class TransactionHistoryFormPage extends StatelessWidget {
                           child: Ink(
                             child: InkWell(
                               onLongPress: () {
-                                Dialogs.productQuantityDialog(context, products, index);
+                                Dialogs.productQuantityDialog(context, products[index]);
                               },
                               child: Container(
                                 padding: EdgeInsets.all(10),
