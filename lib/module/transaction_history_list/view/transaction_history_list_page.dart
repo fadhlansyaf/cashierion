@@ -175,7 +175,7 @@ class TransactionHistoryListPage extends StatelessWidget {
                                 SizedBox(
                                   height: 10,
                                 ),
-                                Text(
+                                if(!controller.isLoading.value)Text(
                                   "${controller.transactionCount[index]} items",
                                   style: TextStyle(
                                     fontSize: 16,

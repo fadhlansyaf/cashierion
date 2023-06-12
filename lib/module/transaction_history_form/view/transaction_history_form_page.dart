@@ -12,12 +12,11 @@ import '../controller/transaction_history_form_controller.dart';
 import '/widgets/custom_text_field.dart';
 
 class TransactionHistoryFormPage extends StatelessWidget {
-  const TransactionHistoryFormPage(
-      {Key? key,
-      this.isEditing = true,
-      required this.transactionDetail,
-      required this.transaction,
-      required this.products})
+  const TransactionHistoryFormPage({Key? key,
+    this.isEditing = true,
+    required this.transactionDetail,
+    required this.transaction,
+    required this.products})
       : super(key: key);
   final bool isEditing;
   final List<TransactionDetailModel> transactionDetail;
@@ -27,10 +26,10 @@ class TransactionHistoryFormPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<TransactionHistoryFormLogic>();
-    //TODO(dhanis): masukin textController[index] ke buat deskripsi nanti
     controller.textController = List.generate(
         transactionDetail.length,
-        (index) => TextEditingController()
+            (index) =>
+        TextEditingController()
           ..text = transactionDetail[index].description);
 
     return Scaffold(
@@ -49,101 +48,69 @@ class TransactionHistoryFormPage extends StatelessWidget {
           ),
         ],
       ),
-      body: Container(
-        padding: const EdgeInsets.all(10.0),
-        child: Column(
-          children: [
-            Expanded(
-              child: ListView.builder(
-                itemCount: transactionDetail.length,
-                shrinkWrap: true,
-                padding: EdgeInsets.zero,
-                clipBehavior: Clip.none,
-                itemBuilder: (context, index) {
-                  return Card(
-                    child: Padding(
-                      padding: EdgeInsets.all(10),
-                      child: Row(
-                        children: [
-                          CircleAvatar(
-                            backgroundColor: Colors.grey[200],
-                            backgroundImage: products[index].image.isNotEmpty
-                                ? MemoryImage(
-                                    base64Decode(products[index].image))
-                                : null,
-                            radius: 20,
-                          ),
-                          SizedBox(
-                            width: 15,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                products[index].name,
-                                // style: TextStyle(
-                                //   fontSize: 16,
-                                //   fontWeight: FontWeight.bold,
-                                // ),
+      body: Obx(() {
+        if(!controller.isEdited.value) {
+          return Container(
+            padding: const EdgeInsets.all(10.0),
+            child: ListView.builder(
+              itemCount: transactionDetail.length,
+              shrinkWrap: true,
+              padding: EdgeInsets.zero,
+              clipBehavior: Clip.none,
+              itemBuilder: (context, index) {
+                return Card(
+                  child: Padding(
+                    padding: EdgeInsets.all(10),
+                    child: Row(
+                      children: [
+                        CircleAvatar(
+                          backgroundColor: Colors.grey[200],
+                          backgroundImage: products[index].image.isNotEmpty
+                              ? MemoryImage(base64Decode(products[index].image))
+                              : null,
+                          radius: 20,
+                        ),
+                        SizedBox(
+                          width: 15,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              products[index].name,
+                              // style: TextStyle(
+                              //   fontSize: 16,
+                              //   fontWeight: FontWeight.bold,
+                              // ),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              FunctionHelper.convertPriceWithComma(
+                                  products[index].price),
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
                               ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Text(
-                                FunctionHelper.convertPriceWithComma(
-                                    products[index].price),
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              SizedBox(
-                                width: 150,
-                                child: Text(
-                                  products[index].description,
-                                  maxLines: 3,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                    color: ColorTheme.COLOR_WHITE,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Spacer(),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              SizedBox(
-                                height: 5,
-                              ),
-                              SizedBox(
-                                child: Obx(() {
-                                  return Text(
-                                    '${FunctionHelper.convertPriceWithComma(products[index].quantity * products[index].price)}',
-                                    // "Rp " + (products[index].quantity*products[index].price).toString(),
-                                    maxLines: 3,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  );
-                                }),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  CircleAvatar(
-                                    backgroundColor: ColorTheme.COLOR_PRIMARY,
+                            ),
+                          ],
+                        ),
+                        Spacer(),
+                        Column(
+                          children: [
+                            SizedBox(
+                              height: 25,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Obx(() {
+                                  return CircleAvatar(
+                                    backgroundColor:
+                                        products[index].quantity.value.obs > 0
+                                            ? ColorTheme.COLOR_CARD
+                                            : ColorTheme.COLOR_PRIMARY,
                                     radius: 15.0,
                                     child: Center(
                                       child: IconButton(
@@ -160,23 +127,25 @@ class TransactionHistoryFormPage extends StatelessWidget {
                                         ),
                                       ),
                                     ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: Obx(() {
-                                      return Text(
-                                        products[index]
-                                            .quantity
-                                            .value
-                                            .toString(),
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                        ),
-                                      );
-                                    }),
-                                  ),
-                                  CircleAvatar(
-                                    backgroundColor: ColorTheme.COLOR_PRIMARY,
+                                  );
+                                }),
+                                Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Obx(() {
+                                    return Text(
+                                      products[index].quantity.value.toString(),
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                      ),
+                                    );
+                                  }),
+                                ),
+                                Obx(() {
+                                  return CircleAvatar(
+                                    backgroundColor:
+                                        products[index].quantity.value > 0
+                                            ? ColorTheme.COLOR_CARD
+                                            : ColorTheme.COLOR_PRIMARY,
                                     radius: 15.0,
                                     child: Center(
                                       child: IconButton(
@@ -200,65 +169,23 @@ class TransactionHistoryFormPage extends StatelessWidget {
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-            Card(
-                    child: Padding(
-                      padding: EdgeInsets.all(15),
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Text("Total"),
-                              ),
-                              // Text(FunctionHelper.convertPriceWithComma(
-                              //     transactionDetail.totalAmount.value)),
-                              Text("Rp 10.000"),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Text("Tax 10%"),
-                              ),
-                              // Text(FunctionHelper.convertPriceWithComma(
-                              //     controller.tax.value)),
-                              Text("Rp 1.000"),
-                            ],
-                          ),
-                          Divider(
-                            thickness: 2,
-                          ),
-                          Row(
-                            children: [
-                              Expanded(child: Text("Total Price")),
-                              // Text(FunctionHelper.convertPriceWithComma(
-                              //     controller.totalAmount.value +
-                              //         controller.tax.value)),
-                              Text("Rp 11.000"),
-                            ],
-                          ),
-                        ],
-                      ),
+                                  );
+                                }),
+                              ],
+                            ),
+                          ],
+                        )
+                      ],
                     ),
                   ),
-          ],
-        ),
-      ),
+                );
+              },
+            ),
+          );
+        }else{
+          return Container();
+        }
+      }),
     );
   }
 }

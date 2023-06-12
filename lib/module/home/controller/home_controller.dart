@@ -60,6 +60,8 @@ class HomeLogic extends GetxController {
     specificPaymentDetail.value = await homeDao.getPaymentDetailUsingPaymentType(selectedPaymentType.value);
     if (specificPaymentDetail.isNotEmpty) {
       selectedPaymentDetail = specificPaymentDetail.first.obs;
+    }else{
+      selectedPaymentDetail.value = null;
     }
     var prediction = await homeDao.manipulateData();
     if(prediction["data"] != null) {
@@ -102,9 +104,11 @@ class HomeLogic extends GetxController {
   ///Dipanggil ketika user mengubah tipe pembayaran
   Future<void> reinitializeSelectedPaymentDetail() async {
     var homeDao = Get.find<HomeDao>();
-    specificPaymentDetail = await homeDao.getPaymentDetailUsingPaymentType(selectedPaymentType.value);
+    specificPaymentDetail.value = await homeDao.getPaymentDetailUsingPaymentType(selectedPaymentType.value);
     if (specificPaymentDetail.isNotEmpty) {
       selectedPaymentDetail = specificPaymentDetail.first.obs;
+    }else{
+      selectedPaymentDetail.value = null;
     }
   }
 
