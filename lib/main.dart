@@ -18,6 +18,9 @@ void main() async{
     navigatorKey: OldGet.navigatorKey,
     debugShowCheckedModeBanner: false,
     home: const HomePage(),
+    // initialBinding: HomeBinding(),
+    // home: const RegisterPage(),
+    // initialBinding: RegisterBinding(),
     ));
 }
 
