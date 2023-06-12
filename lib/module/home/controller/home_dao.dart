@@ -75,50 +75,54 @@ class HomeDao {
     final dateRange = await db.rawQuery(
         'SELECT MIN(dates) AS minDate, MAX(dates) AS maxDate FROM ${DatabaseProvider.transactionTable}');
 
-    if (dateRange.first['minRange'] != null) {
+    if (dateRange.first['minDate'] != null) {
       final minDateRaw = DateTime.parse(dateRange.first['minDate'] as String);
       final minDate = DateTime(minDateRaw.year, minDateRaw.month, minDateRaw.day, 0, 0);
       final maxDateRaw = DateTime.parse(dateRange.first['maxDate'] as String);
       final maxDate = DateTime(maxDateRaw.year, maxDateRaw.month, maxDateRaw.day, 23, 59);
 
-      final startDateRaw = maxDate
-          .subtract(Duration(days: 2 * 365)); // Starting date two years earlier
-      final endDate = DateTime(maxDate.year, maxDate.month, maxDate.day, 23, 59); // Ending date is the latest date in the database
-      var startDate = DateTime(startDateRaw.year, startDateRaw.month, startDateRaw.day, 23, 59);
+      if (minDate.difference(maxDate).abs() >= Duration(days: 30)) {
+        final startDateRaw = maxDate
+            .subtract(Duration(days: 2 * 365)); // Starting date two years earlier
+        final endDate = DateTime(maxDate.year, maxDate.month, maxDate.day, 23, 59); // Ending date is the latest date in the database
+        var startDate = DateTime(startDateRaw.year, startDateRaw.month, startDateRaw.day, 23, 59);
 
-      final records = await db.rawQuery(query);
+        final records = await db.rawQuery(query);
 
-      final List<PredictionModel> manipulatedData = [];
+        final List<PredictionModel> manipulatedData = [];
 
-      final durationDays = (maxDate.add(const Duration(days: 1))).difference(minDate).inDays.toDouble();
-      final recordCount = records.length;
-      final loopCount = (2 * 365 / durationDays).ceil();
+        final durationDays = (maxDate.add(const Duration(days: 1))).difference(minDate).inDays.toDouble();
+        final recordCount = records.length;
+        final loopCount = (2 * 365 / durationDays).ceil();
 
-      for (var i = 0; i < loopCount; i++) {
-        final currentDate =
-            startDate.add(Duration(days: (i * durationDays).toInt()));
-        final endDateLoop = currentDate.add(Duration(days: durationDays.toInt()));
-        final dateDiff = currentDate.difference(startDate).inDays;
-        for (var e in records) {
-          var model = PredictionModel.fromJson(e);
-          final firstManipulatedDate = model.dateTime.add(Duration(days: dateDiff));
-          final manipulatedDate = DateTime(currentDate.year, firstManipulatedDate.month, firstManipulatedDate.day);
-          if (model.dateTime.isAfter(currentDate) &&
-              model.dateTime.isBefore(endDate)) {
-            manipulatedData.add(PredictionModel(item: model.item, sales: model.sales, dates: DateFormat(DateTimeFormat.standard).format(manipulatedDate)));
+        for (var i = 0; i < loopCount; i++) {
+          final currentDate =
+              startDate.add(Duration(days: (i * durationDays).toInt()));
+          final endDateLoop = currentDate.add(Duration(days: durationDays.toInt()));
+          final dateDiff = currentDate.difference(startDate).inDays;
+          for (var e in records) {
+            var model = PredictionModel.fromJson(e);
+            final firstManipulatedDate = model.dateTime.add(Duration(days: dateDiff));
+            final manipulatedDate = DateTime(currentDate.year, firstManipulatedDate.month, firstManipulatedDate.day);
+            if (model.dateTime.isAfter(currentDate) &&
+                model.dateTime.isBefore(endDate)) {
+              manipulatedData.add(PredictionModel(item: model.item, sales: model.sales, dates: DateFormat(DateTimeFormat.standard).format(manipulatedDate)));
+            }
           }
         }
+        Map<String, int> item = {};
+        Map<String, double> sales = {};
+        Map<String, String> dates = {};
+        for(int i=0; i<manipulatedData.length; i++){
+          var e = manipulatedData[i];
+          item.addAll({i.toString() : e.item});
+          sales.addAll({i.toString() : e.sales});
+          dates.addAll({i.toString() : e.dates.split(' ').first});
+        }
+        return {"data" : jsonEncode({"item": item, "sales": sales, "dates": dates})};
+      }else{
+        return {};
       }
-      Map<String, int> item = {};
-      Map<String, double> sales = {};
-      Map<String, String> dates = {};
-      for(int i=0; i<manipulatedData.length; i++){
-        var e = manipulatedData[i];
-        item.addAll({i.toString() : e.item});
-        sales.addAll({i.toString() : e.sales});
-        dates.addAll({i.toString() : e.dates.split(' ').first});
-      }
-      return {"data" : jsonEncode({"item": item, "sales": sales, "dates": dates})};
     }else{
       return {};
     }

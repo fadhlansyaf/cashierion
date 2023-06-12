@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -23,6 +25,8 @@ class HomeLogic extends GetxController {
   var isOrder = true.obs;
   var totalAmount = 0.0.obs;
   var pageIndex = 0.obs;
+  Rx<Uint8List?> predictionImage = Rx<Uint8List?>(null);
+  var canPredict = true.obs;
 
   //variabel untuk bottomsheet
   ///Panggil jika butuh setstate pada bottomsheet
@@ -49,8 +53,14 @@ class HomeLogic extends GetxController {
     if (paymentDetail.isNotEmpty) {
       selectedPaymentDetail = paymentDetail.first.obs;
     }
-    var test = await homeDao.manipulateData();
-    // ApiManager.getPrediction(prediction: test);
+    var prediction = await homeDao.manipulateData();
+    if(prediction["data"] != null) {
+      predictionImage.value =
+          await ApiManager.getPrediction(prediction: prediction);
+    }else{
+      //TODO(dhanis): kasih note buat user kalo ga bisa predict (data belum 30 hari), notenya tampilin di ui prediction aja
+      canPredict.value = false;
+    }
     super.onInit();
   }
 

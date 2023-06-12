@@ -10,5 +10,6 @@ class DateTimeFormat{
 }
 
 class ApiUrl{
+  static const baseUrl = 'http://rayhanafif.pythonanywhere.com/';
   static const prediction = '/cashierion';
 }

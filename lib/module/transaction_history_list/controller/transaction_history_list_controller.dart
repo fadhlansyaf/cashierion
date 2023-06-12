@@ -24,6 +24,7 @@ class TransactionHistoryListLogic extends GetxController {
   @override
   Future<void> onInit() async {
     isLoading.value = true;
+    transactionList.clear();
     var dao = Get.find<TransactionHistoryListDao>();
     transactionList.value = await dao.getTransactionList(startDate.value, endDate.value, selectedFilter.value);
     transactionCount.clear();

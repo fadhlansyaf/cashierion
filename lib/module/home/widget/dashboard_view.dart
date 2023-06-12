@@ -15,6 +15,7 @@ import '../../sales_report/controller/sales_report_binding.dart';
 class DashboardView extends StatelessWidget {
   const DashboardView({Key? key}) : super(key: key);
 
+  @override
   Widget build(BuildContext context) {
     var controller = Get.find<HomeLogic>();
 
@@ -50,33 +51,41 @@ class DashboardView extends StatelessWidget {
                       {
                         "icon": "assets/icons8-product-32.png",
                         "label": "Products\n",
-                        "onTap": () => Get.to(ProductListPage(),
-                            binding: ProductListBinding())?.then((value) => controller.onInit()),
+                        "onTap": () =>
+                            Get.to(ProductListPage(),
+                                binding: ProductListBinding())
+                                ?.then((value) => controller.onInit()),
                       },
                       {
                         "icon": "assets/icons8-category-32.png",
                         "label": "Categories\n",
-                        "onTap": () => Get.to(CategoryListPage(),
-                            binding: CategoryListBinding())?.then((value) => controller.onInit()),
+                        "onTap": () =>
+                            Get.to(CategoryListPage(),
+                                binding: CategoryListBinding())
+                                ?.then((value) => controller.onInit()),
                       },
                       {
                         "icon": "assets/icons8-transaction-32.png",
                         "label": "Transaction\nDetail",
-                        "onTap": () => Get.to(TransactionHistoryListPage(),
-                            binding: TransactionHistoryListBinding())?.then((value) => controller.onInit()),
+                        "onTap": () =>
+                            Get.to(TransactionHistoryListPage(),
+                                binding: TransactionHistoryListBinding())
+                                ?.then((value) => controller.onInit()),
                       },
                       {
                         "icon": "assets/icons8-report-32.png",
                         "label": "Transaction\nReport",
-                        "onTap": () => Get.to(TransactionReportPage(),
-                            binding: TransactionReportBinding())?.then((value) => controller.onInit()),
+                        "onTap": () =>
+                            Get.to(TransactionReportPage(),
+                                binding: TransactionReportBinding())
+                                ?.then((value) => controller.onInit()),
                       },
                     ];
 
                     return Wrap(
                       children: List.generate(
                         menus.length,
-                        (index) {
+                            (index) {
                           var item = menus[index];
 
                           var size = constraint.biggest.width / 4;
@@ -88,7 +97,7 @@ class DashboardView extends StatelessWidget {
                               style: ElevatedButton.styleFrom(
                                 foregroundColor: ColorTheme.COLOR_GREY,
                                 animationDuration:
-                                    const Duration(milliseconds: 1000),
+                                const Duration(milliseconds: 1000),
                                 backgroundColor: Colors.transparent,
                                 splashFactory: InkSplash.splashFactory,
                                 shadowColor: Colors.transparent,
@@ -127,27 +136,32 @@ class DashboardView extends StatelessWidget {
               const SizedBox(
                 height: 10.0,
               ),
-              Card(
-                margin: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-                child: Container(
-                  padding: EdgeInsets.all(10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Text(
-                        "Prediction",
-                        style: TextStyle(
-                            color: ColorTheme.COLOR_WHITE,
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(
-                        height: 150.0,
-                      ),
-                    ],
+              Obx(() {
+                return Card(
+                  margin: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+                  child: Container(
+                    padding: EdgeInsets.all(10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Text(
+                          "Prediction",
+                          style: TextStyle(
+                              color: ColorTheme.COLOR_WHITE,
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        if (controller.predictionImage.value != null)
+                          Image.memory(
+                            controller.predictionImage.value!,
+                            height: 150,
+                            width: double.infinity,
+                          )
+                      ],
+                    ),
                   ),
-                ),
-              ),
+                );
+              }),
               const SizedBox(
                 height: 10.0,
               ),

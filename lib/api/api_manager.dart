@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
 import 'package:pos_app_skripsi/model/database/database_model.dart';
@@ -7,7 +8,7 @@ import 'package:pos_app_skripsi/utils/constant.dart';
 class ApiManager{
   static Dio getDio(){
     var dio = Dio(BaseOptions(
-        baseUrl: 'http://127.0.0.1:5000/',
+        baseUrl: ApiUrl.baseUrl,
         connectTimeout: const Duration(seconds: 15),
         receiveTimeout: const Duration(seconds: 15),
         contentType: Headers.jsonContentType,
@@ -18,13 +19,17 @@ class ApiManager{
 
           return utf8.decode(responseBytes, allowMalformed: true);
         }));
+    dio.interceptors.add(LogInterceptor(requestBody: true, responseBody: true));
     return dio;
   }
 
-  static Future<void> getPrediction({required Map<String, dynamic> prediction}) async {
-    var dio = getDio();
-    jsonEncode(prediction);
-    var res = await dio.post(ApiUrl.prediction, data: prediction);
-    print(res);
+  static Future<Uint8List> getPrediction({required Map<String, dynamic> prediction}) async {
+    try {
+      var dio = getDio();
+      var res = await dio.post(ApiUrl.prediction, data: prediction, options: Options(responseType: ResponseType.bytes));
+      return res.data;
+    }  catch (e) {
+      return Uint8List.fromList([]);
+    }
   }
 }
