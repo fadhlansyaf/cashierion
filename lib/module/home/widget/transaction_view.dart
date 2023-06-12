@@ -150,7 +150,7 @@ class TransactionView extends StatelessWidget {
                                         child: InkWell(
                                           onLongPress: () {
                                             Dialogs.productQuantityDialog(
-                                                context, products, index);
+                                                context, products[index]);
                                           },
                                           child: Container(
                                             padding: EdgeInsets.all(10),

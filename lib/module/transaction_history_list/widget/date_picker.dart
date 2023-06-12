@@ -42,12 +42,6 @@ class _DatePickerState extends State<DatePicker> with RestorationMixin {
     },
   );
 
-  @override
-  void initState() {
-    super.initState();
-
-  }
-
   void _selectDateRange(DateTimeRange? newSelectedDate) {
     if (newSelectedDate != null) {
       setState(() {

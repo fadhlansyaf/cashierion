@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:pos_app_skripsi/utils/helper.dart';
 import 'package:syncfusion_flutter_xlsio/xlsio.dart' as xcel;
 import 'package:open_file/open_file.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -31,7 +32,7 @@ class TransactionReportPage extends StatelessWidget {
         body: GetBuilder<TransactionReportLogic>(
           assignId: true,
           builder: (logic) {
-            if (logic.isLoading.value) {
+            if (!logic.isLoading.value) {
               return Column(
                 children: [
                   Expanded(
@@ -44,7 +45,11 @@ class TransactionReportPage extends StatelessWidget {
                           Row(
                             children: [
                               Expanded(
-                                child: DatePicker(),
+                                child: DatePicker(
+                                  startDate: controller.startDate,
+                                  endDate: controller.endDate,
+                                  controller: controller,
+                                ),
                               ),
                               SizedBox(
                                 width: 10,
@@ -53,9 +58,14 @@ class TransactionReportPage extends StatelessWidget {
                                 child: GestureDetector(
                                   onTap: () {
                                     BottomSheets.filterModalBottomSheet(
-                                        context, controller, (selectedFilter) {
-                                          controller.selectedFilter.value;
-                                        },);
+                                      context,
+                                      controller,
+                                      (selectedFilter) {
+                                        controller.selectedFilter.value =
+                                            selectedFilter;
+                                        controller.onInit();
+                                      },
+                                    );
                                   },
                                   child: Card(
                                     child: Container(
@@ -80,7 +90,8 @@ class TransactionReportPage extends StatelessWidget {
                                           ),
                                           Spacer(),
                                           Text(
-                                            "Sales",
+                                            controller.filter[controller
+                                                .selectedFilter.value],
                                             style: TextStyle(
                                               fontSize: 16,
                                             ),
@@ -128,59 +139,81 @@ class TransactionReportPage extends StatelessWidget {
                           SizedBox(
                             height: 10,
                           ),
-                          ListView.builder(
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: 20,
-                            shrinkWrap: true,
-                            padding: EdgeInsets.zero,
-                            clipBehavior: Clip.none,
-                            itemBuilder: (context, index) {
-                              var item = "item";
-                              return Card(
-                                child: Padding(
-                                  padding: EdgeInsets.all(15),
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            "Produk 1",
-                                            style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold,
+                          Obx(() {
+                            return ListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: controller.reportList.length,
+                              shrinkWrap: true,
+                              padding: EdgeInsets.zero,
+                              clipBehavior: Clip.none,
+                              itemBuilder: (context, index) {
+                                return Card(
+                                  child: Padding(
+                                    padding: EdgeInsets.all(15),
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              controller.reportList[index].name,
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold,
+                                              ),
                                             ),
-                                          ),
-                                          SizedBox(
-                                            height: 5,
-                                          ),
-                                          Text(
-                                            "Rp 6.000",
-                                          ),
-                                          SizedBox(
-                                            height: 5,
-                                          ),
-                                          Text(
-                                            "5 item(s) sold",
-                                          ),
-                                        ],
-                                      ),
-                                      Spacer(),
-                                      Text(
-                                        "Rp 30.000",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
+                                            SizedBox(
+                                              height: 5,
+                                            ),
+                                            Text(
+                                              FunctionHelper
+                                                  .convertPriceWithComma(
+                                                      controller.selectedFilter
+                                                                  .value ==
+                                                              0
+                                                          ? controller
+                                                              .reportList[index]
+                                                              .productSellingPrice
+                                                          : controller
+                                                              .reportList[index]
+                                                              .productPrice),
+                                            ),
+                                            SizedBox(
+                                              height: 5,
+                                            ),
+                                            Text(
+                                              "${controller.reportList[index].totalQuantity} item(s) ${controller.selectedFilter.value == 0 ? 'sold' : 'restocked'}",
+                                            ),
+                                          ],
                                         ),
-                                      ),
-                                    ],
+                                        Spacer(),
+                                        Text(
+                                          FunctionHelper.convertPriceWithComma(
+                                              controller.reportList[index]
+                                                      .totalQuantity *
+                                                  (controller.selectedFilter
+                                                              .value ==
+                                                          0
+                                                      ? controller
+                                                          .reportList[index]
+                                                          .productSellingPrice
+                                                      : controller
+                                                          .reportList[index]
+                                                          .productPrice)),
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              );
-                            },
-                          ),
+                                );
+                              },
+                            );
+                          }),
                         ],
                         // ),
                       ),
