@@ -25,6 +25,11 @@ class HomeDao {
     return paymentTypeList.obs;
   }
 
+  Future<void> deletePaymentDetail(PaymentDetailModel paymentDetail) async {
+    Database db = await DatabaseProvider().database;
+    await db.delete(DatabaseProvider.paymentDetail, where: 'payment_detail_id = ?', whereArgs: [paymentDetail.id]);
+  }
+
   Future<PaymentTypeModel> getPaymentTypeUsingPaymentDetailId(
       PaymentDetailModel paymentDetail) async {
     Database db = await DatabaseProvider().database;
@@ -32,6 +37,11 @@ class HomeDao {
         where: 'payment_type_id = ?', whereArgs: [paymentDetail.paymentTypeId]);
     PaymentTypeModel paymentTypeList = result.map((e) => PaymentTypeModel.fromJson(e)).first;
     return paymentTypeList;
+  }
+
+  Future<void> deletePaymentType(PaymentTypeModel paymentType) async {
+    Database db = await DatabaseProvider().database;
+    await db.delete(DatabaseProvider.paymentType, where: 'payment_type_id = ?', whereArgs: [paymentType.id]);
   }
 
   Future<RxList<PaymentDetailModel>> getPaymentDetailUsingPaymentType(
@@ -60,6 +70,12 @@ class HomeDao {
     Database db = await DatabaseProvider().database;
     await db.update(DatabaseProvider.paymentDetail, paymentDetail.toJson(),
         conflictAlgorithm: ConflictAlgorithm.replace, where: 'payment_detail_id = ?', whereArgs: [paymentDetail.id]);
+  }
+
+  Future<void> editPaymentType(PaymentTypeModel paymentType) async {
+    Database db = await DatabaseProvider().database;
+    await db.update(DatabaseProvider.paymentType, paymentType.toJson(),
+        conflictAlgorithm: ConflictAlgorithm.replace, where: 'payment_type_id = ?', whereArgs: [paymentType.id]);
   }
 
   Future<void> insertTransaction(

@@ -82,7 +82,6 @@ class Dialogs {
   static void deleteTransactionHistoryDialog(
     BuildContext context,
     TransactionHistoryDetailLogic controller,
-    // TransactionModel transaction,
   ) async {
     final result = await showDialog<bool>(
       context: context,
@@ -114,8 +113,8 @@ class Dialogs {
 
   static void deletePaymentTypeDialog(
     BuildContext context,
-    // TransactionHistoryDetailLogic controller,
-    // TransactionModel transaction,
+    HomeLogic controller,
+      PaymentTypeModel paymentType
   ) async {
     final result = await showDialog<bool>(
       context: context,
@@ -141,14 +140,14 @@ class Dialogs {
       ),
     );
     if (result == true) {
-      // controller.deleteItem(product);
+      controller.deletePaymentType(paymentType);
     }
   }
 
   static void deletePaymentMethodDialog(
     BuildContext context,
-    // TransactionHistoryDetailLogic controller,
-    // TransactionModel transaction,
+    HomeLogic controller,
+    PaymentDetailModel paymentDetail,
   ) async {
     final result = await showDialog<bool>(
       context: context,
@@ -174,7 +173,7 @@ class Dialogs {
       ),
     );
     if (result == true) {
-      // controller.deleteItem(product);
+      controller.deletePaymentDetail(paymentDetail);
     }
   }
 

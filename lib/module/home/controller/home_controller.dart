@@ -94,10 +94,9 @@ class HomeLogic extends GetxController {
       e.clear();
     }
     var homeDao = Get.find<HomeDao>();
-    paymentType = await homeDao.getAllPaymentType();
+    paymentType.value = await homeDao.getAllPaymentType();
     specificPaymentDetail.value = await homeDao.getPaymentDetailUsingPaymentType(selectedPaymentType.value);
     allPaymentDetail.value = await homeDao.getAllPaymentDetail();
-    print(allPaymentDetail);
   }
 
   ///Dipanggil ketika user mengubah tipe pembayaran
@@ -128,9 +127,27 @@ class HomeLogic extends GetxController {
     Get.back();
   }
 
+  Future<void> deletePaymentDetail(PaymentDetailModel paymentDetail) async {
+    var homeDao = Get.find<HomeDao>();
+    await homeDao.deletePaymentDetail(paymentDetail);
+    Get.back();
+  }
+
+  Future<void> deletePaymentType(PaymentTypeModel paymentType) async {
+    var homeDao = Get.find<HomeDao>();
+    await homeDao.deletePaymentType(paymentType);
+    Get.back();
+  }
+
   Future<void> editPaymentDetail(PaymentDetailModel paymentDetail) async {
     var homeDao = Get.find<HomeDao>();
     await homeDao.editPaymentDetail(paymentDetail);
+    Get.back();
+  }
+
+  Future<void> editPaymentType(PaymentTypeModel paymentType) async {
+    var homeDao = Get.find<HomeDao>();
+    await homeDao.editPaymentType(paymentType);
     Get.back();
   }
 
