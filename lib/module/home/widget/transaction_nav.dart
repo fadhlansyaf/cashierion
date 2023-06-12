@@ -27,35 +27,50 @@ class TransactionNavView extends StatelessWidget {
           preferredSize: Size.fromHeight(0),
           child: Column(
             children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Obx(() {
-                    return IconButton(
-                      onPressed: () {
-                        pageController.animateToPage(
-                          0,
-                          duration: const Duration(milliseconds: 400),
-                          curve: Curves.easeInOut,
-                        );
-                      },
-                      icon: Icon(
-                        Icons.arrow_back,
-                        color: controller.pageIndex.value == 0
-                            ? ColorTheme.COLOR_WHITE.withOpacity(0)
-                            : ColorTheme.COLOR_WHITE,
+              Obx(() {
+                return Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Obx(() {
+                      return IconButton(
+                        onPressed: () {
+                          pageController.animateToPage(
+                            0,
+                            duration: const Duration(milliseconds: 400),
+                            curve: Curves.easeInOut,
+                          );
+                        },
+                        icon: Icon(
+                          Icons.arrow_back,
+                          color: controller.pageIndex.value == 0
+                              ? ColorTheme.COLOR_WHITE.withOpacity(0)
+                              : ColorTheme.COLOR_WHITE,
+                        ),
+                      );
+                    }),
+                    Text(
+                      "Transaction",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
                       ),
-                    );
-                  }),
-                  Text(
-                    "Transaction",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
                     ),
-                  ),
-                ],
-              ),
+                    Spacer(),
+                    controller.pageIndex.value == 0
+                        ? ElevatedButton(
+                            onPressed: () {},
+                            child: Text("Clear All"),
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStatePropertyAll(ColorTheme.COLOR_ACTIVE),
+                            ),
+                          )
+                        : SizedBox(),
+                    SizedBox(
+                      width: 5,
+                    ),
+                  ],
+                );
+              }),
             ],
           ),
         ),
