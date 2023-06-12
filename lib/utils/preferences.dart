@@ -1,5 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
+export 'constant.dart';
+
 import 'constant.dart';
 
 class Preferences {

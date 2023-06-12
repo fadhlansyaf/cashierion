@@ -8,7 +8,6 @@ import 'package:pos_app_skripsi/model/database/database_model.dart';
 import 'transaction_history_list_dao.dart';
 
 class TransactionHistoryListLogic extends GetxController {
-  var selectedIndex = 0.obs;
   var transactionList = <TransactionModel>[].obs;
   var transactionCount = <int>[].obs;
   var isLoading = true.obs;
