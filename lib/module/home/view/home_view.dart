@@ -1,119 +1,73 @@
 import 'package:flutter/material.dart';
-import 'package:pos_app_skripsi/core.dart';
-import '../controller/home_controller.dart';
+import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:pos_app_skripsi/core.dart';
+import 'package:pos_app_skripsi/module/purchase_order/view/purchase_order_view.dart';
+import 'package:pos_app_skripsi/theme/theme_constants.dart';
 
-import 'package:flutter/material.dart';
+import '../widget/dashboard_view.dart';
+import '../widget/profile_view.dart';
+import '../widget/transaction_nav.dart';
+import '../controller/home_controller.dart';
 
-class MainNavigationView extends StatefulWidget {
-  const MainNavigationView({Key? key}) : super(key: key);
+class HomePage extends StatelessWidget {
+  const HomePage({Key? key}) : super(key: key);
 
-  Widget build(context, MainNavigationController controller) {
-    controller.view = this;
+  @override
+  Widget build(BuildContext context) {
+    final controller = Get.find<HomeLogic>();
+    requestPermission();
 
     return DefaultTabController(
       length: 3,
-      initialIndex: controller.selectedIndex,
+      initialIndex: controller.selectedIndex.value,
       child: Scaffold(
-        body: IndexedStack(
-          index: controller.selectedIndex,
-          children: [
-            DashboardView(),
-            SalesReportView(),
-            ProfileView()
-          ],
+        body: Obx(
+          () => IndexedStack(
+            index: controller.selectedIndex.value,
+            children: [
+              DashboardView(),
+              TransactionNavView(),
+              // SalesTransactionNavView(),
+              ProfileView()
+            ],
+          ),
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          currentIndex: controller.selectedIndex,
-          selectedItemColor: Colors.grey[700],
-          unselectedItemColor: Colors.grey[500],
-          onTap: (index) {
-            controller.selectedIndex = index;
-            controller.setState(() {});
-          },
-          items: const [
-            BottomNavigationBarItem(
-              label: "Dashboard",
-              icon: Icon(
-                MdiIcons.viewDashboard,
-              ),
-            ),
-            BottomNavigationBarItem(
-              label: "Order",
-              icon: Icon(
-                Icons.list,
-              ),
-            ),
-            BottomNavigationBarItem(
-              label: "Me",
-              icon: Icon(
-                Icons.person,
-              ),
-            ),
-          ],
+        bottomNavigationBar: Obx(
+          () => BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
+            currentIndex: controller.selectedIndex.value,
+            selectedItemColor: ColorTheme.COLOR_PRIMARY,
+            unselectedItemColor: ColorTheme.COLOR_WHITE,
+            backgroundColor: ColorTheme.COLOR_CARD,
+            onTap: (index) {
+              controller.selectedIndex.value = index;
+            },
+            items: [
+              BottomNavigationBarItem(
+                  label: "Dashboard",
+                  // icon: new Image.asset("assets/icons8-home-32.png")
+                  icon: Icon(Icons.home)),
+              BottomNavigationBarItem(
+                  label: "Transaction",
+                  // icon: new Image.asset("assets/icons8-order-32.png")
+                  icon: Icon(Icons.list_alt_outlined)),
+              BottomNavigationBarItem(
+                  label: "Store",
+                  // icon: new Image.asset("assets/icons8-store-32.png")
+                  icon: Icon(Icons.store_mall_directory)),
+            ],
+          ),
         ),
       ),
     );
   }
-
-  @override
-  State<MainNavigationView> createState() => MainNavigationController();
 }
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
-
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  int selectedIndex = 0;
-
-  @override
-  Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 3,
-      initialIndex: selectedIndex,
-      child: Scaffold(
-        body: IndexedStack(
-          index: selectedIndex,
-          children: [
-            DashboardView(),
-            SalesReportView(),
-            ProfileView()
-          ],
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          currentIndex: selectedIndex,
-          selectedItemColor: Colors.grey[700],
-          unselectedItemColor: Colors.grey[500],
-          onTap: (index) {
-            selectedIndex = index;
-            setState(() {});
-          },
-          items: const [
-            BottomNavigationBarItem(
-              label: "Dashboard",
-              icon: Icon(
-                MdiIcons.viewDashboard,
-              ),
-            ),
-            BottomNavigationBarItem(
-              label: "Order",
-              icon: Icon(
-                Icons.list,
-              ),
-            ),
-            BottomNavigationBarItem(
-              label: "Me",
-              icon: Icon(
-                Icons.person,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+void requestPermission() async {
+  var status = await Permission.storage.status;
+  if (!status.isGranted) {
+    await Permission.storage.request();
   }
 }

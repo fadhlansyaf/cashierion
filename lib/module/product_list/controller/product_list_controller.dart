@@ -1,20 +1,18 @@
-import 'package:flutter/material.dart';
-import 'package:pos_app_skripsi/state_util.dart';
-import '../view/product_list_view.dart';
+import 'package:get/get.dart';
+import 'package:pos_app_skripsi/module/product_list/controller/product_list_dao.dart';
 
-class ProductListController extends State<ProductListView> implements MvcController {
-  static late ProductListController instance;
-  late ProductListView view;
+import '../../../model/database/product.dart';
+
+class ProductListLogic extends GetxController {
+  var selectedIndex = 0.obs;
+  var products = <ProductModel>[].obs;
+  var isLoaded = false.obs;
 
   @override
-  void initState() {
-    instance = this;
-    super.initState();
+  Future<void> onInit() async {
+    super.onInit();
+    products.clear();
+    products.value = await ProductListDao().getAllProducts();
+    isLoaded.value = true;
   }
-
-  @override
-  void dispose() => super.dispose();
-
-  @override
-  Widget build(BuildContext context) => widget.build(context, this);
 }
