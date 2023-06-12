@@ -209,7 +209,11 @@ class TransactionView extends StatelessWidget {
                                                             ),
                                                           ),
                                                           Text(
-                                                            "Stock: " + products[secondIndex].stock.toString(),
+                                                            "Stock: " +
+                                                                products[
+                                                                        secondIndex]
+                                                                    .stock
+                                                                    .toString(),
                                                             style: TextStyle(
                                                               color: ColorTheme
                                                                   .COLOR_GREY,
@@ -227,16 +231,24 @@ class TransactionView extends StatelessWidget {
                                                   children: [
                                                     Obx(() {
                                                       return CircleAvatar(
-                                                        backgroundColor:
-                                                            products[secondIndex]
+                                                        backgroundColor: products[
+                                                                        secondIndex]
+                                                                    .stock >
+                                                                0
+                                                            ? products[secondIndex]
                                                                         .quantity
-                                                                        .value
-                                                                        .obs >
+                                                                        .value >
                                                                     0
                                                                 ? ColorTheme
                                                                     .COLOR_CARD
                                                                 : ColorTheme
-                                                                    .COLOR_PRIMARY,
+                                                                    .COLOR_PRIMARY
+                                                            : products[secondIndex]
+                                                                        .quantity
+                                                                        .value >
+                                                                    0
+                                                                ? ColorTheme.COLOR_TEXT_DISABLED
+                                                                : ColorTheme.COLOR_TEXT_DISABLED,
                                                         radius: 15.0,
                                                         child: Center(
                                                           child: IconButton(
@@ -279,15 +291,24 @@ class TransactionView extends StatelessWidget {
                                                     ),
                                                     Obx(() {
                                                       return CircleAvatar(
-                                                        backgroundColor:
-                                                            products[secondIndex]
+                                                        backgroundColor: products[
+                                                                        secondIndex]
+                                                                    .stock >
+                                                                0
+                                                            ? products[secondIndex]
                                                                         .quantity
                                                                         .value >
                                                                     0
                                                                 ? ColorTheme
                                                                     .COLOR_CARD
                                                                 : ColorTheme
-                                                                    .COLOR_PRIMARY,
+                                                                    .COLOR_PRIMARY
+                                                            : products[secondIndex]
+                                                                        .quantity
+                                                                        .value >
+                                                                    0
+                                                                ? ColorTheme.COLOR_TEXT_DISABLED
+                                                                : ColorTheme.COLOR_TEXT_DISABLED,
                                                         radius: 15.0,
                                                         child: Center(
                                                           child: IconButton(
@@ -305,7 +326,9 @@ class TransactionView extends StatelessWidget {
                                                                         secondIndex]
                                                                     .quantity
                                                                     .value++;
-                                                              } else if(!controller.isOrder.value) {
+                                                              } else if (!controller
+                                                                  .isOrder
+                                                                  .value) {
                                                                 products[
                                                                         secondIndex]
                                                                     .quantity
