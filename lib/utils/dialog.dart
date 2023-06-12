@@ -178,9 +178,10 @@ class Dialogs {
   }
 
   static void productQuantityDialog(
-      BuildContext context, List<ProductModel> products, int index
+      BuildContext context, ProductModel product
       // TransactionModel transaction,
       ) async {
+    final textController = TextEditingController()..text = product.quantity.value.toString();
     final result = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
@@ -190,7 +191,7 @@ class Dialogs {
           child: TextFormField(
             // onSaved: onSaved,
             keyboardType: TextInputType.number,
-            // controller: controller,
+            controller: textController,
             // onTap: onTap,
             // readOnly: onTap != null,
             cursorColor: ColorTheme.COLOR_PRIMARY,
@@ -235,7 +236,7 @@ class Dialogs {
       ),
     );
     if (result == true) {
-      // controller.deleteItem(product);
+      product.quantity.value = int.parse(textController.text);
     }
   }
 }
