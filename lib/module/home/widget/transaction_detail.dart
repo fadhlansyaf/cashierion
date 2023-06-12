@@ -69,15 +69,27 @@ class TransactionDetailView extends StatelessWidget {
                                     color: ColorTheme.COLOR_WHITE,
                                   ),
                                 ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                SizedBox(
+                                  width: 180,
+                                  child: Text(
+                                    'Description: The Description ',
+                                    maxLines: 3,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      color: ColorTheme.COLOR_WHITE,
+                                    ),
+                                  ),
+                                ),
                               ],
                             ),
                             Spacer(),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                SizedBox(
-                                  height: 20,
-                                ),
                                 Text(
                                   FunctionHelper.convertPriceWithComma(
                                       controller.isOrder.value
@@ -210,11 +222,13 @@ class TransactionDetailView extends StatelessWidget {
                       onPressed: selectedProducts.isNotEmpty
                           ? () {
                               controller.insertTransaction(pageController);
-                              Get.snackbar(
-                                  'Success', 'Transaction has been successfully inserted',
+                              Get.snackbar('Success',
+                                  'Transaction has been successfully inserted',
                                   snackPosition: SnackPosition.BOTTOM,
                                   backgroundColor: Colors.green,
-                                  colorText: Colors.white);
+                                  colorText: Colors.white,
+                                  margin: EdgeInsets.only(bottom: 120.0),
+                                  );
                             }
                           : null,
                       child: Text("Create Transaction"),

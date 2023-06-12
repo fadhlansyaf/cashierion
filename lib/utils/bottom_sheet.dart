@@ -278,96 +278,93 @@ class BottomSheets {
       isScrollControlled: true,
       context: context,
       builder: (BuildContext context) {
-        return StatefulBuilder(
-          builder: (context, setState) {
-            return Scaffold(
-              appBar: AppBar(
-                bottom: PreferredSize(
-                  preferredSize: Size.fromHeight(40),
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 30,
-                      ),
-                      Row(
-                        children: [
-                          IconButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            icon: Icon(Icons.arrow_back),
-                          ),
-                          Text(
-                            "Add Payment Type",
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Spacer(),
-                          isEdit == true
-                              ? IconButton(
-                                  onPressed: () async {
-                                    Dialogs.deletePaymentTypeDialog(context);
-                                  },
-                                  icon: const Icon(
-                                    Icons.delete,
-                                    size: 24.0,
-                                  ),
-                                )
-                              : IconButton(
-                                  onPressed: () async {},
-                                  icon: Icon(
-                                    Icons.delete,
-                                    size: 24.0,
-                                    color: ColorTheme.COLOR_WHITE.withOpacity(0),
-                                  ),
-                                ),
-                          IconButton(
-                            onPressed: () async {
-                              controller.insertPaymentType();
-                            },
-                            icon: const Icon(
-                              Icons.check,
-                              size: 24.0,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                elevation: 0,
-                automaticallyImplyLeading: false,
-                toolbarHeight: 40,
-                actions: [
-                  IconButton(
-                    onPressed: () async {
-                      await controller.insertPaymentType();
-                    },
-                    icon: const Icon(
-                      Icons.check,
-                      size: 24.0,
-                    ),
-                  ),
-                ],
-              ),
-              body: Container(
-                padding: EdgeInsets.all(10),
+        return StatefulBuilder(builder: (context, setState) {
+          return Scaffold(
+            appBar: AppBar(
+              bottom: PreferredSize(
+                preferredSize: Size.fromHeight(40),
                 child: Column(
                   children: [
-                    CustomTextFieldOld(
-                      controller: controller.paymentTypeController[0],
-                      keyboardType: TextInputType.text,
-                      label: "Payment Type",
+                    SizedBox(
+                      height: 30,
                     ),
-                    
+                    Row(
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          icon: Icon(Icons.arrow_back),
+                        ),
+                        Text(
+                          "Add Payment Type",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Spacer(),
+                        isEdit == true
+                            ? IconButton(
+                                onPressed: () async {
+                                  Dialogs.deletePaymentTypeDialog(context);
+                                },
+                                icon: const Icon(
+                                  Icons.delete,
+                                  size: 24.0,
+                                ),
+                              )
+                            : IconButton(
+                                onPressed: () async {},
+                                icon: Icon(
+                                  Icons.delete,
+                                  size: 24.0,
+                                  color: ColorTheme.COLOR_WHITE.withOpacity(0),
+                                ),
+                              ),
+                        IconButton(
+                          onPressed: () async {
+                            controller.insertPaymentType();
+                          },
+                          icon: const Icon(
+                            Icons.check,
+                            size: 24.0,
+                          ),
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               ),
-            );
-          }
-        );
+              elevation: 0,
+              automaticallyImplyLeading: false,
+              toolbarHeight: 40,
+              actions: [
+                IconButton(
+                  onPressed: () async {
+                    await controller.insertPaymentType();
+                  },
+                  icon: const Icon(
+                    Icons.check,
+                    size: 24.0,
+                  ),
+                ),
+              ],
+            ),
+            body: Container(
+              padding: EdgeInsets.all(10),
+              child: Column(
+                children: [
+                  CustomTextFieldOld(
+                    controller: controller.paymentTypeController[0],
+                    keyboardType: TextInputType.text,
+                    label: "Payment Type",
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
       },
     );
   }
@@ -553,17 +550,17 @@ class BottomSheets {
                   label: "Payment Method",
                 ),
                 CustomTextFieldOld(
-                      controller: controller.paymentDetailController,
-                      onTap: () {
-                        paymentTypeModalBottomSheet(
-                            context, controller, false, (paymentDetail) {
-                          // controller.selectedPaymentDetail.value = paymentDetail;
-                          // controller.paymentTypeController[1].text = paymentDetail.description;
-                          // controller.setStatePaymentDetail.value;
-                        });
-                      },
-                      label: "Payment Type",
-                    ),
+                  controller: controller.paymentDetailController,
+                  onTap: () {
+                    paymentTypeModalBottomSheet(context, controller, false,
+                        (paymentDetail) {
+                      // controller.selectedPaymentDetail.value = paymentDetail;
+                      // controller.paymentTypeController[1].text = paymentDetail.description;
+                      // controller.setStatePaymentDetail.value;
+                    });
+                  },
+                  label: "Payment Type",
+                ),
               ],
             ),
           ),
@@ -574,6 +571,7 @@ class BottomSheets {
 
   static void filterModalBottomSheet(
       BuildContext context,
+
       ///TransactionHistoryListLogic/TransactionReportLogic
       dynamic controller,
       void Function(int selectedFilter) onSelected) {

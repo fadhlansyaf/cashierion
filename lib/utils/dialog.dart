@@ -185,36 +185,72 @@ class Dialogs {
     final result = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Quantity'),
+        title: const Text('Quantity & Description'),
         content: Container(
           margin: const EdgeInsets.symmetric(vertical: 10),
-          child: TextFormField(
-            // onSaved: onSaved,
-            keyboardType: TextInputType.number,
-            // controller: controller,
-            // onTap: onTap,
-            // readOnly: onTap != null,
-            cursorColor: ColorTheme.COLOR_PRIMARY,
-            decoration: InputDecoration(
-              // helperText: helperText,
-              labelText: "Quantity",
-              labelStyle: TextStyle(color: ColorTheme.COLOR_GREY),
-              floatingLabelBehavior: FloatingLabelBehavior.always,
-              fillColor: ColorTheme.COLOR_CARD,
-              filled: true,
-              enabledBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: ColorTheme.COLOR_WHITE),
-              ),
-              focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: ColorTheme.COLOR_PRIMARY),
-              ),
-              border: UnderlineInputBorder(
-                borderSide: BorderSide(
-                  width: 0.25,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextFormField(
+                // onSaved: onSaved,
+                keyboardType: TextInputType.number,
+                // controller: controller,
+                // onTap: onTap,
+                // readOnly: onTap != null,
+                cursorColor: ColorTheme.COLOR_PRIMARY,
+                decoration: InputDecoration(
+                  // helperText: helperText,
+                  labelText: "Quantity",
+                  labelStyle: TextStyle(color: ColorTheme.COLOR_GREY),
+                  floatingLabelBehavior: FloatingLabelBehavior.always,
+                  fillColor: ColorTheme.COLOR_CARD,
+                  filled: true,
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: ColorTheme.COLOR_WHITE),
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: ColorTheme.COLOR_PRIMARY),
+                  ),
+                  border: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      width: 0.25,
+                    ),
+                  ),
+                  // suffixIcon: onTap != null ? suffixIcon : null,
                 ),
               ),
-              // suffixIcon: onTap != null ? suffixIcon : null,
-            ),
+              SizedBox(
+                height: 10,
+              ),
+              TextFormField(
+                // onSaved: onSaved,
+                keyboardType: TextInputType.text,
+                // controller: controller,
+                // onTap: onTap,
+                // readOnly: onTap != null,
+                cursorColor: ColorTheme.COLOR_PRIMARY,
+                decoration: InputDecoration(
+                  // helperText: helperText,
+                  labelText: "Description",
+                  labelStyle: TextStyle(color: ColorTheme.COLOR_GREY),
+                  floatingLabelBehavior: FloatingLabelBehavior.always,
+                  fillColor: ColorTheme.COLOR_CARD,
+                  filled: true,
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: ColorTheme.COLOR_WHITE),
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: ColorTheme.COLOR_PRIMARY),
+                  ),
+                  border: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      width: 0.25,
+                    ),
+                  ),
+                  // suffixIcon: onTap != null ? suffixIcon : null,
+                ),
+              ),
+            ],
           ),
         ),
         actions: [

@@ -45,6 +45,14 @@ class TransactionHistoryFormLogic extends GetxController {
         editedTransactionDetail, updatedTransaction);
     Get.back();
     //TODO(dhanis): snackbar success edit
+    Get.snackbar(
+      'Success',
+      'Transaction has been successfully Edited',
+      snackPosition: SnackPosition.BOTTOM,
+      backgroundColor: Colors.green,
+      colorText: Colors.white,
+      margin: EdgeInsets.only(bottom: 120.0),
+    );
   }
 
   // Future<void> insertOrUpdateCategory([CategoryModel? category]) async {
