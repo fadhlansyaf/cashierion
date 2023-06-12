@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pos_app_skripsi/core.dart';
 import 'package:pos_app_skripsi/module/store_profile_form/controller/store_profile_form_binding.dart';
 import 'package:pos_app_skripsi/module/store_profile_form/view/store_profile_form_page.dart';
+import 'package:pos_app_skripsi/utils/dialog.dart';
 
 import 'profile_detail_widget.dart';
 import '/utils/bottom_sheet.dart';
@@ -81,9 +82,7 @@ class ProfileView extends StatelessWidget {
                     width: MediaQuery.of(context).size.width,
                     child: ElevatedButton(
                       onPressed: () {
-                        BottomSheets.changeTaxModalBottomSheet(
-                          context,
-                        );
+                        Dialogs.addTaxDialog(context);
                       },
                       child: Text("Edit Tax"),
                     ),

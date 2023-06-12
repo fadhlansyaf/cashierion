@@ -109,15 +109,27 @@ class TransactionHistoryDetailPage extends StatelessWidget {
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  SizedBox(
+                                  width: 180,
+                                  child: Text(
+                                    'Description: The Description The Description The Description The Description',
+                                    maxLines: 3,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      color: ColorTheme.COLOR_WHITE,
+                                    ),
+                                  ),
+                                ),
                                 ],
                               ),
                               Spacer(),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  SizedBox(
-                                    height: 25,
-                                  ),
                                   Text(
                                     FunctionHelper.convertPriceWithComma(
                                         (type == 0

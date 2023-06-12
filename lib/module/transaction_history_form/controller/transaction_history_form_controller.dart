@@ -43,5 +43,13 @@ class TransactionHistoryFormLogic extends GetxController {
     isEdited.value = true;
     Get.back();
     //TODO(dhanis): snackbar success edit
+    Get.snackbar(
+      'Success',
+      'Transaction has been successfully Edited',
+      snackPosition: SnackPosition.BOTTOM,
+      backgroundColor: Colors.green,
+      colorText: Colors.white,
+      margin: EdgeInsets.only(bottom: 120.0),
+    );
   }
 }

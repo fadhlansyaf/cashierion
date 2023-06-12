@@ -892,16 +892,10 @@ class BottomSheets {
                           }
                           setState(() {});
                         },
-                        height: MediaQuery
-                            .of(context)
-                            .size
-                            .height * 0.125,
+                        height: MediaQuery.of(context).size.height * 0.125,
                       ),
                       body: Container(
-                        height: MediaQuery
-                            .of(context)
-                            .size
-                            .height * 0.875,
+                        height: MediaQuery.of(context).size.height * 0.875,
                         child: ScrollConfiguration(
                           behavior: NoOverscrollBehavior(),
                           child: ListView.builder(
