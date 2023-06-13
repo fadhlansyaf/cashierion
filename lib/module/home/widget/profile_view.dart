@@ -68,12 +68,14 @@ class ProfileView extends StatelessWidget {
                   SizedBox(
                     height: 10,
                   ),
-                  ProfileDetailWidget(title: 'Address', subtitle: controller.address.value),
+                  ProfileDetailWidget(
+                      title: 'Address', subtitle: controller.address.value),
                   SizedBox(
                     height: 10,
                   ),
                   ProfileDetailWidget(
-                      title: 'Description', subtitle: controller.description.value),
+                      title: 'Description',
+                      subtitle: controller.description.value),
                   SizedBox(
                     height: 10,
                   ),
@@ -129,7 +131,7 @@ class ProfileView extends StatelessWidget {
                     backgroundColor: Colors.red,
                   ),
                   onPressed: () {
-                    controller.clearAllData();
+                    Dialogs.deleteAllDataDialog(context, controller);
                   },
                 ),
               ),

@@ -174,11 +174,52 @@ class Dialogs {
     }
   }
 
+  static void deleteAllDataDialog(
+    BuildContext context,
+    HomeLogic controller,
+  ) async {
+    final result = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Are you sure?'),
+        content: const Text('This action will permanently delete all data'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text(
+              'Cancel',
+              style: TextStyle(color: ColorTheme.COLOR_PRIMARY),
+            ),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: const Text(
+              'Delete',
+              style: TextStyle(color: ColorTheme.COLOR_PRIMARY),
+            ),
+          ),
+        ],
+      ),
+    );
+    if (result == true) {
+      controller.clearAllData();
+      Get.snackbar(
+        'Success',
+        'All data has been successfully deleted',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+        margin: EdgeInsets.only(bottom: 20.0),
+      );
+    }
+  }
+
   static void productQuantityDialog(
-      BuildContext context, ProductModel product
-      ) async {
-    final quantityController = TextEditingController()..text = product.quantity.value.toString();
-    final descController = TextEditingController()..text = product.transactionDesc;
+      BuildContext context, ProductModel product) async {
+    final quantityController = TextEditingController()
+      ..text = product.quantity.value.toString();
+    final descController = TextEditingController()
+      ..text = product.transactionDesc;
     final result = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
@@ -274,10 +315,9 @@ class Dialogs {
     }
   }
 
-  static void addTaxDialog(BuildContext context,
-      HomeLogic controller
-      ) async {
-    var taxController = TextEditingController()..text = controller.tax.toString();
+  static void addTaxDialog(BuildContext context, HomeLogic controller) async {
+    var taxController = TextEditingController()
+      ..text = controller.tax.toString();
     final result = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
@@ -337,7 +377,8 @@ class Dialogs {
       ),
     );
     if (result == true) {
-      controller.setTax(taxController.text.isNotEmpty ? int.parse(taxController.text) : 0);
+      controller.setTax(
+          taxController.text.isNotEmpty ? int.parse(taxController.text) : 0);
     }
   }
 }
