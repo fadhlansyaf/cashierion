@@ -39,9 +39,11 @@ class HomeLogic extends GetxController {
   Rx<StateSetter?> setStatePaymentDetail = Rx<StateSetter?>(null);
 
   final paymentTypeController = TextEditingController();
-  final paymentDetailController = [TextEditingController(), TextEditingController()];
+  final paymentDetailController = [
+    TextEditingController(),
+    TextEditingController()
+  ];
   // final paymentDetailController = TextEditingController();
-
 
   @override
   Future<void> onInit() async {
@@ -51,7 +53,7 @@ class HomeLogic extends GetxController {
     paymentTypeController.clear();
     specificPaymentDetail.clear();
     allPaymentDetail.clear();
-    for(var e in paymentDetailController){
+    for (var e in paymentDetailController) {
       e.clear();
     }
     tax.value = Preferences.getInstance().getInt(SharedPreferenceKey.TAX) ?? 0;
@@ -66,17 +68,18 @@ class HomeLogic extends GetxController {
     paymentType.value = await homeDao.getAllPaymentType();
     selectedPaymentType = paymentType.first.obs;
     allPaymentDetail.value = await homeDao.getAllPaymentDetail();
-    specificPaymentDetail.value = await homeDao.getPaymentDetailUsingPaymentType(selectedPaymentType.value);
+    specificPaymentDetail.value = await homeDao
+        .getPaymentDetailUsingPaymentType(selectedPaymentType.value);
     if (specificPaymentDetail.isNotEmpty) {
       selectedPaymentDetail = specificPaymentDetail.first.obs;
-    }else{
+    } else {
       selectedPaymentDetail.value = null;
     }
     var prediction = await homeDao.manipulateData();
-    if(prediction["data"] != null) {
+    if (prediction["data"] != null) {
       predictionImage.value =
           await ApiManager.getPrediction(prediction: prediction);
-    }else{
+    } else {
       canPredict.value = false;
     }
     super.onInit();
@@ -87,11 +90,11 @@ class HomeLogic extends GetxController {
     for (var e in products) {
       if (isOrder.value) {
         total += e.sellingPrice * e.quantity.value;
-      }else{
+      } else {
         total += e.price * e.quantity.value;
       }
     }
-    taxTotal.value = total * (tax/100);
+    taxTotal.value = total * (tax / 100);
     totalAmount.value = total;
   }
 
@@ -100,27 +103,30 @@ class HomeLogic extends GetxController {
     paymentTypeController.clear();
     specificPaymentDetail.clear();
     allPaymentDetail.clear();
-    for(var e in paymentDetailController){
+    for (var e in paymentDetailController) {
       e.clear();
     }
     var homeDao = Get.find<HomeDao>();
     paymentType.value = await homeDao.getAllPaymentType();
-    specificPaymentDetail.value = await homeDao.getPaymentDetailUsingPaymentType(selectedPaymentType.value);
+    specificPaymentDetail.value = await homeDao
+        .getPaymentDetailUsingPaymentType(selectedPaymentType.value);
     allPaymentDetail.value = await homeDao.getAllPaymentDetail();
   }
 
   ///Dipanggil ketika user mengubah tipe pembayaran
   Future<void> reinitializeSelectedPaymentDetail() async {
     var homeDao = Get.find<HomeDao>();
-    specificPaymentDetail.value = await homeDao.getPaymentDetailUsingPaymentType(selectedPaymentType.value);
+    specificPaymentDetail.value = await homeDao
+        .getPaymentDetailUsingPaymentType(selectedPaymentType.value);
     if (specificPaymentDetail.isNotEmpty) {
       selectedPaymentDetail = specificPaymentDetail.first.obs;
-    }else{
+    } else {
       selectedPaymentDetail.value = null;
     }
   }
 
-  Future<PaymentTypeModel> getPaymentDetailUsingId(PaymentDetailModel paymentDetail) async {
+  Future<PaymentTypeModel> getPaymentDetailUsingId(
+      PaymentDetailModel paymentDetail) async {
     var homeDao = Get.find<HomeDao>();
     return await homeDao.getPaymentTypeUsingPaymentDetailId(paymentDetail);
   }
@@ -135,7 +141,8 @@ class HomeLogic extends GetxController {
   Future<void> insertPaymentDetail(PaymentTypeModel paymentType) async {
     var homeDao = Get.find<HomeDao>();
     await homeDao.insertPaymentDetail(PaymentDetailModel(
-        paymentTypeId: paymentType.id, description: paymentDetailController[0].text));
+        paymentTypeId: paymentType.id,
+        description: paymentDetailController[0].text));
     Get.back();
   }
 
@@ -148,10 +155,14 @@ class HomeLogic extends GetxController {
   Future<void> deletePaymentType(PaymentTypeModel paymentType) async {
     var homeDao = Get.find<HomeDao>();
     var isDeleted = await homeDao.deletePaymentType(paymentType);
-    if(isDeleted){
+    if (isDeleted) {
       Get.back();
-    }else{
-      //TODO(dhanis): error gabisa delete karena cuma ada 1 data
+    } else {
+      Get.snackbar(
+        'Error',
+        'Payment type can\'t be empty',
+        backgroundColor: Colors.red,
+      );
     }
   }
 
@@ -192,7 +203,7 @@ class HomeLogic extends GetxController {
     }
   }
 
-  Future<String> generateInvoiceNumber()  async {
+  Future<String> generateInvoiceNumber() async {
     await Preferences.getInstance().reload();
     final now = DateTime.now();
     final todayStart = DateTime(now.year, now.month, now.day);
@@ -200,25 +211,28 @@ class HomeLogic extends GetxController {
     var lastReset = Preferences.getInstance()
         .getString(SharedPreferenceKey.INVOICE_DAY_RESET);
     DateTime lastResetDate;
-    if(lastReset == null){
-      Preferences.getInstance().setString(SharedPreferenceKey.INVOICE_DAY_RESET, DateFormat('yyyy-MM-dd').format(todayStart));
+    if (lastReset == null) {
+      Preferences.getInstance().setString(SharedPreferenceKey.INVOICE_DAY_RESET,
+          DateFormat('yyyy-MM-dd').format(todayStart));
       lastResetDate = todayStart;
-    }else{
+    } else {
       lastResetDate = DateTime.parse(lastReset);
     }
-    final bool isNewDay =
-        lastResetDate.millisecondsSinceEpoch < todayStart.millisecondsSinceEpoch;
+    final bool isNewDay = lastResetDate.millisecondsSinceEpoch <
+        todayStart.millisecondsSinceEpoch;
 
     int counter = 1;
     // Reset the counter if it's a new day
     if (!isNewDay) {
-      var prefsCounter = Preferences.getInstance().getInt(SharedPreferenceKey.INVOICE_COUNTER);
-      if(prefsCounter != null){
+      var prefsCounter =
+          Preferences.getInstance().getInt(SharedPreferenceKey.INVOICE_COUNTER);
+      if (prefsCounter != null) {
         counter = prefsCounter;
-      }else{
-        Preferences.getInstance().setInt(SharedPreferenceKey.INVOICE_COUNTER, 1);
+      } else {
+        Preferences.getInstance()
+            .setInt(SharedPreferenceKey.INVOICE_COUNTER, 1);
       }
-    }else{
+    } else {
       Preferences.getInstance().setInt(SharedPreferenceKey.INVOICE_COUNTER, 1);
     }
 
@@ -227,7 +241,8 @@ class HomeLogic extends GetxController {
     // Generate the invoice number
     final invoiceNumber =
         'C$transactionType-${now.day.toString().padLeft(2, '0')}${now.month.toString().padLeft(2, '0')}${now.year.toString().substring(2)}-${counter.toString().padLeft(4, '0')}';
-    Preferences.getInstance().setInt(SharedPreferenceKey.INVOICE_COUNTER, counter+=1);
+    Preferences.getInstance()
+        .setInt(SharedPreferenceKey.INVOICE_COUNTER, counter += 1);
     return invoiceNumber;
   }
 
@@ -241,10 +256,11 @@ class HomeLogic extends GetxController {
               invoice: await generateInvoiceNumber(),
               dates: DateFormat(DateTimeFormat.standard).format(DateTime.now()),
               sales: totalAmount.value),
-          productList.where((p0) => p0.quantity.value > 0).toList(), isOrder.value);
+          productList.where((p0) => p0.quantity.value > 0).toList(),
+          isOrder.value);
 
-      for(var e in productList){
-        if(e.quantity.value > 0){
+      for (var e in productList) {
+        if (e.quantity.value > 0) {
           e.quantity.value = 0;
         }
       }

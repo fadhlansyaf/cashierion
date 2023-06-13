@@ -31,4 +31,6 @@ class CategoryListLogic extends GetxController {
     final dao = Get.find<CategoryListDao>();
     return await dao.getCategoryList();
   }
+
+  
 }

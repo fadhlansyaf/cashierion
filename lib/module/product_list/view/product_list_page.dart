@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:pos_app_skripsi/core.dart';
+import 'package:pos_app_skripsi/model/database/database_model.dart';
 import 'package:pos_app_skripsi/theme/theme_constants.dart';
 
 import '../controller/product_list_controller.dart';
@@ -18,6 +19,8 @@ class ProductListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<ProductListLogic>();
+    List<ProductModel> duplicate = [];
+    duplicate.addAll(controller.products);
 
     return Scaffold(
       appBar: SearchAppBar(
@@ -25,6 +28,26 @@ class ProductListPage extends StatelessWidget {
           color: ColorTheme.COLOR_WHITE,
           child: Text("Products"),
         ),
+        onEditingComplete: (value) {
+          if (value.isNotEmpty) {
+            List<ProductModel> searched = [];
+            for (var e in controller.products) {
+              if (e.name.toLowerCase().contains(value.toLowerCase())) {
+                searched.add(e);
+              } else if (e.name != null) {
+                if (e.name!.toLowerCase().contains(value.toLowerCase())) {
+                  searched.add(e);
+                }
+              }
+            }
+            controller.products.clear();
+            controller.products.addAll(searched);
+          } else {
+            controller.products.clear();
+            controller.products.addAll(duplicate);
+          }
+          // setState(() {});
+        },
         height: MediaQuery.of(context).size.height * 0.14,
       ),
       floatingActionButton: FloatingActionButton(
@@ -102,9 +125,9 @@ class ProductListPage extends StatelessWidget {
                               height: 25,
                             ),
                             Text(
-                              "Stock: " + controller.products[index].stock.toString(),
-                              style: TextStyle(
-                              ),
+                              "Stock: " +
+                                  controller.products[index].stock.toString(),
+                              style: TextStyle(),
                             ),
                           ],
                         ),
@@ -132,4 +155,17 @@ class ProductListPage extends StatelessWidget {
       ),
     );
   }
+}
+
+class SpinnerItem {
+  final dynamic identity;
+  final String description;
+  final dynamic tag;
+  final String? subDescription;
+
+  SpinnerItem(
+      {required this.identity,
+      required this.description,
+      this.tag,
+      this.subDescription});
 }

@@ -18,6 +18,8 @@ class BottomSheets {
       CategoryListLogic controller,
       CategoryFormLogic categoryFormController,
       void Function(CategoryModel category) onSelected) {
+    List<CategoryModel> duplicate = [];
+    duplicate.addAll(controller.categoryList);
     showModalBottomSheet<void>(
       isScrollControlled: true,
       context: context,
@@ -32,6 +34,28 @@ class BottomSheets {
                   color: ColorTheme.COLOR_WHITE,
                   child: Text("Search Category"),
                 ),
+                onChanged: (value) {
+                  List<CategoryModel> searched = [];
+                  if (value.isNotEmpty) {
+                    for (var e in controller.categoryList) {
+                      if (e.name.toLowerCase().contains(value.toLowerCase())) {
+                        searched.add(e);
+                      } else if (e.name != null) {
+                        if (e.name!
+                            .toLowerCase()
+                            .contains(value.toLowerCase())) {
+                          searched.add(e);
+                        }
+                      }
+                    }
+                    controller.categoryList.clear();
+                    controller.categoryList.addAll(searched);
+                  } else {
+                    controller.categoryList.clear();
+                    controller.categoryList.addAll(duplicate);
+                  }
+                  controller.setState.value;
+                },
                 height: MediaQuery.of(context).size.height * 0.175,
               ),
               body: Obx(
@@ -587,7 +611,6 @@ class BottomSheets {
                                       .paymentDetailController[0].text));
                             }
                           } else {
-                            //TODO(dhanis) : ganti warna error
                             Get.snackbar(
                               'Error',
                               'Please choose payment type',
@@ -622,7 +645,6 @@ class BottomSheets {
                               controller.paymentDetailController[0].text));
                     }
                   } else {
-                    //TODO(dhanis) : ganti warna error
                     Get.snackbar(
                       'Error',
                       'Please choose payment type',
