@@ -35,132 +35,132 @@ class TransactionReportPage extends StatelessWidget {
           assignId: true,
           builder: (logic) {
             if (!logic.isLoading.value) {
-              return Column(
-                children: [
-                  Expanded(
-                    flex: 9,
-                    child: SingleChildScrollView(
-                      padding: EdgeInsets.all(10),
-                      // child: Container(
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              Expanded(
-                                child: DatePicker(
-                                  startDate: controller.startDate,
-                                  endDate: controller.endDate,
-                                  controller: controller,
+              return Obx(() {
+                return Column(
+                  children: [
+                    Expanded(
+                      flex: 9,
+                      child: SingleChildScrollView(
+                        padding: EdgeInsets.all(10),
+                        // child: Container(
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: DatePicker(
+                                    startDate: controller.startDate,
+                                    endDate: controller.endDate,
+                                    controller: controller,
+                                  ),
                                 ),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Expanded(
-                                child: GestureDetector(
-                                  onTap: () {
-                                    BottomSheets.filterModalBottomSheet(
-                                      context,
-                                      controller,
-                                      (selectedFilter) {
-                                        controller.selectedFilter.value =
-                                            selectedFilter;
-                                        controller.onInit();
-                                      },
-                                    );
-                                  },
-                                  child: Card(
-                                    child: Container(
-                                      padding: EdgeInsets.all(10),
-                                      height: 70,
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Text(
-                                                "Report",
-                                                style: TextStyle(
-                                                  fontSize: 20,
-                                                  fontWeight: FontWeight.bold,
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Expanded(
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      BottomSheets.filterModalBottomSheet(
+                                        context,
+                                        controller,
+                                        (selectedFilter) {
+                                          controller.selectedFilter.value =
+                                              selectedFilter;
+                                          controller.onInit();
+                                        },
+                                      );
+                                    },
+                                    child: Card(
+                                      child: Container(
+                                        padding: EdgeInsets.all(10),
+                                        height: 70,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  "Report",
+                                                  style: TextStyle(
+                                                    fontSize: 20,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
                                                 ),
-                                              ),
-                                              Spacer(),
-                                              Icon(Icons.keyboard_arrow_down),
-                                            ],
-                                          ),
-                                          Spacer(),
-                                          Text(
-                                            controller.filter[controller
-                                                .selectedFilter.value],
-                                            style: TextStyle(
-                                              fontSize: 16,
+                                                Spacer(),
+                                                Icon(Icons.keyboard_arrow_down),
+                                              ],
                                             ),
-                                          ),
-                                        ],
+                                            Spacer(),
+                                            Text(
+                                              controller.filter[controller
+                                                  .selectedFilter.value],
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 5),
-                            child: TextField(
-                              textAlignVertical: TextAlignVertical.center,
-                              // controller: controller,
-                              style: TextStyle(
-                                color: ColorTheme.COLOR_WHITE,
-                              ),
-                              decoration: InputDecoration(
-                                  prefixIcon: Icon(
-                                    Icons.search,
-                                    color: ColorTheme.COLOR_WHITE,
-                                    size: 20,
-                                  ),
-                                  focusColor: ColorTheme.COLOR_WHITE,
-                                  hintStyle: TextStyle(
-                                    color: ColorTheme.COLOR_WHITE,
-                                  ),
-                                  hintText: 'search',
-                                  fillColor: ColorTheme.COLOR_CARD,
-                                  filled: true),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 5),
+                              child: TextField(
+                                textAlignVertical: TextAlignVertical.center,
+                                // controller: controller,
+                                style: TextStyle(
+                                  color: ColorTheme.COLOR_WHITE,
+                                ),
+                                decoration: InputDecoration(
+                                    prefixIcon: Icon(
+                                      Icons.search,
+                                      color: ColorTheme.COLOR_WHITE,
+                                      size: 20,
+                                    ),
+                                    focusColor: ColorTheme.COLOR_WHITE,
+                                    hintStyle: TextStyle(
+                                      color: ColorTheme.COLOR_WHITE,
+                                    ),
+                                    hintText: 'search',
+                                    fillColor: ColorTheme.COLOR_CARD,
+                                    filled: true),
 
-                              onChanged: (value) {
-                                if (value.isNotEmpty) {
-                                  List<ReportProductModel> searched = [];
-                                  for (var e in controller.reportList) {
-                                    if (e.name
-                                        .toLowerCase()
-                                        .contains(value.toLowerCase())) {
-                                      searched.add(e);
-                                    } else if (e.name != null) {
-                                      if (e.name!
+                                onChanged: (value) {
+                                  if (value.isNotEmpty) {
+                                    List<ReportProductModel> searched = [];
+                                    for (var e in controller.reportList) {
+                                      if (e.name
                                           .toLowerCase()
                                           .contains(value.toLowerCase())) {
                                         searched.add(e);
+                                      } else if (e.name != null) {
+                                        if (e.name!
+                                            .toLowerCase()
+                                            .contains(value.toLowerCase())) {
+                                          searched.add(e);
+                                        }
                                       }
                                     }
+                                    controller.reportList.clear();
+                                    controller.reportList.addAll(searched);
+                                  } else {
+                                    controller.reportList.clear();
+                                    controller.reportList.addAll(duplicate);
                                   }
-                                  controller.reportList.clear();
-                                  controller.reportList.addAll(searched);
-                                } else {
-                                  controller.reportList.clear();
-                                  controller.reportList.addAll(duplicate);
-                                }
-                              },
+                                },
+                              ),
                             ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Obx(() {
-                            return ListView.builder(
+                            SizedBox(
+                              height: 10,
+                            ),
+                            ListView.builder(
                               physics: const NeverScrollableScrollPhysics(),
                               itemCount: controller.reportList.length,
                               shrinkWrap: true,
@@ -232,36 +232,36 @@ class TransactionReportPage extends StatelessWidget {
                                   ),
                                 );
                               },
-                            );
-                          }),
-                        ],
-                        // ),
+                            ),
+                          ],
+                          // ),
+                        ),
                       ),
                     ),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                      padding: EdgeInsets.all(10),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          CreateExcel.createExcel();
-                        },
-                        child: Row(
-                            children: [
-                              Icon(Icons.table_chart_outlined),
-                              SizedBox(
-                                width: 20,
-                              ),
-                              Text("Export to Excel"),
-                            ],
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center),
+                    Expanded(
+                      flex: 1,
+                      child: Container(
+                        padding: EdgeInsets.all(10),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            CreateExcel.createExcel(controller);
+                          },
+                          child: Row(
+                              children: [
+                                Icon(Icons.table_chart_outlined),
+                                SizedBox(
+                                  width: 20,
+                                ),
+                                Text("Export to Excel"),
+                              ],
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center),
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              );
+                  ],
+                );
+              });
             } else {
               return CircularProgressIndicator();
             }
