@@ -212,6 +212,8 @@ class BottomSheets {
       HomeLogic controller,
       bool isEdit,
       void Function(PaymentTypeModel paymentType) onSelected) {
+        List<PaymentTypeModel> duplicate = [];
+    duplicate.addAll(controller.paymentType);
     showModalBottomSheet<void>(
       isScrollControlled: true,
       context: context,
@@ -226,6 +228,28 @@ class BottomSheets {
                   color: ColorTheme.COLOR_WHITE,
                   child: Text("Search Payment Type"),
                 ),
+                onChanged: (value) {
+                  List<PaymentTypeModel> searched = [];
+                  if (value.isNotEmpty) {
+                    for (var e in controller.paymentType) {
+                      if (e.paymentName.toLowerCase().contains(value.toLowerCase())) {
+                        searched.add(e);
+                      } else if (e.paymentName != null) {
+                        if (e.paymentName!
+                            .toLowerCase()
+                            .contains(value.toLowerCase())) {
+                          searched.add(e);
+                        }
+                      }
+                    }
+                    controller.paymentType.clear();
+                    controller.paymentType.addAll(searched);
+                  } else {
+                    controller.paymentType.clear();
+                    controller.paymentType.addAll(duplicate);
+                  }
+                  controller.setStatePaymentType.value;
+                },
                 height: MediaQuery.of(context).size.height * 0.175,
               ),
               body: Obx(() {
@@ -430,6 +454,8 @@ class BottomSheets {
       HomeLogic controller,
       bool isEdit,
       void Function(PaymentDetailModel paymentDetail) onSelected) {
+        List<PaymentDetailModel> duplicate = [];
+    duplicate.addAll(controller.allPaymentDetail);
     showModalBottomSheet<void>(
       isScrollControlled: true,
       context: context,
@@ -444,6 +470,28 @@ class BottomSheets {
                   color: ColorTheme.COLOR_WHITE,
                   child: Text("Search Payment Method"),
                 ),
+                onChanged: (value) {
+                  List<PaymentDetailModel> searched = [];
+                  if (value.isNotEmpty) {
+                    for (var e in controller.allPaymentDetail) {
+                      if (e.description.toLowerCase().contains(value.toLowerCase())) {
+                        searched.add(e);
+                      } else if (e.description != null) {
+                        if (e.description!
+                            .toLowerCase()
+                            .contains(value.toLowerCase())) {
+                          searched.add(e);
+                        }
+                      }
+                    }
+                    controller.allPaymentDetail.clear();
+                    controller.allPaymentDetail.addAll(searched);
+                  } else {
+                    controller.allPaymentDetail.clear();
+                    controller.allPaymentDetail.addAll(duplicate);
+                  }
+                  controller.setStatePaymentDetail.value;
+                },
                 height: MediaQuery.of(context).size.height * 0.175,
               ),
               body: Obx(() {

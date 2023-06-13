@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:pos_app_skripsi/core.dart';
+import 'package:pos_app_skripsi/model/database/database_model.dart';
 import 'package:pos_app_skripsi/module/transaction_history_detail/view/transaction_history_detail_page.dart';
 import 'package:pos_app_skripsi/theme/theme_constants.dart';
 
@@ -17,6 +18,8 @@ class TransactionHistoryListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<TransactionHistoryListLogic>();
+    List<TransactionModel> duplicate = [];
+    duplicate.addAll(controller.transactionList);
 
     return Scaffold(
         appBar: AppBar(
@@ -24,7 +27,7 @@ class TransactionHistoryListPage extends StatelessWidget {
           actions: const [],
         ),
         body: GetBuilder<TransactionHistoryListLogic>(builder: (logic) {
-          if(!controller.isLoading.value) {
+          if (!controller.isLoading.value) {
             return SingleChildScrollView(
               padding: EdgeInsets.all(10),
               child: Column(
@@ -117,12 +120,34 @@ class TransactionHistoryListPage extends StatelessWidget {
                           hintText: 'search',
                           fillColor: ColorTheme.COLOR_CARD,
                           filled: true),
-                      onEditingComplete: () {
-                        // if (onEditingComplete != null) {
-                        //   onEditingComplete!(controller!.text);
-                        // }
+                      // onEditingComplete: () {
+                      //   // if (onEditingComplete != null) {
+                      //   //   onEditingComplete!(controller!.text);
+                      //   // }
+                      // },
+                      onChanged: (value) {
+                        if (value.isNotEmpty) {
+                          List<TransactionModel> searched = [];
+                          for (var e in controller.transactionList) {
+                            if (e.invoice
+                                .toLowerCase()
+                                .contains(value.toLowerCase())) {
+                              searched.add(e);
+                            } else if (e.invoice != null) {
+                              if (e.invoice!
+                                  .toLowerCase()
+                                  .contains(value.toLowerCase())) {
+                                searched.add(e);
+                              }
+                            }
+                          }
+                          controller.transactionList.clear();
+                          controller.transactionList.addAll(searched);
+                        } else {
+                          controller.transactionList.clear();
+                          controller.transactionList.addAll(duplicate);
+                        }
                       },
-                      // onChanged: onChanged,
                     ),
                   ),
                   SizedBox(
@@ -142,11 +167,12 @@ class TransactionHistoryListPage extends StatelessWidget {
                       itemBuilder: (BuildContext context, index) {
                         return GestureDetector(
                           onTap: () async {
-                            controller.selectedTransaction.value = controller.transactionList[index];
+                            controller.selectedTransaction.value =
+                                controller.transactionList[index];
                             await Get.to(
                                     TransactionHistoryDetailPage(
                                       type: controller.selectedFilter.value,
-                                        ),
+                                    ),
                                     binding: TransactionHistoryDetailBinding())
                                 ?.then((value) => controller.onInit());
                           },
@@ -175,12 +201,13 @@ class TransactionHistoryListPage extends StatelessWidget {
                                 SizedBox(
                                   height: 10,
                                 ),
-                                if(!controller.isLoading.value)Text(
-                                  "${controller.transactionCount[index]} items",
-                                  style: TextStyle(
-                                    fontSize: 16,
+                                if (!controller.isLoading.value)
+                                  Text(
+                                    "${controller.transactionCount[index]} items",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                    ),
                                   ),
-                                ),
                                 Text(
                                   FunctionHelper.convertPriceWithComma(
                                       controller.transactionList[index].sales),
@@ -199,7 +226,7 @@ class TransactionHistoryListPage extends StatelessWidget {
                 // ),
               ),
             );
-          }else{
+          } else {
             return CircularProgressIndicator();
           }
         }));

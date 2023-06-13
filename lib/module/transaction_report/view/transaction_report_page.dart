@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:pos_app_skripsi/model/database/database_model.dart';
 import 'package:pos_app_skripsi/utils/helper.dart';
 import 'package:syncfusion_flutter_xlsio/xlsio.dart' as xcel;
 import 'package:open_file/open_file.dart';
@@ -23,7 +24,8 @@ class TransactionReportPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<TransactionReportLogic>();
-
+    List<ReportProductModel> duplicate = [];
+    duplicate.addAll(controller.reportList);
     return Scaffold(
         appBar: AppBar(
           title: const Text("Transaction Report"),
@@ -128,12 +130,30 @@ class TransactionReportPage extends StatelessWidget {
                                   hintText: 'search',
                                   fillColor: ColorTheme.COLOR_CARD,
                                   filled: true),
-                              onEditingComplete: () {
-                                // if (onEditingComplete != null) {
-                                //   onEditingComplete!(controller!.text);
-                                // }
+
+                              onChanged: (value) {
+                                if (value.isNotEmpty) {
+                                  List<ReportProductModel> searched = [];
+                                  for (var e in controller.reportList) {
+                                    if (e.name
+                                        .toLowerCase()
+                                        .contains(value.toLowerCase())) {
+                                      searched.add(e);
+                                    } else if (e.name != null) {
+                                      if (e.name!
+                                          .toLowerCase()
+                                          .contains(value.toLowerCase())) {
+                                        searched.add(e);
+                                      }
+                                    }
+                                  }
+                                  controller.reportList.clear();
+                                  controller.reportList.addAll(searched);
+                                } else {
+                                  controller.reportList.clear();
+                                  controller.reportList.addAll(duplicate);
+                                }
                               },
-                              // onChanged: onChanged,
                             ),
                           ),
                           SizedBox(
