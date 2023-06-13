@@ -13,7 +13,8 @@ import 'no_overscroll.dart';
 import '/widgets/custom_text_field.dart';
 
 class BottomSheets {
-  static void categoryModalBottomSheet(BuildContext context,
+  static void categoryModalBottomSheet(
+      BuildContext context,
       CategoryListLogic controller,
       CategoryFormLogic categoryFormController,
       void Function(CategoryModel category) onSelected) {
@@ -31,13 +32,10 @@ class BottomSheets {
                   color: ColorTheme.COLOR_WHITE,
                   child: Text("Search Category"),
                 ),
-                height: MediaQuery
-                    .of(context)
-                    .size
-                    .height * 0.175,
+                height: MediaQuery.of(context).size.height * 0.175,
               ),
               body: Obx(
-                    () {
+                () {
                   return SingleChildScrollView(
                     child: Column(
                       children: [
@@ -48,9 +46,8 @@ class BottomSheets {
                             child: ElevatedButton(
                               onPressed: () {
                                 addCategoryModalBottomSheet(
-                                    context, categoryFormController)
-                                    .then((value) =>
-                                    controller
+                                        context, categoryFormController)
+                                    .then((value) => controller
                                         .onInit()
                                         .then((value) => controller.setState));
                               },
@@ -75,7 +72,7 @@ class BottomSheets {
                                   padding: EdgeInsets.all(15),
                                   child: Column(
                                     crossAxisAlignment:
-                                    CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         controller.categoryList[index].name,
@@ -102,8 +99,10 @@ class BottomSheets {
     );
   }
 
-  static Future<void> addCategoryModalBottomSheet(BuildContext context,
-      CategoryFormLogic controller,) async {
+  static Future<void> addCategoryModalBottomSheet(
+    BuildContext context,
+    CategoryFormLogic controller,
+  ) async {
     await showModalBottomSheet<void>(
       isScrollControlled: true,
       context: context,
@@ -184,7 +183,8 @@ class BottomSheets {
     );
   }
 
-  static void paymentTypeModalBottomSheet(BuildContext context,
+  static void paymentTypeModalBottomSheet(
+      BuildContext context,
       HomeLogic controller,
       bool isEdit,
       void Function(PaymentTypeModel paymentType) onSelected) {
@@ -202,10 +202,7 @@ class BottomSheets {
                   color: ColorTheme.COLOR_WHITE,
                   child: Text("Search Payment Type"),
                 ),
-                height: MediaQuery
-                    .of(context)
-                    .size
-                    .height * 0.175,
+                height: MediaQuery.of(context).size.height * 0.175,
               ),
               body: Obx(() {
                 return SingleChildScrollView(
@@ -218,11 +215,11 @@ class BottomSheets {
                           child: ElevatedButton(
                             onPressed: () {
                               addPaymentTypeModalBottomSheet(
-                                  context, controller, false)
-                                  .then((value) =>
-                                  controller.initPayments().then(
-                                          (value) =>
-                                      controller.setStatePaymentType));
+                                      context, controller, false)
+                                  .then((value) => controller
+                                      .initPayments()
+                                      .then((value) =>
+                                          controller.setStatePaymentType));
                             },
                             child: Text("Add Payment Type"),
                           ),
@@ -242,12 +239,13 @@ class BottomSheets {
                                 Navigator.pop(context);
                               } else {
                                 addPaymentTypeModalBottomSheet(
-                                    context, controller, isEdit,
-                                    controller.paymentType[index])
+                                        context,
+                                        controller,
+                                        isEdit,
+                                        controller.paymentType[index])
                                     .then(
+                                  (value) => controller.initPayments().then(
                                       (value) =>
-                                      controller.initPayments().then(
-                                              (value) =>
                                           controller.setStatePaymentType),
                                 );
                               }
@@ -282,11 +280,15 @@ class BottomSheets {
     );
   }
 
-  static Future<void> addPaymentTypeModalBottomSheet(BuildContext context,
-      HomeLogic controller, bool isEdit,
+  static Future<void> addPaymentTypeModalBottomSheet(
+    BuildContext context,
+    HomeLogic controller,
+    bool isEdit,
 
-      ///Jika isEdit true maka tidak boleh null
-      [PaymentTypeModel? paymentType,]) async {
+    ///Jika isEdit true maka tidak boleh null
+    [
+    PaymentTypeModel? paymentType,
+  ]) async {
     if (paymentType != null && isEdit) {
       controller.paymentTypeController.text = paymentType.paymentName;
     }
@@ -322,29 +324,32 @@ class BottomSheets {
                         Spacer(),
                         isEdit
                             ? IconButton(
-                          onPressed: () async {
-                            Dialogs.deletePaymentTypeDialog(
-                                context, controller, paymentType!);
-                          },
-                          icon: const Icon(
-                            Icons.delete,
-                            size: 24.0,
-                          ),
-                        )
+                                onPressed: () async {
+                                  Dialogs.deletePaymentTypeDialog(
+                                      context, controller, paymentType!);
+                                },
+                                icon: const Icon(
+                                  Icons.delete,
+                                  size: 24.0,
+                                ),
+                              )
                             : IconButton(
-                          onPressed: () async {},
-                          icon: Icon(
-                            Icons.delete,
-                            size: 24.0,
-                            color: ColorTheme.COLOR_WHITE.withOpacity(0),
-                          ),
-                        ),
+                                onPressed: () async {},
+                                icon: Icon(
+                                  Icons.delete,
+                                  size: 24.0,
+                                  color: ColorTheme.COLOR_WHITE.withOpacity(0),
+                                ),
+                              ),
                         IconButton(
                           onPressed: () async {
                             if (!isEdit) {
                               await controller.insertPaymentType();
                             } else {
-                              await controller.editPaymentType(PaymentTypeModel(id: paymentType!.id,paymentName: controller.paymentTypeController.text));
+                              await controller.editPaymentType(PaymentTypeModel(
+                                  id: paymentType!.id,
+                                  paymentName:
+                                      controller.paymentTypeController.text));
                             }
                           },
                           icon: const Icon(
@@ -366,8 +371,9 @@ class BottomSheets {
                     if (!isEdit) {
                       await controller.insertPaymentType();
                     } else {
-                      await controller.editPaymentType(PaymentTypeModel(id: paymentType!.id,paymentName: controller.paymentTypeController.text));
-
+                      await controller.editPaymentType(PaymentTypeModel(
+                          id: paymentType!.id,
+                          paymentName: controller.paymentTypeController.text));
                     }
                   },
                   icon: const Icon(
@@ -395,7 +401,8 @@ class BottomSheets {
     );
   }
 
-  static void paymentMethodModalBottomSheet(BuildContext context,
+  static void paymentMethodModalBottomSheet(
+      BuildContext context,
       HomeLogic controller,
       bool isEdit,
       void Function(PaymentDetailModel paymentDetail) onSelected) {
@@ -413,10 +420,7 @@ class BottomSheets {
                   color: ColorTheme.COLOR_WHITE,
                   child: Text("Search Payment Method"),
                 ),
-                height: MediaQuery
-                    .of(context)
-                    .size
-                    .height * 0.175,
+                height: MediaQuery.of(context).size.height * 0.175,
               ),
               body: Obx(() {
                 return SingleChildScrollView(
@@ -429,11 +433,11 @@ class BottomSheets {
                           child: ElevatedButton(
                             onPressed: () {
                               addPaymentMethodModalBottomSheet(
-                                  context, controller, false)
-                                  .then((value) =>
-                                  controller.initPayments().then(
-                                          (value) =>
-                                      controller.setStatePaymentDetail));
+                                      context, controller, false)
+                                  .then((value) => controller
+                                      .initPayments()
+                                      .then((value) =>
+                                          controller.setStatePaymentDetail));
                             },
                             child: Text("Add Payment Method"),
                           ),
@@ -456,22 +460,20 @@ class BottomSheets {
                                 Navigator.pop(context);
                               } else {
                                 controller
-                                    .getPaymentDetailUsingId(controller
-                                    .allPaymentDetail[index])
+                                    .getPaymentDetailUsingId(
+                                        controller.allPaymentDetail[index])
                                     .then((value) =>
-                                    addPaymentMethodModalBottomSheet(
-                                        context,
-                                        controller,
-                                        isEdit,
-                                        controller
-                                            .allPaymentDetail[index],
-                                        value)
-                                        .then((value) =>
-                                        controller
-                                            .initPayments()
-                                            .then((value) =>
-                                        controller
-                                            .setStatePaymentDetail)));
+                                        addPaymentMethodModalBottomSheet(
+                                                context,
+                                                controller,
+                                                isEdit,
+                                                controller
+                                                    .allPaymentDetail[index],
+                                                value)
+                                            .then((value) => controller
+                                                .initPayments()
+                                                .then((value) => controller
+                                                    .setStatePaymentDetail)));
                               }
                             },
                             child: Card(
@@ -482,11 +484,11 @@ class BottomSheets {
                                   children: [
                                     Text(
                                       isEdit
-                                          ? controller
-                                          .allPaymentDetail[index].description
+                                          ? controller.allPaymentDetail[index]
+                                              .description
                                           : controller
-                                          .specificPaymentDetail[index]
-                                          .description,
+                                              .specificPaymentDetail[index]
+                                              .description,
                                       style: TextStyle(
                                         fontSize: 16,
                                       ),
@@ -509,12 +511,12 @@ class BottomSheets {
     );
   }
 
-  static Future<void> addPaymentMethodModalBottomSheet(BuildContext context,
-      HomeLogic controller, bool isEdit,
+  static Future<void> addPaymentMethodModalBottomSheet(
+      BuildContext context, HomeLogic controller, bool isEdit,
 
       ///Jika isEdit true maka tidak boleh null
       [PaymentDetailModel? paymentDetail,
-        PaymentTypeModel? currentlySelectedPaymentType]) async {
+      PaymentTypeModel? currentlySelectedPaymentType]) async {
     PaymentTypeModel? selectedPayment;
     if (isEdit &&
         paymentDetail != null &&
@@ -555,23 +557,23 @@ class BottomSheets {
                       Spacer(),
                       isEdit
                           ? IconButton(
-                        onPressed: () async {
-                          Dialogs.deletePaymentMethodDialog(
-                              context, controller, paymentDetail!);
-                        },
-                        icon: const Icon(
-                          Icons.delete,
-                          size: 24.0,
-                        ),
-                      )
+                              onPressed: () async {
+                                Dialogs.deletePaymentMethodDialog(
+                                    context, controller, paymentDetail!);
+                              },
+                              icon: const Icon(
+                                Icons.delete,
+                                size: 24.0,
+                              ),
+                            )
                           : IconButton(
-                        onPressed: () async {},
-                        icon: Icon(
-                          Icons.delete,
-                          size: 24.0,
-                          color: ColorTheme.COLOR_WHITE.withOpacity(0),
-                        ),
-                      ),
+                              onPressed: () async {},
+                              icon: Icon(
+                                Icons.delete,
+                                size: 24.0,
+                                color: ColorTheme.COLOR_WHITE.withOpacity(0),
+                              ),
+                            ),
                       IconButton(
                         onPressed: () async {
                           if (selectedPayment != null) {
@@ -586,7 +588,11 @@ class BottomSheets {
                             }
                           } else {
                             //TODO(dhanis) : ganti warna error
-                            Get.snackbar('Error', 'Please choose payment type');
+                            Get.snackbar(
+                              'Error',
+                              'Please choose payment type',
+                              backgroundColor: Colors.red,
+                            );
                           }
                         },
                         icon: const Icon(
@@ -613,11 +619,15 @@ class BottomSheets {
                           id: paymentDetail!.id,
                           paymentTypeId: selectedPayment!.id,
                           description:
-                          controller.paymentDetailController[0].text));
+                              controller.paymentDetailController[0].text));
                     }
                   } else {
                     //TODO(dhanis) : ganti warna error
-                    Get.snackbar('Error', 'Please choose payment type');
+                    Get.snackbar(
+                      'Error',
+                      'Please choose payment type',
+                      backgroundColor: Colors.red,
+                    );
                   }
                 },
                 icon: const Icon(
@@ -640,12 +650,12 @@ class BottomSheets {
                   controller: controller.paymentDetailController[1],
                   onTap: () {
                     paymentTypeModalBottomSheet(context, controller, false,
-                            (paymentType) {
-                          selectedPayment = paymentType;
-                          controller.paymentDetailController[1].text =
-                              paymentType.paymentName;
-                          controller.setStatePaymentDetail.value;
-                        });
+                        (paymentType) {
+                      selectedPayment = paymentType;
+                      controller.paymentDetailController[1].text =
+                          paymentType.paymentName;
+                      controller.setStatePaymentDetail.value;
+                    });
                   },
                   label: "Payment Type",
                 ),
@@ -657,7 +667,8 @@ class BottomSheets {
     );
   }
 
-  static void filterModalBottomSheet(BuildContext context,
+  static void filterModalBottomSheet(
+      BuildContext context,
 
       ///TransactionHistoryListLogic/TransactionReportLogic
       dynamic controller,
@@ -715,7 +726,7 @@ class BottomSheets {
                 ],
               ),
               body: Obx(
-                    () {
+                () {
                   return ListView.builder(
                       physics: const NeverScrollableScrollPhysics(),
                       itemCount: controller.filter.length,
@@ -755,9 +766,10 @@ class BottomSheets {
     );
   }
 
-  static Future<void> changeTaxModalBottomSheet(BuildContext context,
-      // HomeLogic controller,
-      ) async {
+  static Future<void> changeTaxModalBottomSheet(
+    BuildContext context,
+    // HomeLogic controller,
+  ) async {
     await showModalBottomSheet<void>(
       isScrollControlled: true,
       context: context,
@@ -853,19 +865,12 @@ class BottomSheets {
         builder: (context) {
           return StatefulBuilder(builder: (context, setState) {
             return Material(
-                color: Theme
-                    .of(context)
-                    .primaryColor,
+                color: Theme.of(context).primaryColor,
                 child: Container(
                   padding: EdgeInsets.only(
-                      top: MediaQuery
-                          .of(context)
-                          .size
-                          .height * 0.04),
+                      top: MediaQuery.of(context).size.height * 0.04),
                   child: Scaffold(
-                      backgroundColor: Theme
-                          .of(context)
-                          .primaryColor,
+                      backgroundColor: Theme.of(context).primaryColor,
                       appBar: SearchAppBar(
                         title: Text(title),
                         onChanged: (value) {
@@ -932,21 +937,21 @@ class BottomSheets {
                                               horizontal: 10),
                                           child: Column(
                                             crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                                CrossAxisAlignment.start,
                                             children: [
                                               Text(
                                                 spinnerItems[index].description,
                                                 style: TextStyle(
                                                     fontWeight:
-                                                    FontWeight.bold),
+                                                        FontWeight.bold),
                                               ),
                                               if (spinnerItems[index]
-                                                  .subDescription !=
+                                                      .subDescription !=
                                                   null)
                                                 Padding(
                                                   padding:
-                                                  const EdgeInsets.only(
-                                                      top: 5),
+                                                      const EdgeInsets.only(
+                                                          top: 5),
                                                   child: Text(
                                                       spinnerItems[index]
                                                           .subDescription!),
@@ -975,8 +980,9 @@ class SpinnerItem {
   final dynamic tag;
   final String? subDescription;
 
-  SpinnerItem({required this.identity,
-    required this.description,
-    this.tag,
-    this.subDescription});
+  SpinnerItem(
+      {required this.identity,
+      required this.description,
+      this.tag,
+      this.subDescription});
 }
