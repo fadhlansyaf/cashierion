@@ -28,7 +28,7 @@ class ProductListPage extends StatelessWidget {
           color: ColorTheme.COLOR_WHITE,
           child: Text("Products"),
         ),
-        onEditingComplete: (value) {
+        onChanged: (value) {
           if (value.isNotEmpty) {
             List<ProductModel> searched = [];
             for (var e in controller.products) {
@@ -46,7 +46,6 @@ class ProductListPage extends StatelessWidget {
             controller.products.clear();
             controller.products.addAll(duplicate);
           }
-          // setState(() {});
         },
         height: MediaQuery.of(context).size.height * 0.14,
       ),
@@ -155,17 +154,4 @@ class ProductListPage extends StatelessWidget {
       ),
     );
   }
-}
-
-class SpinnerItem {
-  final dynamic identity;
-  final String description;
-  final dynamic tag;
-  final String? subDescription;
-
-  SpinnerItem(
-      {required this.identity,
-      required this.description,
-      this.tag,
-      this.subDescription});
 }
