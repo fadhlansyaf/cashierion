@@ -33,11 +33,19 @@ class TransactionHistoryDetailLogic extends GetxController {
     isLoading.value = true;
     tax.value = Preferences.getInstance().getInt(SharedPreferenceKey.TAX) ?? 0;
     var dao = Get.find<TransactionHistoryDetailDao>();
-    transaction = await dao.refreshTransaction(listController.selectedTransaction.value!);
+    try {
+      transaction = await dao.refreshTransaction(listController.selectedTransaction.value!);
+    } catch (e) {
+      print(e);
+    }
     transactionDetailList.value = await dao.getTransactionDetails(listController.selectedTransaction.value!);
     productList.clear();
     for(var e in transactionDetailList){
-      productList.add((await dao.getProduct(e)).copyWith(quantity: e.quantity.obs, transactionDesc: e.description));
+      try {
+        productList.add((await dao.getProduct(e)).copyWith(quantity: e.quantity.obs, transactionDesc: e.description));
+      } catch (e) {
+        print(e);
+      }
     }
     countTotal(productList, transaction.value.invoice.startsWith('CO'));
     isLoading.value = false;

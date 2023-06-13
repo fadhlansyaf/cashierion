@@ -6,9 +6,14 @@ import '../../../service/database_provider.dart';
 
 class ProductListDao{
   Future<RxList<ProductModel>> getAllProducts() async {
-    Database db = await DatabaseProvider().database;
-    var result = await db.query(DatabaseProvider.productTable);
-    List<ProductModel> products = List.from(result.map((e) => ProductModel.fromJson(e)));
-    return products.obs;
+    try {
+      Database db = await DatabaseProvider().database;
+      var result = await db.query(DatabaseProvider.productTable);
+      List<ProductModel> products = List.from(result.map((e) => ProductModel.fromJson(e)));
+      return products.obs;
+    } catch (e) {
+      print(e);
+      return <ProductModel>[].obs;
+    }
   }
 }
