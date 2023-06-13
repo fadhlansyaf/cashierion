@@ -179,9 +179,9 @@ class Dialogs {
 
   static void productQuantityDialog(
       BuildContext context, ProductModel product
-      // TransactionModel transaction,
       ) async {
-    final textController = TextEditingController()..text = product.quantity.value.toString();
+    final quantityController = TextEditingController()..text = product.quantity.value.toString();
+    final descController = TextEditingController()..text = product.transactionDesc;
     final result = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
@@ -194,7 +194,7 @@ class Dialogs {
               TextFormField(
                 // onSaved: onSaved,
                 keyboardType: TextInputType.number,
-                controller: textController,
+                controller: quantityController,
                 // onTap: onTap,
                 // readOnly: onTap != null,
                 cursorColor: ColorTheme.COLOR_PRIMARY,
@@ -225,7 +225,7 @@ class Dialogs {
               TextFormField(
                 // onSaved: onSaved,
                 keyboardType: TextInputType.text,
-                // controller: controller,
+                controller: descController,
                 // onTap: onTap,
                 // readOnly: onTap != null,
                 cursorColor: ColorTheme.COLOR_PRIMARY,
@@ -272,7 +272,8 @@ class Dialogs {
       ),
     );
     if (result == true) {
-      product.quantity.value = int.parse(textController.text);
+      product.quantity.value = int.parse(quantityController.text);
+      product.transactionDesc = descController.text;
     }
   }
 

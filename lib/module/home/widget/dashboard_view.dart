@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:photo_view/photo_view.dart';
 import 'package:pos_app_skripsi/core.dart';
 import 'package:pos_app_skripsi/module/category_list/controller/category_list_binding.dart';
 import 'package:pos_app_skripsi/module/product_list/controller/product_list_binding.dart';
@@ -9,10 +8,6 @@ import 'package:pos_app_skripsi/module/transaction_report/controller/transaction
 import 'package:pos_app_skripsi/module/transaction_report/view/transaction_report_page.dart';
 import 'package:pos_app_skripsi/theme/theme_constants.dart';
 import 'package:pos_app_skripsi/utils/helper.dart';
-import '../../dashboard/controller/dashboard_controller.dart';
-import 'package:google_fonts/google_fonts.dart';
-
-import '../../sales_report/controller/sales_report_binding.dart';
 
 class DashboardView extends StatelessWidget {
   const DashboardView({Key? key}) : super(key: key);

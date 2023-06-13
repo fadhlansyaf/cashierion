@@ -70,7 +70,7 @@ class HomeDao {
     var endDay = DateFormat(DateTimeFormat.standard)
         .format(DateTime(now.year, now.month, now.day + 1));
     var result = (await db.rawQuery(query, [startDay, endDay])).first;
-    return [result['totalTransaction'] as num, result['totalProductsSold'] as num];
+    return [(result['totalTransaction'] ?? 0) as num, (result['totalProductsSold'] ?? 0) as num];
   }
 
   Future<RxList<PaymentTypeModel>> getAllPaymentType() async {
@@ -105,10 +105,25 @@ class HomeDao {
     return paymentTypeList;
   }
 
-  Future<void> deletePaymentType(PaymentTypeModel paymentType) async {
-    Database db = await DatabaseProvider().database;
-    await db.delete(DatabaseProvider.paymentType,
-        where: 'payment_type_id = ?', whereArgs: [paymentType.id]);
+  Future<bool> deletePaymentType(PaymentTypeModel paymentType) async {
+    try {
+      Database db = await DatabaseProvider().database;
+      int rowCount = Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM ${DatabaseProvider.paymentType}')) ?? 0;
+      if(rowCount > 1) {
+        var detailResult = await db.query(DatabaseProvider.paymentDetail, where: 'payment_type_id = ?', whereArgs: [paymentType.id]);
+        var paymentDetails = detailResult.map((e) => PaymentDetailModel.fromJson(e)).toList();
+        for(var e in paymentDetails){
+          await deletePaymentDetail(e);
+        }
+        await db.delete(DatabaseProvider.paymentType,
+          where: 'payment_type_id = ?', whereArgs: [paymentType.id]);
+        return true;
+      }else{
+        return false;
+      }
+    } catch (e) {
+      return false;
+    }
   }
 
   Future<RxList<PaymentDetailModel>> getPaymentDetailUsingPaymentType(
@@ -162,7 +177,7 @@ class HomeDao {
           productId: e.id,
           quantity: e.quantity.value,
           //TODO: ganti description dari textController
-          description: e.description);
+          description: e.transactionDesc);
       batch.insert(
           DatabaseProvider.transactionDetailTable, transactionDetail.toJson(),
           conflictAlgorithm: ConflictAlgorithm.replace);

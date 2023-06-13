@@ -9,8 +9,6 @@ import 'transaction_history_form_dao.dart';
 class TransactionHistoryFormLogic extends GetxController {
   var isEdited = false.obs;
 
-  List<TextEditingController> textController = [];
-
   Future<void> editTransaction(List<TransactionDetailModel> transactionDetail,
       List<ProductModel> products, TransactionModel transaction) async {
     List<TransactionDetailModel> editedTransactionDetail = [];
@@ -22,7 +20,7 @@ class TransactionHistoryFormLogic extends GetxController {
             transactionId: transactionDetail[i].transactionId,
             productId: transactionDetail[i].productId,
             quantity: products[i].quantity.value,
-            description: textController[i].text));
+            description: products[i].transactionDesc));
       }
       productDao.editItem(products[i].copyWith(
           stock: transaction.invoice.startsWith('CO')
@@ -42,7 +40,6 @@ class TransactionHistoryFormLogic extends GetxController {
         editedTransactionDetail, updatedTransaction);
     isEdited.value = true;
     Get.back();
-    //TODO(dhanis): snackbar success edit
     Get.snackbar(
       'Success',
       'Transaction has been successfully Edited',

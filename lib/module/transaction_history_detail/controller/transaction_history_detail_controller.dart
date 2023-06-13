@@ -37,7 +37,7 @@ class TransactionHistoryDetailLogic extends GetxController {
     transactionDetailList.value = await dao.getTransactionDetails(listController.selectedTransaction.value!);
     productList.clear();
     for(var e in transactionDetailList){
-      productList.add((await dao.getProduct(e)).copyWith(quantity: e.quantity.obs));
+      productList.add((await dao.getProduct(e)).copyWith(quantity: e.quantity.obs, transactionDesc: e.description));
     }
     countTotal(productList, transaction.value.invoice.startsWith('CO'));
     isLoading.value = false;

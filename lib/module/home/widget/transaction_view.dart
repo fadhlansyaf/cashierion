@@ -209,7 +209,11 @@ class TransactionView extends StatelessWidget {
                                                             ),
                                                           ),
                                                           Text(
-                                                            "Stock: " + products[secondIndex].stock.toString(),
+                                                            "Stock: " +
+                                                                products[
+                                                                        secondIndex]
+                                                                    .stock
+                                                                    .toString(),
                                                             style: TextStyle(
                                                               color: ColorTheme
                                                                   .COLOR_GREY,
@@ -305,7 +309,9 @@ class TransactionView extends StatelessWidget {
                                                                         secondIndex]
                                                                     .quantity
                                                                     .value++;
-                                                              } else if(!controller.isOrder.value) {
+                                                              } else if (!controller
+                                                                  .isOrder
+                                                                  .value) {
                                                                 products[
                                                                         secondIndex]
                                                                     .quantity
