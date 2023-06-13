@@ -80,8 +80,7 @@ class TransactionDetailView extends StatelessWidget {
                                 SizedBox(
                                   height: 5,
                                 ),
-                                SizedBox(
-                                  width: 180,
+                                if(selectedProducts[index].transactionDesc.isNotEmpty)SizedBox(
                                   child: Text(
                                     selectedProducts[index].transactionDesc,
                                     maxLines: 3,
@@ -212,7 +211,7 @@ class TransactionDetailView extends StatelessWidget {
                                   child: Text("Tax ${controller.tax.value}%"),
                                 ),
                                 Text(FunctionHelper.convertPriceWithComma(
-                                    controller.tax.value)),
+                                    controller.taxTotal.value)),
                               ],
                             ),
                             Divider(
@@ -223,7 +222,7 @@ class TransactionDetailView extends StatelessWidget {
                                 Expanded(child: Text("Total Price")),
                                 Text(FunctionHelper.convertPriceWithComma(
                                     controller.totalAmount.value +
-                                        controller.tax.value)),
+                                        controller.taxTotal.value)),
                               ],
                             ),
                           ],

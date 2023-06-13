@@ -89,7 +89,7 @@ class DatabaseProvider {
     )
     ''',
     '''
-      INSERT INTO PaymentType (payment_name) VALUES('Cash')
+      INSERT INTO $paymentType (payment_name) VALUES('Cash')
     ''',
     '''
     CREATE TABLE $paymentDetail (

@@ -29,7 +29,7 @@ class HomeDao {
         DateFormat(DateTimeFormat.standard).format(endDate);
     var result =
         await db.rawQuery(query, [formattedStartDate, formattedEndDate]);
-    return result.first['Sales'] as double;
+    return (result.first['Sales'] ?? 0.0) as double;
   }
 
   Future<double> getFinanceExpenditure() async {
@@ -52,7 +52,7 @@ class HomeDao {
         DateFormat(DateTimeFormat.standard).format(endDate);
     var result =
         await db.rawQuery(query, [formattedStartDate, formattedEndDate]);
-    return result.first['Expenditure'] as double;
+    return (result.first['Expenditure'] ?? 0.0) as double;
   }
 
   ///Return sudah pasti 2 value, index 0 TotalTransaction dan index 1 TotalProductsSold
@@ -273,6 +273,29 @@ class HomeDao {
       }
     } else {
       return {};
+    }
+  }
+
+  Future<void> deleteAllTables() async {
+    Database db = await DatabaseProvider().database;
+    await db.delete(DatabaseProvider.transactionDetailTable);
+    await db.delete(DatabaseProvider.transactionTable);
+    await db.delete(DatabaseProvider.paymentDetail);
+    await db.delete(DatabaseProvider.paymentType);
+    await db.delete(DatabaseProvider.productTable);
+    await db.delete(DatabaseProvider.productCategoryTable);
+
+    var initScript = [
+      '''
+  INSERT INTO ${DatabaseProvider.productCategoryTable}(product_category_id, name) VALUES(0, 'No Category')
+  ''',
+      '''
+      INSERT INTO ${DatabaseProvider.paymentType} (payment_name) VALUES('Cash')
+    ''',
+    ];
+
+    for(var e in initScript){
+      await db.rawInsert(e);
     }
   }
 }

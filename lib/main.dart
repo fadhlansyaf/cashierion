@@ -12,6 +12,8 @@ import 'package:syncfusion_flutter_xlsio/xlsio.dart' as xcel;
 import 'package:open_file/open_file.dart';
 import 'package:pos_app_skripsi/module/home/controller/home_binding.dart';
 
+import 'module/register/controller/register_binding.dart';
+import 'module/register/view/register_page.dart';
 import 'utils/preferences.dart';
 
 ThemeManager _themeManager = ThemeManager();
@@ -23,17 +25,15 @@ void main() async{
     Hive.init(path.path);
   }
   await Preferences.getInstance().init();
-
+  var haveAccount = Preferences.getInstance().getString(SharedPreferenceKey.STORE_NAME) != null;
   var mainStorage = await Hive.openBox('mainStorage');
   runApp(GetMaterialApp(
     title: 'POS',
     theme: mainTheme,
     navigatorKey: OldGet.navigatorKey,
     debugShowCheckedModeBanner: false,
-    home: const HomePage(),
-    initialBinding: HomeBinding(),
-    // home: const RegisterPage(),
-    // initialBinding: RegisterBinding(),
+    home: haveAccount ? const HomePage() : const RegisterPage(),
+    initialBinding: haveAccount ? HomeBinding() : RegisterBinding(),
     ));
 }
 

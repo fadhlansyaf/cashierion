@@ -58,7 +58,9 @@ class TransactionNavView extends StatelessWidget {
                     Spacer(),
                     controller.pageIndex.value == 0
                         ? ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              controller.clearAllItems();
+                            },
                             child: Text("Clear All"),
                             style: ButtonStyle(
                               backgroundColor: MaterialStatePropertyAll(ColorTheme.COLOR_ACTIVE),

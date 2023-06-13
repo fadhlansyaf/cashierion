@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pos_app_skripsi/model/database/category.dart';
+import 'package:pos_app_skripsi/utils/preferences.dart';
 
 import 'store_profile_form_dao.dart';
 
@@ -10,28 +11,30 @@ class StoreProfileFormLogic extends GetxController {
   var selectedImagePath = ''.obs;
   var selectedImageSize = ''.obs;
 
-  /// 0 = Category Name
+  /// 0 = Store Name
   ///
-  /// 1 = Description
-  List<TextEditingController> textController = [
-    TextEditingController(),
-    TextEditingController()
-  ];
+  /// 1 = Phone Number
+  ///
+  /// 2 = Store Address
+  ///
+  /// 3 = Description
+  List<TextEditingController> textController = List.generate(4, (index) => TextEditingController());
+  var prefs = Preferences.getInstance();
 
-  // Future<void> insertOrUpdateCategory([CategoryModel? category]) async {
-  //   var dao = Get.find<CategoryFormDao>();
-  //   if(category == null) {
-  //     await dao.insertCategory(CategoryModel(
-  //         name: textController[0].text, description: textController[1].text));
-  //   }else{
-  //     await dao.editCategory(CategoryModel(id: category.id,
-  //         name: textController[0].text, description: textController[1].text));
-  //     Get.back();
-  //   }
-  //   //Clear text
-  //   for(var e in textController){
-  //     e.text = '';
-  //   }
-  //   Get.back();
-  // }
+
+  @override
+  void onInit() {
+    super.onInit();
+    textController[0].text = prefs.getString(SharedPreferenceKey.STORE_NAME) ?? '';
+    textController[1].text = prefs.getString(SharedPreferenceKey.PHONE_NUMBER) ?? '';
+    textController[2].text = prefs.getString(SharedPreferenceKey.STORE_ADDRESS) ?? '';
+    textController[3].text = prefs.getString(SharedPreferenceKey.DESCRIPTION) ?? '';
+  }
+
+  void saveStoreProfile(){
+    prefs.setString(SharedPreferenceKey.STORE_NAME, textController[0].text);
+    prefs.setString(SharedPreferenceKey.PHONE_NUMBER, textController[1].text);
+    prefs.setString(SharedPreferenceKey.STORE_ADDRESS, textController[2].text);
+    prefs.setString(SharedPreferenceKey.DESCRIPTION, textController[3].text);
+  }
 }
