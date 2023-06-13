@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:pos_app_skripsi/model/database/database_model.dart';
+import 'package:cashierion/model/database/database_model.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../../../service/database_provider.dart';

@@ -1,16 +1,16 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:pos_app_skripsi/core.dart';
-import 'package:pos_app_skripsi/model/database/database_model.dart';
-import 'package:pos_app_skripsi/module/transaction_history_detail/view/transaction_history_detail_page.dart';
-import 'package:pos_app_skripsi/theme/theme_constants.dart';
+import 'package:cashierion/core.dart';
+import 'package:cashierion/model/database/database_model.dart';
+import 'package:cashierion/module/transaction_history_detail/view/transaction_history_detail_page.dart';
+import 'package:cashierion/theme/theme_constants.dart';
 
 import '../../../utils/helper.dart';
 import '../controller/transaction_history_list_controller.dart';
 import '../widget/date_picker.dart';
 import '/utils/bottom_sheet.dart';
-import 'package:pos_app_skripsi/module/transaction_history_detail/view/transaction_history_detail_page.dart';
-import 'package:pos_app_skripsi/module/transaction_history_detail/controller/transaction_history_detail_binding.dart';
+import 'package:cashierion/module/transaction_history_detail/view/transaction_history_detail_page.dart';
+import 'package:cashierion/module/transaction_history_detail/controller/transaction_history_detail_binding.dart';
 
 class TransactionHistoryListPage extends StatelessWidget {
   const TransactionHistoryListPage({Key? key}) : super(key: key);

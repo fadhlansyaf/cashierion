@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:pos_app_skripsi/module/product_detail/controller/product_detail_dao.dart';
+import 'package:cashierion/module/product_detail/controller/product_detail_dao.dart';
 
 import '../../../model/database/category.dart';
 import '../../../model/database/product.dart';

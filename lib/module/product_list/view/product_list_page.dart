@@ -2,14 +2,14 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:pos_app_skripsi/core.dart';
-import 'package:pos_app_skripsi/model/database/database_model.dart';
-import 'package:pos_app_skripsi/theme/theme_constants.dart';
+import 'package:cashierion/core.dart';
+import 'package:cashierion/model/database/database_model.dart';
+import 'package:cashierion/theme/theme_constants.dart';
 
 import '../controller/product_list_controller.dart';
-import 'package:pos_app_skripsi/module/product_form/controller/product_form_binding.dart';
+import 'package:cashierion/module/product_form/controller/product_form_binding.dart';
 
-import 'package:pos_app_skripsi/module/product_detail/controller/product_detail_binding.dart';
+import 'package:cashierion/module/product_detail/controller/product_detail_binding.dart';
 
 import '/widgets/search_appbar.dart';
 

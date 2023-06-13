@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:pos_app_skripsi/core.dart';
-import 'package:pos_app_skripsi/module/purchase_order/view/purchase_order_view.dart';
-import 'package:pos_app_skripsi/theme/theme_constants.dart';
+import 'package:cashierion/core.dart';
+import 'package:cashierion/module/purchase_order/view/purchase_order_view.dart';
+import 'package:cashierion/theme/theme_constants.dart';
 
 import '../widget/dashboard_view.dart';
 import '../widget/profile_view.dart';

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pos_app_skripsi/core.dart';
-import 'package:pos_app_skripsi/theme/theme_constants.dart';
-import 'package:pos_app_skripsi/utils/helper.dart';
+import 'package:cashierion/core.dart';
+import 'package:cashierion/theme/theme_constants.dart';
+import 'package:cashierion/utils/helper.dart';
 
 import '/utils/bottom_sheet.dart';
 

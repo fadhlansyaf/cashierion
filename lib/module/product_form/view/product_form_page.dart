@@ -2,11 +2,11 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:pos_app_skripsi/core.dart';
+import 'package:cashierion/core.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:pos_app_skripsi/model/database/database_model.dart';
-import 'package:pos_app_skripsi/module/product_form/controller/product_form_dao.dart';
-import 'package:pos_app_skripsi/theme/theme_constants.dart';
+import 'package:cashierion/model/database/database_model.dart';
+import 'package:cashierion/module/product_form/controller/product_form_dao.dart';
+import 'package:cashierion/theme/theme_constants.dart';
 
 import '../../../model/database/category.dart';
 import '../../category_list/controller/category_list_dao.dart';

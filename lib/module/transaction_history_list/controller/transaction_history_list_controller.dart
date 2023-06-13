@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pos_app_skripsi/model/database/database_model.dart';
+import 'package:cashierion/model/database/database_model.dart';
 
 // import '../../../model/database/category.dart';
 import 'transaction_history_list_dao.dart';

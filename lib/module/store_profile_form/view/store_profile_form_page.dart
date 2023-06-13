@@ -1,9 +1,9 @@
 import 'dart:io';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:pos_app_skripsi/core.dart';
+import 'package:cashierion/core.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:pos_app_skripsi/model/database/database_model.dart';
+import 'package:cashierion/model/database/database_model.dart';
 
 import '../controller/store_profile_form_controller.dart';
 import '/widgets/custom_text_field.dart';

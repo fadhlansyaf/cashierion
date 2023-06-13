@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:pos_app_skripsi/module/transaction_report/controller/transaction_report_controller.dart';
+import 'package:cashierion/module/transaction_report/controller/transaction_report_controller.dart';
 
 import '../../../utils/constant.dart';
 

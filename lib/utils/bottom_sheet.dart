@@ -2,9 +2,9 @@ import 'dart:async';
 import 'dart:io';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:pos_app_skripsi/core.dart';
-import 'package:pos_app_skripsi/theme/theme_constants.dart';
-import 'package:pos_app_skripsi/utils/dialog.dart';
+import 'package:cashierion/core.dart';
+import 'package:cashierion/theme/theme_constants.dart';
+import 'package:cashierion/utils/dialog.dart';
 
 import '../model/database/category.dart';
 import '../model/database/database_model.dart';

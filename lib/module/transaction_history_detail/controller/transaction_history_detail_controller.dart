@@ -2,10 +2,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:pos_app_skripsi/model/database/database_model.dart';
-import 'package:pos_app_skripsi/module/transaction_history_detail/controller/transaction_history_detail_dao.dart';
-import 'package:pos_app_skripsi/utils/constant.dart';
-import 'package:pos_app_skripsi/utils/preferences.dart';
+import 'package:cashierion/model/database/database_model.dart';
+import 'package:cashierion/module/transaction_history_detail/controller/transaction_history_detail_dao.dart';
+import 'package:cashierion/utils/constant.dart';
+import 'package:cashierion/utils/preferences.dart';
 
 import '../../../core.dart';
 import '../../../model/database/category.dart';

@@ -3,11 +3,11 @@ import 'dart:io';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:pos_app_skripsi/core.dart';
+import 'package:cashierion/core.dart';
 import 'package:syncfusion_flutter_xlsio/xlsio.dart' as xcel;
 import 'package:open_file/open_file.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:pos_app_skripsi/main.dart';
+import 'package:cashierion/main.dart';
 
 import '../controller/stock_report_controller.dart';
 

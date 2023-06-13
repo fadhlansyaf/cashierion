@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:pos_app_skripsi/module/product_list/controller/product_list_dao.dart';
+import 'package:cashierion/module/product_list/controller/product_list_dao.dart';
 
 import '../../../model/database/product.dart';
 

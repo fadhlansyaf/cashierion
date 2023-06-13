@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
-import 'package:pos_app_skripsi/model/database/database_model.dart';
-import 'package:pos_app_skripsi/utils/constant.dart';
+import 'package:cashierion/model/database/database_model.dart';
+import 'package:cashierion/utils/constant.dart';
 
 class ApiManager{
   static Dio getDio(){

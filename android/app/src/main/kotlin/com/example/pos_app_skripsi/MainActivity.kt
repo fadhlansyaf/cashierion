@@ -1,4 +1,4 @@
-package com.example.pos_app_skripsi
+package com.cashierion.cashierion
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:pos_app_skripsi/model/database/database_model.dart';
-import 'package:pos_app_skripsi/utils/constant.dart';
+import 'package:cashierion/model/database/database_model.dart';
+import 'package:cashierion/utils/constant.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../../../model/database/product.dart';

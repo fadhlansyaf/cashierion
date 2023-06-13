@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:pos_app_skripsi/model/database/category.dart';
+import 'package:cashierion/model/database/category.dart';
 
 import '../../../core.dart';
 import '../../../model/database/product.dart';

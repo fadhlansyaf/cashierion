@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pos_app_skripsi/theme/theme_constants.dart';
+import 'package:cashierion/theme/theme_constants.dart';
 
 ///Custom TextField, jika [onTap] null maka menampilkan textfield biasa,
 ///jika [onTap] tidak null maka menampilkan suffix icon, jika

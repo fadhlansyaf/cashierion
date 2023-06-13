@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:pos_app_skripsi/theme/theme_constants.dart';
+import 'package:cashierion/theme/theme_constants.dart';
 
 class SearchAppBar extends StatelessWidget implements PreferredSizeWidget {
   const SearchAppBar(

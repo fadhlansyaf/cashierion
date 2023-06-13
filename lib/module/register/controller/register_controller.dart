@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pos_app_skripsi/core.dart';
-import 'package:pos_app_skripsi/model/database/category.dart';
-import 'package:pos_app_skripsi/module/home/controller/home_binding.dart';
-import 'package:pos_app_skripsi/utils/preferences.dart';
+import 'package:cashierion/core.dart';
+import 'package:cashierion/model/database/category.dart';
+import 'package:cashierion/module/home/controller/home_binding.dart';
+import 'package:cashierion/utils/preferences.dart';
 
 import 'register_dao.dart';
 

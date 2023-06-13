@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:pos_app_skripsi/core.dart';
-import 'package:pos_app_skripsi/utils/constant.dart';
+import 'package:cashierion/core.dart';
+import 'package:cashierion/utils/constant.dart';
 
 /// Flutter code sample for [showDatePicker].
 

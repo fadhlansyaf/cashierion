@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pos_app_skripsi/model/database/category.dart';
-import 'package:pos_app_skripsi/utils/preferences.dart';
+import 'package:cashierion/model/database/category.dart';
+import 'package:cashierion/utils/preferences.dart';
 
 import 'store_profile_form_dao.dart';
 

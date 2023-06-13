@@ -1,5 +1,5 @@
 import 'package:intl/intl.dart';
-import 'package:pos_app_skripsi/utils/constant.dart';
+import 'package:cashierion/utils/constant.dart';
 
 class PredictionModel {
   final int item;

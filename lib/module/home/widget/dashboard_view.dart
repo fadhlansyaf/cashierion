@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pos_app_skripsi/core.dart';
-import 'package:pos_app_skripsi/module/category_list/controller/category_list_binding.dart';
-import 'package:pos_app_skripsi/module/product_list/controller/product_list_binding.dart';
-import 'package:pos_app_skripsi/module/transaction_history_list/controller/transaction_history_list_binding.dart';
-import 'package:pos_app_skripsi/module/transaction_report/controller/transaction_report_binding.dart';
-import 'package:pos_app_skripsi/module/transaction_report/view/transaction_report_page.dart';
-import 'package:pos_app_skripsi/theme/theme_constants.dart';
-import 'package:pos_app_skripsi/utils/helper.dart';
+import 'package:cashierion/core.dart';
+import 'package:cashierion/module/category_list/controller/category_list_binding.dart';
+import 'package:cashierion/module/product_list/controller/product_list_binding.dart';
+import 'package:cashierion/module/transaction_history_list/controller/transaction_history_list_binding.dart';
+import 'package:cashierion/module/transaction_report/controller/transaction_report_binding.dart';
+import 'package:cashierion/module/transaction_report/view/transaction_report_page.dart';
+import 'package:cashierion/theme/theme_constants.dart';
+import 'package:cashierion/utils/helper.dart';
 
 class DashboardView extends StatelessWidget {
   const DashboardView({Key? key}) : super(key: key);

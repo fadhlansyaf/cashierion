@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pos_app_skripsi/state_util.dart';
+import 'package:cashierion/state_util.dart';
 import '../../home/widget/dashboard_view.dart';
 
 // class DashboardController extends State<DashboardView> implements MvcController {

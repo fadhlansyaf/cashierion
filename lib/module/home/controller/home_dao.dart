@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:pos_app_skripsi/utils/constant.dart';
-import 'package:pos_app_skripsi/utils/preferences.dart';
+import 'package:cashierion/utils/constant.dart';
+import 'package:cashierion/utils/preferences.dart';
 
 import '../../../model/database/database_model.dart';
 import '../../../service/database_provider.dart';

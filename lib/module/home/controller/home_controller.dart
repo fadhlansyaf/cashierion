@@ -3,8 +3,8 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:pos_app_skripsi/core.dart';
-import 'package:pos_app_skripsi/module/register/view/register_page.dart';
+import 'package:cashierion/core.dart';
+import 'package:cashierion/module/register/view/register_page.dart';
 
 import '../../../api/api_manager.dart';
 import '../../../model/database/database_model.dart';
