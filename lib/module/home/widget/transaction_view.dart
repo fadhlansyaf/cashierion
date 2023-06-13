@@ -142,7 +142,6 @@ class TransactionView extends StatelessWidget {
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             5))
-                                            //TODO (dhanis): Stock habis
                                             : BoxDecoration(
                                                 color: Colors.grey,
                                                 borderRadius:

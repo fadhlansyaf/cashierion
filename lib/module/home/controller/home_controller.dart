@@ -77,7 +77,6 @@ class HomeLogic extends GetxController {
       predictionImage.value =
           await ApiManager.getPrediction(prediction: prediction);
     }else{
-      //TODO(dhanis): kasih note buat user kalo ga bisa predict (data belum 30 hari), notenya tampilin di ui prediction aja
       canPredict.value = false;
     }
     super.onInit();
