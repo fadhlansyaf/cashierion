@@ -36,5 +36,6 @@ class StoreProfileFormLogic extends GetxController {
     prefs.setString(SharedPreferenceKey.PHONE_NUMBER, textController[1].text);
     prefs.setString(SharedPreferenceKey.STORE_ADDRESS, textController[2].text);
     prefs.setString(SharedPreferenceKey.DESCRIPTION, textController[3].text);
+    Get.back();
   }
 }

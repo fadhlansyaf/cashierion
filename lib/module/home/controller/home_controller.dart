@@ -90,6 +90,7 @@ class HomeLogic extends GetxController {
     }
 
     var prefs = Preferences.getInstance();
+    await prefs.reload();
     storeName.value = prefs.getString(SharedPreferenceKey.STORE_NAME) ?? '';
     phoneNumber.value = prefs.getString(SharedPreferenceKey.PHONE_NUMBER) ?? '';
     address.value = prefs.getString(SharedPreferenceKey.STORE_ADDRESS) ?? '';

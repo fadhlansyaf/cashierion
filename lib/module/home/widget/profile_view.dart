@@ -23,12 +23,14 @@ class ProfileView extends StatelessWidget {
           IconButton(
             onPressed: () async {
               Get.to(
-                  () => StoreProfileFormPage(
+                      () =>
+                      StoreProfileFormPage(
                         // product: product,
                         isEditing: true,
                         // categories:
                       ),
-                  binding: StoreProfileFormBinding());
+                  binding: StoreProfileFormBinding())?.then((value) =>
+                  controller.onInit());
             },
             icon: const Icon(
               Icons.edit,
@@ -38,92 +40,109 @@ class ProfileView extends StatelessWidget {
         ],
       ),
       body: Container(
-        width: MediaQuery.of(context).size.width,
+        width: MediaQuery
+            .of(context)
+            .size
+            .width,
         padding: const EdgeInsets.all(10.0),
         child: Column(
           children: [
-            Expanded(
-              flex: 11,
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: ProfileDetailWidget(
-                          title: 'Store Name',
-                          subtitle: controller.storeName.value,
+            Obx(() {
+              return Expanded(
+                flex: 11,
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: ProfileDetailWidget(
+                            title: 'Store Name',
+                            subtitle: controller.storeName.value,
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Expanded(
-                        child: ProfileDetailWidget(
-                          title: 'Phone Number',
-                          subtitle: controller.phoneNumber.value,
+                        SizedBox(
+                          width: 10,
                         ),
+                        Expanded(
+                          child: ProfileDetailWidget(
+                            title: 'Phone Number',
+                            subtitle: controller.phoneNumber.value,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    ProfileDetailWidget(
+                        title: 'Address', subtitle: controller.address.value),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    ProfileDetailWidget(
+                        title: 'Description',
+                        subtitle: controller.description.value),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      // padding: EdgeInsets.all(10),
+                      width: MediaQuery
+                          .of(context)
+                          .size
+                          .width,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Dialogs.addTaxDialog(context, controller);
+                        },
+                        child: Text("Edit Tax"),
                       ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  ProfileDetailWidget(
-                      title: 'Address', subtitle: controller.address.value),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  ProfileDetailWidget(
-                      title: 'Description',
-                      subtitle: controller.description.value),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    // padding: EdgeInsets.all(10),
-                    width: MediaQuery.of(context).size.width,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Dialogs.addTaxDialog(context, controller);
-                      },
-                      child: Text("Edit Tax"),
                     ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    // padding: EdgeInsets.all(10),
-                    width: MediaQuery.of(context).size.width,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        BottomSheets.paymentTypeModalBottomSheet(
-                            context, controller, isEdit, (paymentType) {});
-                      },
-                      child: Text("Edit Payment Type"),
+                    SizedBox(
+                      height: 10,
                     ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    // padding: EdgeInsets.all(10),
-                    width: MediaQuery.of(context).size.width,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        BottomSheets.paymentMethodModalBottomSheet(
-                            context, controller, isEdit, (paymentDetail) {});
-                      },
-                      child: Text("Edit Payment Method"),
+                    Container(
+                      // padding: EdgeInsets.all(10),
+                      width: MediaQuery
+                          .of(context)
+                          .size
+                          .width,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          BottomSheets.paymentTypeModalBottomSheet(
+                              context, controller, isEdit, (paymentType) {});
+                        },
+                        child: Text("Edit Payment Type"),
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      // padding: EdgeInsets.all(10),
+                      width: MediaQuery
+                          .of(context)
+                          .size
+                          .width,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          BottomSheets.paymentMethodModalBottomSheet(
+                              context, controller, isEdit, (paymentDetail) {});
+                        },
+                        child: Text("Edit Payment Method"),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            }),
             Expanded(
               flex: 1,
               child: Container(
-                width: MediaQuery.of(context).size.width,
+                width: MediaQuery
+                    .of(context)
+                    .size
+                    .width,
                 child: ElevatedButton.icon(
                   icon: const Icon(Icons.delete),
                   label: const Text("Delete Data"),
