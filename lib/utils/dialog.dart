@@ -213,6 +213,7 @@ class Dialogs {
                       width: 0.25,
                     ),
                   ),
+                  // suffixIcon: onTap != null ? suffixIcon : null,
                 ),
               ),
               SizedBox(
@@ -268,7 +269,7 @@ class Dialogs {
       ),
     );
     if (result == true) {
-      // controller.deleteItem(product);
+      product.quantity.value = int.parse(textController.text);
     }
   }
 
@@ -334,7 +335,7 @@ class Dialogs {
       ),
     );
     if (result == true) {
-      // product.quantity.value = int.parse(textController.text);
+      // controller.deleteItem(product);
     }
   }
 }

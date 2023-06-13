@@ -8,6 +8,7 @@ import 'package:pos_app_skripsi/module/transaction_history_list/controller/trans
 import 'package:pos_app_skripsi/module/transaction_report/controller/transaction_report_binding.dart';
 import 'package:pos_app_skripsi/module/transaction_report/view/transaction_report_page.dart';
 import 'package:pos_app_skripsi/theme/theme_constants.dart';
+import 'package:pos_app_skripsi/utils/helper.dart';
 import '../../dashboard/controller/dashboard_controller.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -194,80 +195,84 @@ class DashboardView extends StatelessWidget {
               const SizedBox(
                 height: 10.0,
               ),
-              Container(
-                margin: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Card(
-                        child: Container(
-                          padding: EdgeInsets.all(10),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Sales",
-                                  style: TextStyle(
-                                      color: ColorTheme.COLOR_GREY,
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                const SizedBox(
-                                  height: 20.0,
-                                ),
-                                Text(
-                                  "Rp 0",
-                                  style: TextStyle(
-                                      color: ColorTheme.COLOR_WHITE,
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
+              Obx(() {
+                return Container(
+                  margin: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Card(
+                          child: Container(
+                            padding: EdgeInsets.all(10),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Sales",
+                                    style: TextStyle(
+                                        color: ColorTheme.COLOR_GREY,
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  const SizedBox(
+                                    height: 20.0,
+                                  ),
+                                  Text(
+                                    FunctionHelper.convertPriceWithComma(
+                                        controller.sales.value),
+                                    style: TextStyle(
+                                        color: ColorTheme.COLOR_WHITE,
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                    const SizedBox(
-                      width: 10.0,
-                    ),
-                    Expanded(
-                      child: Card(
-                        child: Container(
-                          padding: EdgeInsets.all(10),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Expenditure",
-                                  style: TextStyle(
-                                      color: ColorTheme.COLOR_GREY,
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                const SizedBox(
-                                  height: 20.0,
-                                ),
-                                Text(
-                                  "Rp 0",
-                                  style: TextStyle(
-                                      color: ColorTheme.COLOR_WHITE,
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
+                      const SizedBox(
+                        width: 10.0,
+                      ),
+                      Expanded(
+                        child: Card(
+                          child: Container(
+                            padding: EdgeInsets.all(10),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Expenditure",
+                                    style: TextStyle(
+                                        color: ColorTheme.COLOR_GREY,
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  const SizedBox(
+                                    height: 20.0,
+                                  ),
+                                  Text(
+                                    FunctionHelper.convertPriceWithComma(
+                                        controller.expenditure.value),
+                                    style: TextStyle(
+                                        color: ColorTheme.COLOR_WHITE,
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
+                    ],
+                  ),
+                );
+              }),
               const SizedBox(
                 height: 10.0,
               ),
@@ -287,80 +292,82 @@ class DashboardView extends StatelessWidget {
               const SizedBox(
                 height: 10.0,
               ),
-              Container(
-                margin: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Card(
-                        child: Container(
-                          padding: EdgeInsets.all(10),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Transaction Totals",
-                                  style: TextStyle(
-                                      color: ColorTheme.COLOR_GREY,
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                const SizedBox(
-                                  height: 20.0,
-                                ),
-                                Text(
-                                  "0",
-                                  style: TextStyle(
-                                      color: ColorTheme.COLOR_WHITE,
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
+              Obx(() {
+                return Container(
+                  margin: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Card(
+                          child: Container(
+                            padding: EdgeInsets.all(10),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Total Transactions",
+                                    style: TextStyle(
+                                        color: ColorTheme.COLOR_GREY,
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  const SizedBox(
+                                    height: 20.0,
+                                  ),
+                                  Text(
+                                    controller.todayTransaction.value.toString(),
+                                    style: TextStyle(
+                                        color: ColorTheme.COLOR_WHITE,
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                    const SizedBox(
-                      width: 10.0,
-                    ),
-                    Expanded(
-                      child: Card(
-                        child: Container(
-                          padding: EdgeInsets.all(10),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Total Product Sold",
-                                  style: TextStyle(
-                                      color: ColorTheme.COLOR_GREY,
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                const SizedBox(
-                                  height: 20.0,
-                                ),
-                                Text(
-                                  "0",
-                                  style: TextStyle(
-                                      color: ColorTheme.COLOR_WHITE,
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
+                      const SizedBox(
+                        width: 10.0,
+                      ),
+                      Expanded(
+                        child: Card(
+                          child: Container(
+                            padding: EdgeInsets.all(10),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Total Product Sold",
+                                    style: TextStyle(
+                                        color: ColorTheme.COLOR_GREY,
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  const SizedBox(
+                                    height: 20.0,
+                                  ),
+                                  Text(
+                                    controller.todaySoldProducts.value.toString(),
+                                    style: TextStyle(
+                                        color: ColorTheme.COLOR_WHITE,
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
+                    ],
+                  ),
+                );
+              }),
             ],
           ),
         ),

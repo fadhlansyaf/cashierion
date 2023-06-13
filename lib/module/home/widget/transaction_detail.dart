@@ -236,14 +236,15 @@ class TransactionDetailView extends StatelessWidget {
                     child: ElevatedButton(
                       onPressed: selectedProducts.isNotEmpty
                           ? () {
-                        controller.insertTransaction(pageController);
-                        Get.snackbar(
-                            'Success',
-                            'Transaction has been successfully inserted',
-                            snackPosition: SnackPosition.BOTTOM,
-                            backgroundColor: Colors.green,
-                            colorText: Colors.white);
-                      }
+                              controller.insertTransaction(pageController);
+                              Get.snackbar('Success',
+                                  'Transaction has been successfully inserted',
+                                  snackPosition: SnackPosition.BOTTOM,
+                                  backgroundColor: Colors.green,
+                                  colorText: Colors.white,
+                                  margin: EdgeInsets.only(bottom: 120.0),
+                                  );
+                            }
                           : null,
                       child: Text("Create Transaction"),
                     ),
