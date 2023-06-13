@@ -18,10 +18,6 @@ class RegisterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<RegisterLogic>();
-    if (isEditing && category != null) {
-      controller.textController[0].text = category!.name;
-      controller.textController[1].text = category!.description;
-    }
 
     return Scaffold(
       // backgroundColor: Color(Gradient(colors: [ColorTheme.COLOR_ACTIVE, ColorTheme.COLOR_PRIMARY]),),
@@ -38,42 +34,48 @@ class RegisterPage extends StatelessWidget {
             ),
           ),
           child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                  height: 150,
-                ),
-                Image.asset(
-                  "assets/logo-no-background.png",
-                  width: 250,
-                ),
-                SizedBox(
-                  height: 150,
-                ),
-                Container(
-                  padding: EdgeInsets.all(10),
-                  child: Card(
-                    color: ColorTheme.COLOR_BACKGROUND,
-                    child: Container(
-                      padding: EdgeInsets.all(10),
-                      child: Column(
-                        children: [
-                          CustomTextFieldOld(
-                            controller: controller.textController[0],
-                            keyboardType: TextInputType.text,
-                            label: "Store Name",
-                          ),
-                          ElevatedButton(
-                            onPressed: () {},
-                            child: Text("Register"),
-                          )
-                        ],
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: 150,
+                  ),
+                  Image.asset(
+                    "assets/logo-no-background.png",
+                    width: 250,
+                  ),
+                  SizedBox(
+                    height: 150,
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(10),
+                    child: Card(
+                      color: ColorTheme.COLOR_BACKGROUND,
+                      child: Container(
+                        padding: EdgeInsets.all(10),
+                        child: Column(
+                          children: [
+                            CustomTextFieldOld(
+                              controller: controller.textController,
+                              keyboardType: TextInputType.text,
+                              label: "Store Name",
+                            ),
+                            ElevatedButton(
+                              onPressed: () {
+                                if(controller.textController.text.isNotEmpty){
+                                  controller.registerStore();
+                                }
+                              },
+                              child: Text("Register"),
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

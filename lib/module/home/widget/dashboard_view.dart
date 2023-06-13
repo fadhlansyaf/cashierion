@@ -214,13 +214,15 @@ class DashboardView extends StatelessWidget {
                                   const SizedBox(
                                     height: 20.0,
                                   ),
-                                  Text(
-                                    FunctionHelper.convertPriceWithComma(
-                                        controller.sales.value),
-                                    style: TextStyle(
-                                        color: ColorTheme.COLOR_WHITE,
-                                        fontSize: 24,
-                                        fontWeight: FontWeight.bold),
+                                  FittedBox(
+                                    child: Text(
+                                      FunctionHelper.convertPriceWithComma(
+                                          controller.sales.value),
+                                      style: TextStyle(
+                                          color: ColorTheme.COLOR_WHITE,
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.bold),
+                                    ),
                                   ),
                                 ],
                               ),
@@ -250,13 +252,15 @@ class DashboardView extends StatelessWidget {
                                   const SizedBox(
                                     height: 20.0,
                                   ),
-                                  Text(
-                                    FunctionHelper.convertPriceWithComma(
-                                        controller.expenditure.value),
-                                    style: TextStyle(
-                                        color: ColorTheme.COLOR_WHITE,
-                                        fontSize: 24,
-                                        fontWeight: FontWeight.bold),
+                                  FittedBox(
+                                    child: Text(
+                                      FunctionHelper.convertPriceWithComma(
+                                          controller.expenditure.value),
+                                      style: TextStyle(
+                                          color: ColorTheme.COLOR_WHITE,
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.bold),
+                                    ),
                                   ),
                                 ],
                               ),

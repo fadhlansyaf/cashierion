@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pos_app_skripsi/core.dart';
+import 'package:pos_app_skripsi/module/register/view/register_page.dart';
 
 import '../../../api/api_manager.dart';
 import '../../../model/database/database_model.dart';
@@ -11,12 +12,13 @@ import '../../../utils/constant.dart';
 import '../../../utils/preferences.dart';
 import '../../category_list/controller/category_list_dao.dart';
 import '../../product_list/controller/product_list_dao.dart';
+import '../../register/controller/register_binding.dart';
 
 class HomeLogic extends GetxController {
   var selectedIndex = 0.obs;
   var categoryList = <CategoryModel>[].obs;
   var productList = <ProductModel>[].obs;
-  late Rx<PaymentTypeModel> selectedPaymentType;
+  Rx<PaymentTypeModel> selectedPaymentType = PaymentTypeModel(paymentName: '').obs;
   var paymentType = <PaymentTypeModel>[].obs;
   Rx<PaymentDetailModel?> selectedPaymentDetail = Rx<PaymentDetailModel?>(null);
   var specificPaymentDetail = <PaymentDetailModel>[].obs;
@@ -32,6 +34,10 @@ class HomeLogic extends GetxController {
   var expenditure = 0.0.obs;
   var todayTransaction = 0.obs;
   var todaySoldProducts = 0.obs;
+  var storeName = ''.obs;
+  var phoneNumber = ''.obs;
+  var address = ''.obs;
+  var description = ''.obs;
 
   //variabel untuk bottomsheet
   ///Panggil jika butuh setstate pada bottomsheet
@@ -82,6 +88,12 @@ class HomeLogic extends GetxController {
     } else {
       canPredict.value = false;
     }
+
+    var prefs = Preferences.getInstance();
+    storeName.value = prefs.getString(SharedPreferenceKey.STORE_NAME) ?? '';
+    phoneNumber.value = prefs.getString(SharedPreferenceKey.PHONE_NUMBER) ?? '';
+    address.value = prefs.getString(SharedPreferenceKey.STORE_ADDRESS) ?? '';
+    description.value = prefs.getString(SharedPreferenceKey.DESCRIPTION) ?? '';
     super.onInit();
   }
 
@@ -96,6 +108,11 @@ class HomeLogic extends GetxController {
     }
     taxTotal.value = total * (tax / 100);
     totalAmount.value = total;
+  }
+
+  void setTax(int newTax){
+    Preferences.getInstance().setInt(SharedPreferenceKey.TAX, newTax);
+    tax.value = newTax;
   }
 
   ///Dipanggil ketika user menambahkan payment type/detail baru
@@ -246,6 +263,14 @@ class HomeLogic extends GetxController {
     return invoiceNumber;
   }
 
+  void clearAllItems(){
+    for(var e in productList){
+      if(e.quantity.value > 0){
+        e.quantity.value = 0;
+      }
+    }
+  }
+
   Future<void> insertTransaction(PageController pageController) async {
     try {
       var homeDao = Get.find<HomeDao>();
@@ -255,15 +280,11 @@ class HomeLogic extends GetxController {
               paymentDetailId: selectedPaymentDetail.value?.id,
               invoice: await generateInvoiceNumber(),
               dates: DateFormat(DateTimeFormat.standard).format(DateTime.now()),
-              sales: totalAmount.value),
-          productList.where((p0) => p0.quantity.value > 0).toList(),
-          isOrder.value);
+              sales: totalAmount.value +
+                  taxTotal.value),
+          productList.where((p0) => p0.quantity.value > 0).toList(), isOrder.value);
 
-      for (var e in productList) {
-        if (e.quantity.value > 0) {
-          e.quantity.value = 0;
-        }
-      }
+      clearAllItems();
       onInit();
       await pageController.animateToPage(
         0,
@@ -273,5 +294,16 @@ class HomeLogic extends GetxController {
     } catch (e) {
       print(e);
     }
+  }
+
+  Future<void> clearAllData() async {
+    var prefs = Preferences.getInstance();
+    prefs.clear();
+    var homeDao = Get.find<HomeDao>();
+    await homeDao.deleteAllTables();
+    prefs.reload();
+    Get.until((route) => route.isFirst);
+    Get.delete<HomeLogic>();
+    Get.off(() => RegisterPage(), binding: RegisterBinding());
   }
 }

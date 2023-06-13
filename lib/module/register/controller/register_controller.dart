@@ -1,37 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pos_app_skripsi/core.dart';
 import 'package:pos_app_skripsi/model/database/category.dart';
+import 'package:pos_app_skripsi/module/home/controller/home_binding.dart';
+import 'package:pos_app_skripsi/utils/preferences.dart';
 
 import 'register_dao.dart';
 
 class RegisterLogic extends GetxController {
-  var selectedIndex = 0.obs;
+  final textController = TextEditingController();
 
-  var selectedImagePath = ''.obs;
-  var selectedImageSize = ''.obs;
-
-  /// 0 = Category Name
-  ///
-  /// 1 = Description
-  List<TextEditingController> textController = [
-    TextEditingController(),
-    TextEditingController()
-  ];
-
-  // Future<void> insertOrUpdateCategory([CategoryModel? category]) async {
-  //   var dao = Get.find<CategoryFormDao>();
-  //   if(category == null) {
-  //     await dao.insertCategory(CategoryModel(
-  //         name: textController[0].text, description: textController[1].text));
-  //   }else{
-  //     await dao.editCategory(CategoryModel(id: category.id,
-  //         name: textController[0].text, description: textController[1].text));
-  //     Get.back();
-  //   }
-  //   //Clear text
-  //   for(var e in textController){
-  //     e.text = '';
-  //   }
-  //   Get.back();
-  // }
+  void registerStore(){
+    Preferences.getInstance().setString(SharedPreferenceKey.STORE_NAME, textController.text);
+    Preferences.getInstance().setInt(SharedPreferenceKey.TAX, 10);
+    Get.delete<RegisterLogic>();
+    Get.off(() => HomePage(), binding: HomeBinding());
+  }
 }

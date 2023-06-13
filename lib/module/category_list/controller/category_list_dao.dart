@@ -7,15 +7,25 @@ import '../../../service/database_provider.dart';
 
 class CategoryListDao{
   Future<RxList<CategoryModel>> getCategoryList() async {
-    Database db = await DatabaseProvider().database;
-    var query = await db.query(DatabaseProvider.productCategoryTable);
-    var category = query.map((e) => CategoryModel.fromJson(e)).toList();
-    return category.obs;
+    try {
+      Database db = await DatabaseProvider().database;
+      var query = await db.query(DatabaseProvider.productCategoryTable);
+      var category = query.map((e) => CategoryModel.fromJson(e)).toList();
+      return category.obs;
+    } catch (e) {
+      print(e);
+      return <CategoryModel>[].obs;
+    }
   }
 
   Future<int> checkCategoryCount(CategoryModel category) async{
-    Database db = await DatabaseProvider().database;
-    var query = await db.query(DatabaseProvider.productTable, where: 'product_category_id = ?', whereArgs: [category.id]);
-    return query.map((e) => ProductModel.fromJson(e)).toList().length;
+    try {
+      Database db = await DatabaseProvider().database;
+      var query = await db.query(DatabaseProvider.productTable, where: 'product_category_id = ?', whereArgs: [category.id]);
+      return query.map((e) => ProductModel.fromJson(e)).toList().length;
+    } catch (e) {
+      print(e);
+      return 0;
+    }
   }
 }

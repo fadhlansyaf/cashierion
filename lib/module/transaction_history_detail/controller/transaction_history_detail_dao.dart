@@ -6,10 +6,15 @@ import '../../../service/database_provider.dart';
 
 class TransactionHistoryDetailDao{
   Future<RxList<TransactionDetailModel>> getTransactionDetails(TransactionModel transaction) async {
-    Database db = await DatabaseProvider().database;
-    var query = await db.query(DatabaseProvider.transactionDetailTable, where: 'transaction_id = ?', whereArgs: [transaction.id]);
-    var transactionDetail = query.map((e) => TransactionDetailModel.fromJson(e)).toList();
-    return transactionDetail.obs;
+    try {
+      Database db = await DatabaseProvider().database;
+      var query = await db.query(DatabaseProvider.transactionDetailTable, where: 'transaction_id = ?', whereArgs: [transaction.id]);
+      var transactionDetail = query.map((e) => TransactionDetailModel.fromJson(e)).toList();
+      return transactionDetail.obs;
+    }  catch (e) {
+      print(e);
+      return <TransactionDetailModel>[].obs;
+    }
   }
 
   Future<Rx<TransactionModel>> refreshTransaction(TransactionModel transaction) async {

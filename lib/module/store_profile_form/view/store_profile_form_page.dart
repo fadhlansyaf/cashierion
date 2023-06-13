@@ -9,19 +9,13 @@ import '../controller/store_profile_form_controller.dart';
 import '/widgets/custom_text_field.dart';
 
 class StoreProfileFormPage extends StatelessWidget {
-  const StoreProfileFormPage({Key? key, this.isEditing = false, 
-  this.category
+  const StoreProfileFormPage({Key? key, this.isEditing = false,
   }) : super(key: key);
   final bool isEditing;
-  final CategoryModel? category;
 
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<StoreProfileFormLogic>();
-    if(isEditing && category != null){
-      controller.textController[0].text = category!.name;
-      controller.textController[1].text = category!.description;
-    }
 
     return Scaffold(
       appBar: AppBar(
@@ -29,7 +23,7 @@ class StoreProfileFormPage extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {
-              // controller.insertOrUpdateCategory(category);
+              controller.saveStoreProfile();
             },
             icon: const Icon(
               Icons.check,
@@ -50,16 +44,16 @@ class StoreProfileFormPage extends StatelessWidget {
               ),
               CustomTextFieldOld(
                 controller: controller.textController[1],
-                keyboardType: TextInputType.text,
+                keyboardType: TextInputType.number,
                 label: "Phone Number",
               ),
               CustomTextFieldOld(
-                controller: controller.textController[1],
+                controller: controller.textController[2],
                 keyboardType: TextInputType.text,
-                label: "Phone Address",
+                label: "Address",
               ),
               CustomTextFieldOld(
-                controller: controller.textController[1],
+                controller: controller.textController[3],
                 keyboardType: TextInputType.text,
                 label: "Description",
               ),

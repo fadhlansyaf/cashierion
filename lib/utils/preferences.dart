@@ -19,9 +19,6 @@ class Preferences {
 
   init() async {
     sharedPreferences = await SharedPreferences.getInstance();
-    if(getInt(SharedPreferenceKey.TAX) == null){
-      setInt(SharedPreferenceKey.TAX, 10);
-    }
   }
 
   bool? getBool(SharedPreferenceKey sharedPreferenceKey, [bool? defValue]) {

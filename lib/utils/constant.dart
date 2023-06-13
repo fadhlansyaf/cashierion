@@ -1,7 +1,11 @@
 enum SharedPreferenceKey{
   TAX,
   INVOICE_DAY_RESET,
-  INVOICE_COUNTER
+  INVOICE_COUNTER,
+  STORE_NAME,
+  PHONE_NUMBER,
+  STORE_ADDRESS,
+  DESCRIPTION
 }
 
 class DateTimeFormat{

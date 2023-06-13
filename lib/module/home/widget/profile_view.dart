@@ -51,7 +51,7 @@ class ProfileView extends StatelessWidget {
                       Expanded(
                         child: ProfileDetailWidget(
                           title: 'Store Name',
-                          subtitle: 'Store Name',
+                          subtitle: controller.storeName.value,
                         ),
                       ),
                       SizedBox(
@@ -60,7 +60,7 @@ class ProfileView extends StatelessWidget {
                       Expanded(
                         child: ProfileDetailWidget(
                           title: 'Phone Number',
-                          subtitle: 'Phone Number',
+                          subtitle: controller.phoneNumber.value,
                         ),
                       ),
                     ],
@@ -68,12 +68,12 @@ class ProfileView extends StatelessWidget {
                   SizedBox(
                     height: 10,
                   ),
-                  ProfileDetailWidget(title: 'Address', subtitle: 'Address'),
+                  ProfileDetailWidget(title: 'Address', subtitle: controller.address.value),
                   SizedBox(
                     height: 10,
                   ),
                   ProfileDetailWidget(
-                      title: 'Description', subtitle: 'Description'),
+                      title: 'Description', subtitle: controller.description.value),
                   SizedBox(
                     height: 10,
                   ),
@@ -82,7 +82,7 @@ class ProfileView extends StatelessWidget {
                     width: MediaQuery.of(context).size.width,
                     child: ElevatedButton(
                       onPressed: () {
-                        Dialogs.addTaxDialog(context);
+                        Dialogs.addTaxDialog(context, controller);
                       },
                       child: Text("Edit Tax"),
                     ),
@@ -128,7 +128,9 @@ class ProfileView extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.red,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    controller.clearAllData();
+                  },
                 ),
               ),
             ),

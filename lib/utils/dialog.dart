@@ -274,9 +274,10 @@ class Dialogs {
     }
   }
 
-  static void addTaxDialog(BuildContext context
-      // TransactionModel transaction,
+  static void addTaxDialog(BuildContext context,
+      HomeLogic controller
       ) async {
+    var taxController = TextEditingController()..text = controller.tax.toString();
     final result = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
@@ -289,7 +290,7 @@ class Dialogs {
               TextFormField(
                 // onSaved: onSaved,
                 keyboardType: TextInputType.number,
-                // controller: controller,
+                controller: taxController,
                 // onTap: onTap,
                 // readOnly: onTap != null,
                 cursorColor: ColorTheme.COLOR_PRIMARY,
@@ -336,7 +337,7 @@ class Dialogs {
       ),
     );
     if (result == true) {
-      // controller.deleteItem(product);
+      controller.setTax(taxController.text.isNotEmpty ? int.parse(taxController.text) : 0);
     }
   }
 }

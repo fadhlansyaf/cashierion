@@ -17,9 +17,8 @@ import '../widget/transaction_history_detail_widget.dart';
 import '/utils/dialog.dart';
 
 class TransactionHistoryDetailPage extends StatelessWidget {
-  const TransactionHistoryDetailPage({
-    Key? key,required this.type
-  }) : super(key: key);
+  const TransactionHistoryDetailPage({Key? key, required this.type})
+      : super(key: key);
   final int type;
 
   @override
@@ -33,13 +32,12 @@ class TransactionHistoryDetailPage extends StatelessWidget {
           IconButton(
             onPressed: () async {
               Get.to(
-                      () =>
-                      TransactionHistoryFormPage(
-                        transaction: controller.transaction.value,
-                        transactionDetail: controller.transactionDetailList,
-                        products: controller.productList,
-                      ),
-                  binding: TransactionHistoryFormBinding())
+                      () => TransactionHistoryFormPage(
+                            transaction: controller.transaction.value,
+                            transactionDetail: controller.transactionDetailList,
+                            products: controller.productList,
+                          ),
+                      binding: TransactionHistoryFormBinding())
                   ?.then((value) => controller.onInit());
             },
             icon: const Icon(
@@ -59,7 +57,7 @@ class TransactionHistoryDetailPage extends StatelessWidget {
         ],
       ),
       body: Obx(() {
-        if(!controller.isLoading.value) {
+        if (!controller.isLoading.value) {
           return Container(
             padding: const EdgeInsets.all(10.0),
             child: Column(
@@ -94,16 +92,11 @@ class TransactionHistoryDetailPage extends StatelessWidget {
                                   children: [
                                     Text(
                                       controller.productList[index].name,
-                                      // style: TextStyle(
-                                      //   fontSize: 16,
-                                      //   fontWeight: FontWeight.bold,
-                                      // ),
                                     ),
                                     SizedBox(
                                       height: 5,
                                     ),
                                     Text(
-                                      // controller.products[index].description,
                                       "${FunctionHelper.convertPriceWithComma(type == 0 ? controller.productList[index].sellingPrice : controller.productList[index].price)} x ${controller.transactionDetailList[index].quantity}",
                                       style: TextStyle(
                                         fontSize: 16,
@@ -113,16 +106,20 @@ class TransactionHistoryDetailPage extends StatelessWidget {
                                     SizedBox(
                                       height: 5,
                                     ),
-                                    SizedBox(
-                                    child: Text(
-                                      controller.transactionDetailList[index].description,
-                                      maxLines: 3,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                        color: ColorTheme.COLOR_WHITE,
+                                    if (controller.transactionDetailList[index]
+                                        .description.isNotEmpty)
+                                      SizedBox(
+                                        child: Text(
+                                          controller
+                                              .transactionDetailList[index]
+                                              .description,
+                                          maxLines: 3,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                            color: ColorTheme.COLOR_WHITE,
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                  ),
                                   ],
                                 ),
                               ),
@@ -176,7 +173,8 @@ class TransactionHistoryDetailPage extends StatelessWidget {
                         TransactionHistoryDetailWidget(
                             title: "Total Price:",
                             subtitle: FunctionHelper.convertPriceWithComma(
-                                controller.totalAmount.value + controller.taxTotal.value)),
+                                controller.totalAmount.value +
+                                    controller.taxTotal.value)),
                       ],
                     ),
                   ),
@@ -192,7 +190,7 @@ class TransactionHistoryDetailPage extends StatelessWidget {
             // }
             // }),
           );
-        }else{
+        } else {
           return CircularProgressIndicator();
         }
       }),
