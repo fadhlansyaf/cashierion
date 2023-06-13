@@ -88,44 +88,44 @@ class TransactionHistoryDetailPage extends StatelessWidget {
                               SizedBox(
                                 width: 15,
                               ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    controller.productList[index].name,
-                                    // style: TextStyle(
-                                    //   fontSize: 16,
-                                    //   fontWeight: FontWeight.bold,
-                                    // ),
-                                  ),
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  Text(
-                                    // controller.products[index].description,
-                                    "${FunctionHelper.convertPriceWithComma(type == 0 ? controller.productList[index].sellingPrice : controller.productList[index].price)} x ${controller.transactionDetailList[index].quantity}",
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      controller.productList[index].name,
+                                      // style: TextStyle(
+                                      //   fontSize: 16,
+                                      //   fontWeight: FontWeight.bold,
+                                      // ),
+                                    ),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    Text(
+                                      // controller.products[index].description,
+                                      "${FunctionHelper.convertPriceWithComma(type == 0 ? controller.productList[index].sellingPrice : controller.productList[index].price)} x ${controller.transactionDetailList[index].quantity}",
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    SizedBox(
+                                    child: Text(
+                                      controller.transactionDetailList[index].description,
+                                      maxLines: 3,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                        color: ColorTheme.COLOR_WHITE,
+                                      ),
                                     ),
                                   ),
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  SizedBox(
-                                  width: 180,
-                                  child: Text(
-                                    'Description: The Description The Description The Description The Description',
-                                    maxLines: 3,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                      color: ColorTheme.COLOR_WHITE,
-                                    ),
-                                  ),
+                                  ],
                                 ),
-                                ],
                               ),
-                              Spacer(),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.center,

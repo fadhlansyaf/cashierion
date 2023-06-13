@@ -83,7 +83,7 @@ class TransactionDetailView extends StatelessWidget {
                                 SizedBox(
                                   width: 180,
                                   child: Text(
-                                    'Description: The Description ',
+                                    selectedProducts[index].transactionDesc,
                                     maxLines: 3,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(

@@ -28,10 +28,6 @@ class TransactionHistoryFormPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<TransactionHistoryFormLogic>();
-    controller.textController = List.generate(
-        transactionDetail.length,
-        (index) => TextEditingController()
-          ..text = transactionDetail[index].description);
 
     return Scaffold(
       appBar: AppBar(

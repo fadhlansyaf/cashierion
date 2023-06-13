@@ -147,8 +147,12 @@ class HomeLogic extends GetxController {
 
   Future<void> deletePaymentType(PaymentTypeModel paymentType) async {
     var homeDao = Get.find<HomeDao>();
-    await homeDao.deletePaymentType(paymentType);
-    Get.back();
+    var isDeleted = await homeDao.deletePaymentType(paymentType);
+    if(isDeleted){
+      Get.back();
+    }else{
+      //TODO(dhanis): error gabisa delete karena cuma ada 1 data
+    }
   }
 
   Future<void> editPaymentDetail(PaymentDetailModel paymentDetail) async {
