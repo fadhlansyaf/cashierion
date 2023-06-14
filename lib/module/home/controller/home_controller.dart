@@ -183,7 +183,9 @@ class HomeLogic extends GetxController {
       Get.snackbar(
         'Error',
         'Payment type can\'t be empty',
-        backgroundColor: Colors.red,
+        snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white
       );
     }
   }

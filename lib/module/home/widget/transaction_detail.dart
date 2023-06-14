@@ -240,10 +240,10 @@ class TransactionDetailView extends StatelessWidget {
                               Get.snackbar(
                                 'Success',
                                 'Transaction has been successfully inserted',
-                                snackPosition: SnackPosition.BOTTOM,
+                                snackPosition: SnackPosition.TOP,
                                 backgroundColor: Colors.green,
                                 colorText: Colors.white,
-                                margin: EdgeInsets.only(bottom: 120.0),
+                                margin: EdgeInsets.only(top: 20.0),
                               );
                             }
                           : null,

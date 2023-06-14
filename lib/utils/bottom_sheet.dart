@@ -687,11 +687,10 @@ class BottomSheets {
                               }
                             }
                           } else {
-                            Get.snackbar(
-                              'Error',
-                              'Please choose payment type',
-                              backgroundColor: Colors.red,
-                            );
+                            Get.snackbar('Error', 'Please choose payment type',
+                                snackPosition: SnackPosition.BOTTOM,
+                                backgroundColor: Colors.red,
+                                colorText: Colors.white);
                           }
                         },
                         icon: const Icon(
@@ -725,11 +724,10 @@ class BottomSheets {
                       }
                     }
                   } else {
-                    Get.snackbar(
-                      'Error',
-                      'Please choose payment type',
-                      backgroundColor: Colors.red,
-                    );
+                    Get.snackbar('Error', 'Please choose payment type',
+                        snackPosition: SnackPosition.BOTTOM,
+                        backgroundColor: Colors.red,
+                        colorText: Colors.white);
                   }
                 },
                 icon: const Icon(
