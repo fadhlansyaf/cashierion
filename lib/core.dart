@@ -31,4 +31,3 @@ export 'package:cashierion/module/transaction_history_list/controller/transactio
 export 'package:cashierion/module/transaction_history_list/view/transaction_history_list_page.dart';
 export 'package:cashierion/service/order_service.dart';
 export 'package:cashierion/service/product_service.dart';
-export 'state_util.dart';
