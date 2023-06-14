@@ -23,13 +23,13 @@ class ProductFormPage extends StatelessWidget {
   final bool isEditing;
   final ProductModel? product;
   final List<CategoryModel>? categories;
+  static final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<ProductFormLogic>();
     final categoryController = Get.find<CategoryListLogic>();
     final categoryFormController = Get.find<CategoryFormLogic>();
-    final _formKey = GlobalKey<FormState>();
     if (isEditing && product != null && categories != null) {
       controller.textController[0].text = product!.name;
       controller.textController[1].text = product!.price.toString();
