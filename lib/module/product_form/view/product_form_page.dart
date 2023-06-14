@@ -52,8 +52,6 @@ class ProductFormPage extends StatelessWidget {
           IconButton(
             onPressed: () async {
               if (_formKey.currentState!.validate()) {
-                  // If the form is valid, display a snackbar. In the real world,
-                  // you'd often call a server or save the information in a database.
                   controller.insertOrEditProduct(product);
                   // ScaffoldMessenger.of(context).showSnackBar(
                   //   const SnackBar(content: Text('Processing Data')),
@@ -142,7 +140,8 @@ class ProductFormPage extends StatelessWidget {
                 ),
                 CustomTextFieldOld(
                   controller: controller.textController[5],
-                  label: "Category",
+                  label: "Category *",
+                  validation: true,
                   onTap: () {
                     BottomSheets.categoryModalBottomSheet(
                       context,
