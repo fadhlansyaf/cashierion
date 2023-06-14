@@ -9,7 +9,7 @@ class CustomTextFieldOld extends StatelessWidget {
       required this.controller,
       this.keyboardType,
       required this.label,
-      this.validation,
+      this.validation = false,
       this.helperText,
       this.onTap,
       this.suffixIcon = const Icon(
@@ -21,7 +21,7 @@ class CustomTextFieldOld extends StatelessWidget {
   final TextEditingController controller;
   final TextInputType? keyboardType;
   final String label;
-  final Function(String?)? validation;
+  final bool validation;
   final String? helperText;
   final Function()? onTap;
   final Icon suffixIcon;
@@ -46,7 +46,14 @@ class CustomTextFieldOld extends StatelessWidget {
         controller: controller,
         onTap: onTap,
         readOnly: onTap != null,
-        // validator: validation,
+        validator: (value) {
+          if (validation) {
+            if (value == null || value.isEmpty) {
+              return 'Input can\'t be empty';
+            }
+          }
+          return null;
+        },
         cursorColor: ColorTheme.COLOR_PRIMARY,
         decoration: InputDecoration(
             helperText: helperText,
