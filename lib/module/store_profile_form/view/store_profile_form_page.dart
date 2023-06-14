@@ -19,7 +19,7 @@ class StoreProfileFormPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Store Profile Form"),
+        title: const Text("Edit Store Profile"),
         actions: [
           IconButton(
             onPressed: () {

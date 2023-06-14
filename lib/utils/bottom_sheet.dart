@@ -226,7 +226,7 @@ class BottomSheets {
               appBar: SearchAppBar(
                 title: Title(
                   color: ColorTheme.COLOR_WHITE,
-                  child: Text("Search Payment Type"),
+                  child: Text(!isEdit ? "Choose Payment Type" : "Edit Payment Type"),
                 ),
                 onChanged: (value) {
                   List<PaymentTypeModel> searched = [];
@@ -468,7 +468,7 @@ class BottomSheets {
               appBar: SearchAppBar(
                 title: Title(
                   color: ColorTheme.COLOR_WHITE,
-                  child: Text("Search Payment Method"),
+                  child: Text(!isEdit ? "Choose Payment Method" : "Edit Payment Method"),
                 ),
                 onChanged: (value) {
                   List<PaymentDetailModel> searched = [];
