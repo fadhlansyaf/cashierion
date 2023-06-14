@@ -18,12 +18,14 @@ class TransactionHistoryFormPage extends StatelessWidget {
       this.isEditing = true,
       required this.transactionDetail,
       required this.transaction,
-      required this.products})
+      required this.products,
+      required this.type,})
       : super(key: key);
   final bool isEditing;
   final List<TransactionDetailModel> transactionDetail;
   final List<ProductModel> products;
   final TransactionModel transaction;
+  final int type;
 
   @override
   Widget build(BuildContext context) {
@@ -95,7 +97,7 @@ class TransactionHistoryFormPage extends StatelessWidget {
                                         ),
                                         Text(
                                           FunctionHelper.convertPriceWithComma(
-                                              products[index].price),
+                                              type == 0 ? products[index].sellingPrice : products[index].price),
                                           style: TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.bold,
@@ -129,7 +131,7 @@ class TransactionHistoryFormPage extends StatelessWidget {
                                         SizedBox(
                                           child: Obx(() {
                                             return Text(
-                                              '${FunctionHelper.convertPriceWithComma(products[index].quantity * products[index].price)}',
+                                              '${FunctionHelper.convertPriceWithComma(type == 0 ? products[index].quantity * products[index].sellingPrice : products[index].quantity * products[index].price )}',
                                               // "Rp " + (products[index].quantity*products[index].price).toString(),
                                               maxLines: 3,
                                               overflow: TextOverflow.ellipsis,

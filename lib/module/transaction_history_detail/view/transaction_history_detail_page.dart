@@ -36,6 +36,7 @@ class TransactionHistoryDetailPage extends StatelessWidget {
                             transaction: controller.transaction.value,
                             transactionDetail: controller.transactionDetailList,
                             products: controller.productList,
+                            type: type,
                           ),
                       binding: TransactionHistoryFormBinding())
                   ?.then((value) {
