@@ -19,15 +19,12 @@ class TransactionDetailView extends StatelessWidget {
   Widget build(BuildContext context) {
     var controller = Get.find<HomeLogic>();
     var selectedProducts =
-    controller.productList.where((p0) => p0.quantity > 0).toList();
+        controller.productList.where((p0) => p0.quantity > 0).toList();
     controller.countTotal(selectedProducts);
     bool isEdit = false;
     return Scaffold(
       body: Container(
-        width: MediaQuery
-            .of(context)
-            .size
-            .width,
+        width: MediaQuery.of(context).size.width,
         padding: const EdgeInsets.all(10.0),
         child: Column(
           children: [
@@ -50,10 +47,11 @@ class TransactionDetailView extends StatelessWidget {
                           children: [
                             CircleAvatar(
                               backgroundColor: Colors.grey[200],
-                              backgroundImage: selectedProducts[index].image.isNotEmpty
-                                  ? MemoryImage(base64Decode(
-                                  selectedProducts[index].image))
-                                  : null,
+                              backgroundImage:
+                                  selectedProducts[index].image.isNotEmpty
+                                      ? MemoryImage(base64Decode(
+                                          selectedProducts[index].image))
+                                      : null,
                               radius: 20,
                             ),
                             SizedBox(
@@ -72,12 +70,7 @@ class TransactionDetailView extends StatelessWidget {
                                   height: 5,
                                 ),
                                 Text(
-                                  '${FunctionHelper.convertPriceWithComma(
-                                      controller.isOrder.value
-                                          ? selectedProducts[index].sellingPrice
-                                          : selectedProducts[index]
-                                          .price)} x ${selectedProducts[index]
-                                      .quantity}',
+                                  '${FunctionHelper.convertPriceWithComma(controller.isOrder.value ? selectedProducts[index].sellingPrice : selectedProducts[index].price)} x ${selectedProducts[index].quantity}',
                                   style: TextStyle(
                                     color: ColorTheme.COLOR_WHITE,
                                   ),
@@ -85,16 +78,19 @@ class TransactionDetailView extends StatelessWidget {
                                 SizedBox(
                                   height: 5,
                                 ),
-                                if(selectedProducts[index].transactionDesc.isNotEmpty)SizedBox(
-                                  child: Text(
-                                    selectedProducts[index].transactionDesc,
-                                    maxLines: 3,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                      color: ColorTheme.COLOR_WHITE,
+                                if (selectedProducts[index]
+                                    .transactionDesc
+                                    .isNotEmpty)
+                                  SizedBox(
+                                    child: Text(
+                                      selectedProducts[index].transactionDesc,
+                                      maxLines: 3,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                        color: ColorTheme.COLOR_WHITE,
+                                      ),
                                     ),
                                   ),
-                                ),
                               ],
                             ),
                             Spacer(),
@@ -105,11 +101,15 @@ class TransactionDetailView extends StatelessWidget {
                                 Text(
                                   FunctionHelper.convertPriceWithComma(
                                       controller.isOrder.value
-                                          ? selectedProducts[index].sellingPrice
+                                          ? selectedProducts[index]
+                                                  .sellingPrice *
+                                              selectedProducts[index]
+                                                  .quantity
+                                                  .value
                                           : selectedProducts[index].price *
-                                          selectedProducts[index]
-                                              .quantity
-                                              .value),
+                                              selectedProducts[index]
+                                                  .quantity
+                                                  .value),
                                   style: TextStyle(
                                     color: ColorTheme.COLOR_WHITE,
                                   ),
@@ -125,10 +125,7 @@ class TransactionDetailView extends StatelessWidget {
               ),
             ),
             Container(
-              width: MediaQuery
-                  .of(context)
-                  .size
-                  .width,
+              width: MediaQuery.of(context).size.width,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -166,18 +163,17 @@ class TransactionDetailView extends StatelessWidget {
                                 child: GestureDetector(
                                   onTap: () {
                                     BottomSheets.paymentMethodModalBottomSheet(
-                                        context,
-                                        controller,
-                                        isEdit,
-                                            (paymentDetail) {
-                                          controller.selectedPaymentDetail.value = paymentDetail;
-                                            });
+                                        context, controller, isEdit,
+                                        (paymentDetail) {
+                                      controller.selectedPaymentDetail.value =
+                                          paymentDetail;
+                                    });
                                   },
                                   child: Row(
                                     children: [
                                       Expanded(child: Text("Payment Method")),
                                       Text(controller.selectedPaymentDetail
-                                          .value?.description ??
+                                              .value?.description ??
                                           ''),
                                       Icon(
                                         Icons.edit,
@@ -241,13 +237,14 @@ class TransactionDetailView extends StatelessWidget {
                       onPressed: selectedProducts.isNotEmpty
                           ? () {
                               controller.insertTransaction(pageController);
-                              Get.snackbar('Success',
-                                  'Transaction has been successfully inserted',
-                                  snackPosition: SnackPosition.BOTTOM,
-                                  backgroundColor: Colors.green,
-                                  colorText: Colors.white,
-                                  margin: EdgeInsets.only(bottom: 120.0),
-                                  );
+                              Get.snackbar(
+                                'Success',
+                                'Transaction has been successfully inserted',
+                                snackPosition: SnackPosition.BOTTOM,
+                                backgroundColor: Colors.green,
+                                colorText: Colors.white,
+                                margin: EdgeInsets.only(bottom: 120.0),
+                              );
                             }
                           : null,
                       child: Text("Create Transaction"),

@@ -9,13 +9,16 @@ import '../controller/store_profile_form_controller.dart';
 import '/widgets/custom_text_field.dart';
 
 class StoreProfileFormPage extends StatelessWidget {
-  const StoreProfileFormPage({Key? key, this.isEditing = false,
+  const StoreProfileFormPage({
+    Key? key,
+    this.isEditing = false,
   }) : super(key: key);
   final bool isEditing;
 
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<StoreProfileFormLogic>();
+    final _formKey = GlobalKey<FormState>();
 
     return Scaffold(
       appBar: AppBar(
@@ -23,7 +26,9 @@ class StoreProfileFormPage extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {
-              controller.saveStoreProfile();
+              if (_formKey.currentState!.validate()) {
+                controller.saveStoreProfile();
+              }
             },
             icon: const Icon(
               Icons.check,
@@ -35,29 +40,33 @@ class StoreProfileFormPage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Container(
           padding: const EdgeInsets.all(10.0),
-          child: Column(
-            children: [
-              CustomTextFieldOld(
-                controller: controller.textController[0],
-                keyboardType: TextInputType.text,
-                label: "Store Name",
-              ),
-              CustomTextFieldOld(
-                controller: controller.textController[1],
-                keyboardType: TextInputType.number,
-                label: "Phone Number",
-              ),
-              CustomTextFieldOld(
-                controller: controller.textController[2],
-                keyboardType: TextInputType.text,
-                label: "Address",
-              ),
-              CustomTextFieldOld(
-                controller: controller.textController[3],
-                keyboardType: TextInputType.text,
-                label: "Description",
-              ),
-            ],
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                CustomTextFieldOld(
+                  controller: controller.textController[0],
+                  keyboardType: TextInputType.text,
+                  validation: true,
+                  label: "Store Name",
+                ),
+                CustomTextFieldOld(
+                  controller: controller.textController[1],
+                  keyboardType: TextInputType.number,
+                  label: "Phone Number",
+                ),
+                CustomTextFieldOld(
+                  controller: controller.textController[2],
+                  keyboardType: TextInputType.text,
+                  label: "Address",
+                ),
+                CustomTextFieldOld(
+                  controller: controller.textController[3],
+                  keyboardType: TextInputType.text,
+                  label: "Description",
+                ),
+              ],
+            ),
           ),
         ),
       ),

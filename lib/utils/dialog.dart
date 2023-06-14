@@ -318,44 +318,55 @@ class Dialogs {
   static void addTaxDialog(BuildContext context, HomeLogic controller) async {
     var taxController = TextEditingController()
       ..text = controller.tax.toString();
+    final _formKey = GlobalKey<FormState>();
     final result = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Edit Tax'),
         content: Container(
           margin: const EdgeInsets.symmetric(vertical: 10),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextFormField(
-                // onSaved: onSaved,
-                keyboardType: TextInputType.number,
-                controller: taxController,
-                // onTap: onTap,
-                // readOnly: onTap != null,
-                cursorColor: ColorTheme.COLOR_PRIMARY,
-                decoration: InputDecoration(
-                  // helperText: helperText,
-                  labelText: "Tax",
-                  labelStyle: TextStyle(color: ColorTheme.COLOR_GREY),
-                  floatingLabelBehavior: FloatingLabelBehavior.always,
-                  fillColor: ColorTheme.COLOR_CARD,
-                  filled: true,
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: ColorTheme.COLOR_WHITE),
-                  ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: ColorTheme.COLOR_PRIMARY),
-                  ),
-                  border: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                      width: 0.25,
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextFormField(
+                  // onSaved: onSaved,
+                  keyboardType: TextInputType.number,
+                  controller: taxController,
+                  // onTap: onTap,
+                  // readOnly: onTap != null,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Input can\'t be empty';
+                    }
+
+                    return null;
+                  },
+                  cursorColor: ColorTheme.COLOR_PRIMARY,
+                  decoration: InputDecoration(
+                    // helperText: helperText,
+                    labelText: "Tax",
+                    labelStyle: TextStyle(color: ColorTheme.COLOR_GREY),
+                    floatingLabelBehavior: FloatingLabelBehavior.always,
+                    fillColor: ColorTheme.COLOR_CARD,
+                    filled: true,
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: ColorTheme.COLOR_WHITE),
                     ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: ColorTheme.COLOR_PRIMARY),
+                    ),
+                    border: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        width: 0.25,
+                      ),
+                    ),
+                    // suffixIcon: onTap != null ? suffixIcon : null,
                   ),
-                  // suffixIcon: onTap != null ? suffixIcon : null,
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
         actions: [
@@ -367,7 +378,11 @@ class Dialogs {
             ),
           ),
           TextButton(
-            onPressed: () => Navigator.pop(context, true),
+            onPressed: () {
+              if (_formKey.currentState!.validate()) {
+                Navigator.pop(context, true);
+              }
+            },
             child: const Text(
               'Ok',
               style: TextStyle(color: ColorTheme.COLOR_PRIMARY),

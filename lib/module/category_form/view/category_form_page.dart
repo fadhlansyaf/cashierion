@@ -9,14 +9,16 @@ import '../controller/category_form_controller.dart';
 import '/widgets/custom_text_field.dart';
 
 class CategoryFormPage extends StatelessWidget {
-  const CategoryFormPage({Key? key, this.isEditing = false, this.category}) : super(key: key);
+  const CategoryFormPage({Key? key, this.isEditing = false, this.category})
+      : super(key: key);
   final bool isEditing;
   final CategoryModel? category;
 
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<CategoryFormLogic>();
-    if(isEditing && category != null){
+    final _formKey = GlobalKey<FormState>();
+    if (isEditing && category != null) {
       controller.textController[0].text = category!.name;
       controller.textController[1].text = category!.description;
     }
@@ -27,7 +29,9 @@ class CategoryFormPage extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {
-              controller.insertOrUpdateCategory(category);
+              if (_formKey.currentState!.validate()) {
+                controller.insertOrUpdateCategory(category);
+              }
             },
             icon: const Icon(
               Icons.check,
@@ -37,21 +41,25 @@ class CategoryFormPage extends StatelessWidget {
         ],
       ),
       body: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.all(10.0),
-          child: Column(
-            children: [
-              CustomTextFieldOld(
-                controller: controller.textController[0],
-                keyboardType: TextInputType.text,
-                label: "Category Name",
-              ),
-              CustomTextFieldOld(
-                controller: controller.textController[1],
-                keyboardType: TextInputType.text,
-                label: "Description",
-              ),
-            ],
+        child: Form(
+          key: _formKey,
+          child: Container(
+            padding: const EdgeInsets.all(10.0),
+            child: Column(
+              children: [
+                CustomTextFieldOld(
+                  controller: controller.textController[0],
+                  keyboardType: TextInputType.text,
+                  validation: true,
+                  label: "Category Name",
+                ),
+                CustomTextFieldOld(
+                  controller: controller.textController[1],
+                  keyboardType: TextInputType.text,
+                  label: "Description",
+                ),
+              ],
+            ),
           ),
         ),
       ),

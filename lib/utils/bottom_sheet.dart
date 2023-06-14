@@ -212,7 +212,7 @@ class BottomSheets {
       HomeLogic controller,
       bool isEdit,
       void Function(PaymentTypeModel paymentType) onSelected) {
-        List<PaymentTypeModel> duplicate = [];
+    List<PaymentTypeModel> duplicate = [];
     duplicate.addAll(controller.paymentType);
     showModalBottomSheet<void>(
       isScrollControlled: true,
@@ -226,13 +226,16 @@ class BottomSheets {
               appBar: SearchAppBar(
                 title: Title(
                   color: ColorTheme.COLOR_WHITE,
-                  child: Text(!isEdit ? "Choose Payment Type" : "Edit Payment Type"),
+                  child: Text(
+                      !isEdit ? "Choose Payment Type" : "Edit Payment Type"),
                 ),
                 onChanged: (value) {
                   List<PaymentTypeModel> searched = [];
                   if (value.isNotEmpty) {
                     for (var e in controller.paymentType) {
-                      if (e.paymentName.toLowerCase().contains(value.toLowerCase())) {
+                      if (e.paymentName
+                          .toLowerCase()
+                          .contains(value.toLowerCase())) {
                         searched.add(e);
                       } else if (e.paymentName != null) {
                         if (e.paymentName!
@@ -340,110 +343,125 @@ class BottomSheets {
     if (paymentType != null && isEdit) {
       controller.paymentTypeController.text = paymentType.paymentName;
     }
+    final _formKey = GlobalKey<FormState>();
     await showModalBottomSheet<void>(
       isScrollControlled: true,
       context: context,
       builder: (BuildContext context) {
         return StatefulBuilder(builder: (context, setState) {
           return Scaffold(
-            appBar: AppBar(
-              bottom: PreferredSize(
-                preferredSize: Size.fromHeight(40),
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: 30,
-                    ),
-                    Row(
-                      children: [
-                        IconButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          icon: Icon(Icons.arrow_back),
-                        ),
-                        Text(
-                          !isEdit ? "Add Payment Type" : "Edit Payment Type",
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
+              appBar: AppBar(
+                bottom: PreferredSize(
+                  preferredSize: Size.fromHeight(40),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 30,
+                      ),
+                      Row(
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            icon: Icon(Icons.arrow_back),
                           ),
-                        ),
-                        Spacer(),
-                        isEdit
-                            ? IconButton(
-                                onPressed: () async {
-                                  Dialogs.deletePaymentTypeDialog(
-                                      context, controller, paymentType!);
-                                },
-                                icon: const Icon(
-                                  Icons.delete,
-                                  size: 24.0,
-                                ),
-                              )
-                            : IconButton(
-                                onPressed: () async {},
-                                icon: Icon(
-                                  Icons.delete,
-                                  size: 24.0,
-                                  color: ColorTheme.COLOR_WHITE.withOpacity(0),
-                                ),
-                              ),
-                        IconButton(
-                          onPressed: () async {
-                            if (!isEdit) {
-                              await controller.insertPaymentType();
-                            } else {
-                              await controller.editPaymentType(PaymentTypeModel(
-                                  id: paymentType!.id,
-                                  paymentName:
-                                      controller.paymentTypeController.text));
-                            }
-                          },
-                          icon: const Icon(
-                            Icons.check,
-                            size: 24.0,
+                          Text(
+                            !isEdit ? "Add Payment Type" : "Edit Payment Type",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              elevation: 0,
-              automaticallyImplyLeading: false,
-              toolbarHeight: 40,
-              actions: [
-                IconButton(
-                  onPressed: () async {
-                    if (!isEdit) {
-                      await controller.insertPaymentType();
-                    } else {
-                      await controller.editPaymentType(PaymentTypeModel(
-                          id: paymentType!.id,
-                          paymentName: controller.paymentTypeController.text));
-                    }
-                  },
-                  icon: const Icon(
-                    Icons.check,
-                    size: 24.0,
+                          Spacer(),
+                          isEdit
+                              ? IconButton(
+                                  onPressed: () async {
+                                    Dialogs.deletePaymentTypeDialog(
+                                        context, controller, paymentType!);
+                                  },
+                                  icon: const Icon(
+                                    Icons.delete,
+                                    size: 24.0,
+                                  ),
+                                )
+                              : IconButton(
+                                  onPressed: () async {},
+                                  icon: Icon(
+                                    Icons.delete,
+                                    size: 24.0,
+                                    color:
+                                        ColorTheme.COLOR_WHITE.withOpacity(0),
+                                  ),
+                                ),
+                          IconButton(
+                            onPressed: () async {
+                              if (!isEdit) {
+                                if (_formKey.currentState!.validate()) {
+                                  await controller.insertPaymentType();
+                                }
+                              } else {
+                                if (_formKey.currentState!.validate()) {
+                                  await controller.editPaymentType(
+                                      PaymentTypeModel(
+                                          id: paymentType!.id,
+                                          paymentName: controller
+                                              .paymentTypeController.text));
+                                }
+                              }
+                            },
+                            icon: const Icon(
+                              Icons.check,
+                              size: 24.0,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
-              ],
-            ),
-            body: Container(
-              padding: EdgeInsets.all(10),
-              child: Column(
-                children: [
-                  CustomTextFieldOld(
-                    controller: controller.paymentTypeController,
-                    keyboardType: TextInputType.text,
-                    label: "Payment Type",
+                elevation: 0,
+                automaticallyImplyLeading: false,
+                toolbarHeight: 40,
+                actions: [
+                  IconButton(
+                    onPressed: () async {
+                      if (!isEdit) {
+                        if (_formKey.currentState!.validate()) {
+                          await controller.insertPaymentType();
+                        }
+                      } else {
+                        if (_formKey.currentState!.validate()) {
+                          await controller.editPaymentType(PaymentTypeModel(
+                              id: paymentType!.id,
+                              paymentName:
+                                  controller.paymentTypeController.text));
+                        }
+                      }
+                    },
+                    icon: const Icon(
+                      Icons.check,
+                      size: 24.0,
+                    ),
                   ),
                 ],
               ),
-            ),
-          );
+              body: Form(
+                key: _formKey,
+                child: Container(
+                  padding: EdgeInsets.all(10),
+                  child: Column(
+                    children: [
+                      CustomTextFieldOld(
+                        controller: controller.paymentTypeController,
+                        keyboardType: TextInputType.text,
+                        validation: true,
+                        label: "Payment Type",
+                      ),
+                    ],
+                  ),
+                ),
+              ));
         });
       },
     );
@@ -454,7 +472,7 @@ class BottomSheets {
       HomeLogic controller,
       bool isEdit,
       void Function(PaymentDetailModel paymentDetail) onSelected) {
-        List<PaymentDetailModel> duplicate = [];
+    List<PaymentDetailModel> duplicate = [];
     duplicate.addAll(controller.allPaymentDetail);
     showModalBottomSheet<void>(
       isScrollControlled: true,
@@ -468,13 +486,17 @@ class BottomSheets {
               appBar: SearchAppBar(
                 title: Title(
                   color: ColorTheme.COLOR_WHITE,
-                  child: Text(!isEdit ? "Choose Payment Method" : "Edit Payment Method"),
+                  child: Text(!isEdit
+                      ? "Choose Payment Method"
+                      : "Edit Payment Method"),
                 ),
                 onChanged: (value) {
                   List<PaymentDetailModel> searched = [];
                   if (value.isNotEmpty) {
                     for (var e in controller.allPaymentDetail) {
-                      if (e.description.toLowerCase().contains(value.toLowerCase())) {
+                      if (e.description
+                          .toLowerCase()
+                          .contains(value.toLowerCase())) {
                         searched.add(e);
                       } else if (e.description != null) {
                         if (e.description!
@@ -590,6 +612,7 @@ class BottomSheets {
       [PaymentDetailModel? paymentDetail,
       PaymentTypeModel? currentlySelectedPaymentType]) async {
     PaymentTypeModel? selectedPayment;
+    final _formKey = GlobalKey<FormState>();
     if (isEdit &&
         paymentDetail != null &&
         currentlySelectedPaymentType != null) {
@@ -650,13 +673,18 @@ class BottomSheets {
                         onPressed: () async {
                           if (selectedPayment != null) {
                             if (!isEdit) {
-                              controller.insertPaymentDetail(selectedPayment!);
+                              if (_formKey.currentState!.validate()) {
+                                controller
+                                    .insertPaymentDetail(selectedPayment!);
+                              }
                             } else {
-                              controller.editPaymentDetail(PaymentDetailModel(
-                                  id: paymentDetail!.id,
-                                  paymentTypeId: selectedPayment!.id,
-                                  description: controller
-                                      .paymentDetailController[0].text));
+                              if (_formKey.currentState!.validate()) {
+                                controller.editPaymentDetail(PaymentDetailModel(
+                                    id: paymentDetail!.id,
+                                    paymentTypeId: selectedPayment!.id,
+                                    description: controller
+                                        .paymentDetailController[0].text));
+                              }
                             }
                           } else {
                             Get.snackbar(
@@ -684,13 +712,17 @@ class BottomSheets {
                 onPressed: () async {
                   if (selectedPayment != null) {
                     if (!isEdit) {
-                      controller.insertPaymentDetail(selectedPayment!);
+                      if (_formKey.currentState!.validate()) {
+                        controller.insertPaymentDetail(selectedPayment!);
+                      }
                     } else {
-                      controller.editPaymentDetail(PaymentDetailModel(
-                          id: paymentDetail!.id,
-                          paymentTypeId: selectedPayment!.id,
-                          description:
-                              controller.paymentDetailController[0].text));
+                      if (_formKey.currentState!.validate()) {
+                        controller.editPaymentDetail(PaymentDetailModel(
+                            id: paymentDetail!.id,
+                            paymentTypeId: selectedPayment!.id,
+                            description:
+                                controller.paymentDetailController[0].text));
+                      }
                     }
                   } else {
                     Get.snackbar(
@@ -707,29 +739,34 @@ class BottomSheets {
               ),
             ],
           ),
-          body: Container(
-            padding: EdgeInsets.all(10),
-            child: Column(
-              children: [
-                CustomTextFieldOld(
-                  controller: controller.paymentDetailController[0],
-                  keyboardType: TextInputType.text,
-                  label: "Payment Method",
-                ),
-                CustomTextFieldOld(
-                  controller: controller.paymentDetailController[1],
-                  onTap: () {
-                    paymentTypeModalBottomSheet(context, controller, false,
-                        (paymentType) {
-                      selectedPayment = paymentType;
-                      controller.paymentDetailController[1].text =
-                          paymentType.paymentName;
-                      controller.setStatePaymentDetail.value;
-                    });
-                  },
-                  label: "Payment Type",
-                ),
-              ],
+          body: Form(
+            key: _formKey,
+            child: Container(
+              padding: EdgeInsets.all(10),
+              child: Column(
+                children: [
+                  CustomTextFieldOld(
+                    controller: controller.paymentDetailController[0],
+                    keyboardType: TextInputType.text,
+                    validation: true,
+                    label: "Payment Method *",
+                  ),
+                  CustomTextFieldOld(
+                    controller: controller.paymentDetailController[1],
+                    onTap: () {
+                      paymentTypeModalBottomSheet(context, controller, false,
+                          (paymentType) {
+                        selectedPayment = paymentType;
+                        controller.paymentDetailController[1].text =
+                            paymentType.paymentName;
+                        controller.setStatePaymentDetail.value;
+                      });
+                    },
+                    validation: true,
+                    label: "Payment Type *",
+                  ),
+                ],
+              ),
             ),
           ),
         );
