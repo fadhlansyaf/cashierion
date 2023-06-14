@@ -42,7 +42,17 @@ class Dialogs {
       ),
     );
     if (result == true) {
-      controller.deleteCategory(category);
+      controller.deleteCategory(category).then((success) {
+        if(success != null){
+          if(success){
+            Get.back();
+          }else{
+            //TODO(dhanis): snackbar error gagal karena masih ada produk
+          }
+        }else{
+          //TODO(dhanis): unknown error (Tulisanya An error occurred, please try again later gitu aja mungkin)
+        }
+      } );
     }
   }
 
@@ -75,7 +85,17 @@ class Dialogs {
       ),
     );
     if (result == true) {
-      controller.deleteItem(product);
+      controller.deleteItem(product).then((success) {
+        if(success != null){
+          if(success){
+            Get.back();
+          }else{
+            //TODO(dhanis): snackbar error gagal karena masih ada transaksi detail
+          }
+        }else{
+          //TODO(dhanis): unknown error (Tulisanya An error occurred, please try again later gitu aja mungkin)
+        }
+      } );
     }
   }
 
