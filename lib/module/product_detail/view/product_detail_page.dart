@@ -65,7 +65,7 @@ class ProductDetailPage extends StatelessWidget {
                   product.image.isEmpty
                       ? Column(
                           children: [
-                            Image.asset("assets/select-image.png"),
+                            Image.asset("assets/no-image.png"),
                             SizedBox(
                               height: 20,
                             ),

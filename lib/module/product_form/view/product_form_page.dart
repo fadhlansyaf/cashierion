@@ -52,11 +52,11 @@ class ProductFormPage extends StatelessWidget {
           IconButton(
             onPressed: () async {
               if (_formKey.currentState!.validate()) {
-                  controller.insertOrEditProduct(product);
-                  // ScaffoldMessenger.of(context).showSnackBar(
-                  //   const SnackBar(content: Text('Processing Data')),
-                  // );
-                }
+                controller.insertOrEditProduct(product);
+                // ScaffoldMessenger.of(context).showSnackBar(
+                //   const SnackBar(content: Text('Processing Data')),
+                // );
+              }
             },
             icon: const Icon(
               Icons.check,
@@ -65,25 +65,26 @@ class ProductFormPage extends StatelessWidget {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Form(
-          key: _formKey,
-          child: Container(
-            padding: const EdgeInsets.all(10.0),
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 20,
-                ),
-                GestureDetector(
-                  onTap: () async {
-                    final result = await showDialog<bool>(
-                        context: context,
-                        builder: (context) {
-                          return SelectImageDialog();
-                        });
-                  },
-                  child: Obx(controller.selectedImagePath.value == '' &&
+      body: Obx(() {
+        return SingleChildScrollView(
+          child: Form(
+            key: _formKey,
+            child: Container(
+              padding: const EdgeInsets.all(10.0),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 20,
+                  ),
+                  GestureDetector(
+                    onTap: () async {
+                      final result = await showDialog<bool>(
+                          context: context,
+                          builder: (context) {
+                            return SelectImageDialog();
+                          });
+                    },
+                    child: controller.selectedImagePath.value == '' &&
                             controller.selectedImageBytes == null
                         ? Column(
                             children: [
@@ -127,60 +128,60 @@ class ProductFormPage extends StatelessWidget {
                             ],
                           ),
                   ),
-                ),
-                SizedBox(
-                  height: 40,
-                ),
-                CustomTextFieldOld(
-                  controller: controller.textController[0],
-                  keyboardType: TextInputType.text,
-                  validation: true,
-                  label: "Product Name *",
-                ),
-                CustomTextFieldOld(
-                  controller: controller.textController[5],
-                  label: "Category *",
-                  validation: true,
-                  onTap: () {
-                    BottomSheets.categoryModalBottomSheet(
-                      context,
-                      categoryController,
-                      categoryFormController,
-                      (category) {
-                        controller.selectedCategory.value = category;
-                        controller.textController[5].text = category.name;
-                      },
-                    );
-                  },
-                ),
-                CustomTextFieldOld(
-                  controller: controller.textController[1],
-                  keyboardType: TextInputType.number,
-                  validation: true,
-                  label: "Price *",
-                ),
-                CustomTextFieldOld(
-                  controller: controller.textController[2],
-                  keyboardType: TextInputType.number,
-                  validation: true,
-                  label: "Selling Price *",
-                ),
-                CustomTextFieldOld(
-                  controller: controller.textController[3],
-                  keyboardType: TextInputType.number,
-                  validation: true,
-                  label: "Stock *",
-                ),
-                CustomTextFieldOld(
-                  controller: controller.textController[4],
-                  keyboardType: TextInputType.text,
-                  label: "Description",
-                ),
-              ],
+                  SizedBox(
+                    height: 40,
+                  ),
+                  CustomTextFieldOld(
+                    controller: controller.textController[0],
+                    keyboardType: TextInputType.text,
+                    validation: true,
+                    label: "Product Name *",
+                  ),
+                  CustomTextFieldOld(
+                    controller: controller.textController[5],
+                    label: "Category *",
+                    validation: true,
+                    onTap: () {
+                      BottomSheets.categoryModalBottomSheet(
+                        context,
+                        categoryController,
+                        categoryFormController,
+                        (category) {
+                          controller.selectedCategory.value = category;
+                          controller.textController[5].text = category.name;
+                        },
+                      );
+                    },
+                  ),
+                  CustomTextFieldOld(
+                    controller: controller.textController[1],
+                    keyboardType: TextInputType.number,
+                    validation: true,
+                    label: "Price *",
+                  ),
+                  CustomTextFieldOld(
+                    controller: controller.textController[2],
+                    keyboardType: TextInputType.number,
+                    validation: true,
+                    label: "Selling Price *",
+                  ),
+                  CustomTextFieldOld(
+                    controller: controller.textController[3],
+                    keyboardType: TextInputType.number,
+                    validation: true,
+                    label: "Stock *",
+                  ),
+                  CustomTextFieldOld(
+                    controller: controller.textController[4],
+                    keyboardType: TextInputType.text,
+                    label: "Description",
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-      ),
+        );
+      }),
     );
   }
 
