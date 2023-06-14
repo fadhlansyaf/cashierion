@@ -30,6 +30,7 @@ class HomeLogic extends GetxController {
   var pageIndex = 0.obs;
   Rx<Uint8List?> predictionImage = Rx<Uint8List?>(null);
   var canPredict = true.obs;
+  var noInternet = false.obs;
   var sales = 0.0.obs;
   var expenditure = 0.0.obs;
   var todayTransaction = 0.obs;
@@ -85,6 +86,9 @@ class HomeLogic extends GetxController {
     if (prediction["data"] != null) {
       predictionImage.value =
           await ApiManager.getPrediction(prediction: prediction);
+      if(predictionImage.value!.isEmpty){
+        noInternet.value = true;
+      }
     } else {
       canPredict.value = false;
     }

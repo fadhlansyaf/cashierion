@@ -148,17 +148,23 @@ class DashboardView extends StatelessWidget {
                           height: 5,
                         ),
                         if (controller.predictionImage.value != null)
-                          Container(
-                            width: double.infinity,
-                            height: 150,
-                            child: InteractiveViewer(
-                              child: Image.memory(
-                                controller.predictionImage.value!,
-                                height: 150,
-                                width: double.infinity,
-                              ),
-                            ),
-                          )
+                          controller.predictionImage.value!.isNotEmpty
+                              ? Container(
+                                  width: double.infinity,
+                                  height: 150,
+                                  child: InteractiveViewer(
+                                    child: Image.memory(
+                                      controller.predictionImage.value!,
+                                      height: 150,
+                                      width: double.infinity,
+                                    ),
+                                  ),
+                                )
+                              : Container(
+                                  width: double.infinity,
+                                  height: 150,
+                                  alignment: AlignmentDirectional.center,
+                                  child: Text("No internet connection"))
                         else
                           Container(
                               width: double.infinity,
@@ -316,7 +322,8 @@ class DashboardView extends StatelessWidget {
                                     height: 20.0,
                                   ),
                                   Text(
-                                    controller.todayTransaction.value.toString(),
+                                    controller.todayTransaction.value
+                                        .toString(),
                                     style: TextStyle(
                                         color: ColorTheme.COLOR_WHITE,
                                         fontSize: 24,
@@ -351,7 +358,8 @@ class DashboardView extends StatelessWidget {
                                     height: 20.0,
                                   ),
                                   Text(
-                                    controller.todaySoldProducts.value.toString(),
+                                    controller.todaySoldProducts.value
+                                        .toString(),
                                     style: TextStyle(
                                         color: ColorTheme.COLOR_WHITE,
                                         fontSize: 24,
