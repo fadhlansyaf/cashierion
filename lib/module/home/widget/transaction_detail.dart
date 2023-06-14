@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:cashierion/core.dart';
@@ -48,7 +50,10 @@ class TransactionDetailView extends StatelessWidget {
                           children: [
                             CircleAvatar(
                               backgroundColor: Colors.grey[200],
-                              backgroundImage: null,
+                              backgroundImage: selectedProducts[index].image.isNotEmpty
+                                  ? MemoryImage(base64Decode(
+                                  selectedProducts[index].image))
+                                  : null,
                               radius: 20,
                             ),
                             SizedBox(

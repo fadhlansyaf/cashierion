@@ -69,7 +69,6 @@ class ProductListPage extends StatelessWidget {
             padding: EdgeInsets.zero,
             clipBehavior: Clip.none,
             itemBuilder: (context, index) {
-              var item = "item";
               return GestureDetector(
                 onTap: () async {
                   await Get.to(
