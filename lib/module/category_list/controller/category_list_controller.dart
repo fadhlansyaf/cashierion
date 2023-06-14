@@ -18,8 +18,10 @@ class CategoryListLogic extends GetxController {
   Future<void> onInit() async {
     super.onInit();
     isLoading.value = true;
+    update();
     final dao = Get.find<CategoryListDao>();
-    categoryList = await dao.getCategoryList();
+    categoryList.value = await dao.getCategoryList();
+    categoryCount.clear();
     for(int i=0; i<categoryList.length; i++){
       categoryCount.add(await dao.checkCategoryCount(categoryList[i]));
     }

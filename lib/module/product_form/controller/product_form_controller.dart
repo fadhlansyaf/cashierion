@@ -18,7 +18,8 @@ class ProductFormLogic extends GetxController {
   var selectedImagePath = ''.obs;
   var selectedImageSize = ''.obs;
   Uint8List? selectedImageBytes;
-  Rx<CategoryModel> selectedCategory = CategoryModel(name: '', description: '').obs;
+  var initialCategory = CategoryModel(name: '', description: '');
+  late Rx<CategoryModel> selectedCategory = initialCategory.obs;
 
   /// 0 = Product Name
   ///
@@ -37,8 +38,10 @@ class ProductFormLogic extends GetxController {
   Future<void> onInit() async {
     final categoryController = Get.find<CategoryListLogic>();
     var categoryList = await categoryController.getCategoryList();
-    selectedCategory = categoryList.first.obs;
-    textController[5].text = selectedCategory.value.name;
+    if (selectedCategory.value == initialCategory) {
+      selectedCategory = categoryList.first.obs;
+      textController[5].text = selectedCategory.value.name;
+    }
     super.onInit();
   }
 

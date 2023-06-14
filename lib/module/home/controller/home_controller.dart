@@ -25,8 +25,8 @@ class HomeLogic extends GetxController {
   var allPaymentDetail = <PaymentDetailModel>[].obs;
   var tax = 0.obs;
   var taxTotal = 0.0.obs;
-  var isOrder = true.obs;
   var totalAmount = 0.0.obs;
+  var isOrder = true.obs;
   var pageIndex = 0.obs;
   Rx<Uint8List?> predictionImage = Rx<Uint8List?>(null);
   var canPredict = true.obs;

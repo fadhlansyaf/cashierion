@@ -25,7 +25,7 @@ class CategoryFormPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Category Form"),
+        title: Text(isEditing ? "Edit ${category!.name}" : "Add Category"),
         actions: [
           IconButton(
             onPressed: () {

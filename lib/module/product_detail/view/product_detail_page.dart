@@ -24,7 +24,7 @@ class ProductDetailPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Product Detail"),
+        title: Text(product.name),
         actions: [
           IconButton(
             onPressed: () async {

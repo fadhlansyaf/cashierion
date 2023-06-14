@@ -25,7 +25,7 @@ class CategoryDetailPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Category Detail"),
+        title: Text(category.name),
         actions: [
           IconButton(
             onPressed: () async {

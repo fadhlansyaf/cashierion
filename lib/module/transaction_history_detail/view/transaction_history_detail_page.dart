@@ -38,7 +38,10 @@ class TransactionHistoryDetailPage extends StatelessWidget {
                             products: controller.productList,
                           ),
                       binding: TransactionHistoryFormBinding())
-                  ?.then((value) => controller.onInit());
+                  ?.then((value) {
+                    controller.isLoading.value = true;
+                controller.onInit();
+              });
             },
             icon: const Icon(
               Icons.edit,
