@@ -13,11 +13,11 @@ class CategoryFormPage extends StatelessWidget {
       : super(key: key);
   final bool isEditing;
   final CategoryModel? category;
+  static final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<CategoryFormLogic>();
-    final _formKey = GlobalKey<FormState>();
     if (isEditing && category != null) {
       controller.textController[0].text = category!.name;
       controller.textController[1].text = category!.description;

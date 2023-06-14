@@ -14,11 +14,11 @@ class StoreProfileFormPage extends StatelessWidget {
     this.isEditing = false,
   }) : super(key: key);
   final bool isEditing;
+  static final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<StoreProfileFormLogic>();
-    final _formKey = GlobalKey<FormState>();
 
     return Scaffold(
       appBar: AppBar(
