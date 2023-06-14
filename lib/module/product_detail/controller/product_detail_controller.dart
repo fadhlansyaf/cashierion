@@ -51,9 +51,9 @@ class ProductDetailLogic extends GetxController {
     }
   }
 
-  Future<void> deleteItem(ProductModel product)async {
+  Future<bool?> deleteItem(ProductModel product)async {
     final dao = Get.find<ProductDetailDao>();
-    dao.deleteItem(product);
-    Get.back();
+    var success = await dao.deleteItem(product);
+    return success;
   }
 }
