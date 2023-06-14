@@ -263,7 +263,15 @@ class TransactionReportPage extends StatelessWidget {
                 );
               });
             } else {
-              return CircularProgressIndicator();
+              return Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+              child: Center(
+                child: CircularProgressIndicator(
+                    color: ColorTheme.COLOR_PRIMARY,
+                  ),
+              ),
+            );
             }
           },
         ));
