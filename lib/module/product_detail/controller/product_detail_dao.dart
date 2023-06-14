@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../../../model/database/database_model.dart';
@@ -17,6 +19,10 @@ class ProductDetailDao{
             where: 'product_id = ?', whereArgs: [product.id]);
         return true;
       }else{
+        Get.snackbar('Cannot delete product!', 'Product is already in transaction',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white);
         return false;
       }
     } catch (e) {
