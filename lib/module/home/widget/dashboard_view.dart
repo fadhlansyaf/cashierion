@@ -61,7 +61,7 @@ class DashboardView extends StatelessWidget {
                       },
                       {
                         "icon": "assets/icons8-transaction-32.png",
-                        "label": "Transaction\nDetail",
+                        "label": "Transaction\nHistory",
                         "onTap": () => Get.to(TransactionHistoryListPage(),
                                 binding: TransactionHistoryListBinding())
                             ?.then((value) => controller.onInit()),

@@ -72,7 +72,7 @@ class DatabaseProvider {
     product_category_id INTEGER NOT NULL,
     name TEXT NOT NULL,
     image TEXT,
-    price REAL,
+    price REAL NOT NULL,
     selling_price REAL NOT NULL,
     stock INTEGER,
     description TEXT,

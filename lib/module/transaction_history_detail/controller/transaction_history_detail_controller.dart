@@ -30,7 +30,6 @@ class TransactionHistoryDetailLogic extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
-    isLoading.value = true;
     tax.value = Preferences.getInstance().getInt(SharedPreferenceKey.TAX) ?? 0;
     var dao = Get.find<TransactionHistoryDetailDao>();
     try {

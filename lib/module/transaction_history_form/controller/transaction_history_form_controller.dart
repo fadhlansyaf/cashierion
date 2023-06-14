@@ -4,10 +4,14 @@ import 'package:cashierion/core.dart';
 import 'package:cashierion/model/database/category.dart';
 
 import '../../../model/database/database_model.dart';
+import '../../../utils/preferences.dart';
 import 'transaction_history_form_dao.dart';
 
 class TransactionHistoryFormLogic extends GetxController {
   var isEdited = false.obs;
+  var tax = 0.obs;
+  var taxTotal = 0.0.obs;
+  var totalAmount = 0.0.obs;
 
   Future<void> editTransaction(List<TransactionDetailModel> transactionDetail,
       List<ProductModel> products, TransactionModel transaction) async {
@@ -48,5 +52,24 @@ class TransactionHistoryFormLogic extends GetxController {
       colorText: Colors.white,
       margin: EdgeInsets.only(bottom: 120.0),
     );
+  }
+
+  @override
+  void onInit() {
+    tax.value = Preferences.getInstance().getInt(SharedPreferenceKey.TAX) ?? 0;
+    super.onInit();
+  }
+
+  void countTotal(List<ProductModel> products, bool isOrder) {
+    double total = 0;
+    for (var e in products) {
+      if (isOrder) {
+        total += e.sellingPrice * e.quantity.value;
+      } else {
+        total += e.price * e.quantity.value;
+      }
+    }
+    taxTotal.value = total * (tax / 100);
+    totalAmount.value = total;
   }
 }

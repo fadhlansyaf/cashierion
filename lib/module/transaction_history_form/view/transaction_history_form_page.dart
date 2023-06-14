@@ -28,6 +28,7 @@ class TransactionHistoryFormPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<TransactionHistoryFormLogic>();
+    controller.countTotal(products, transaction.invoice.startsWith('CO'));
 
     return Scaffold(
       appBar: AppBar(
@@ -106,7 +107,7 @@ class TransactionHistoryFormPage extends StatelessWidget {
                                         SizedBox(
                                           width: 150,
                                           child: Text(
-                                            products[index].description,
+                                            products[index].transactionDesc,
                                             maxLines: 3,
                                             overflow: TextOverflow.ellipsis,
                                             style: TextStyle(
@@ -154,6 +155,7 @@ class TransactionHistoryFormPage extends StatelessWidget {
                                                     if (products[index].quantity.value >
                                                         0) {
                                                       products[index].quantity.value--;
+                                                      controller.countTotal(products, transaction.invoice.startsWith('CO'));
                                                     }
                                                   },
                                                   icon: const Icon(
@@ -195,6 +197,7 @@ class TransactionHistoryFormPage extends StatelessWidget {
                                                         .startsWith('CO')) {
                                                       products[index].quantity.value++;
                                                     }
+                                                    controller.countTotal(products, transaction.invoice.startsWith('CO'));
                                                   },
                                                   icon: const Icon(
                                                     Icons.add,
@@ -226,9 +229,8 @@ class TransactionHistoryFormPage extends StatelessWidget {
                             Expanded(
                               child: Text("Total"),
                             ),
-                            // Text(FunctionHelper.convertPriceWithComma(
-                            //     transactionDetail.totalAmount.value)),
-                            Text("Rp 10.000"),
+                            Text(FunctionHelper.convertPriceWithComma(
+                                controller.totalAmount.value)),
                           ],
                         ),
                         SizedBox(
@@ -237,11 +239,10 @@ class TransactionHistoryFormPage extends StatelessWidget {
                         Row(
                           children: [
                             Expanded(
-                              child: Text("Tax 10%"),
+                              child: Text("Tax ${controller.tax.value}%"),
                             ),
-                            // Text(FunctionHelper.convertPriceWithComma(
-                            //     controller.tax.value)),
-                            Text("Rp 1.000"),
+                            Text(FunctionHelper.convertPriceWithComma(
+                                controller.taxTotal.value)),
                           ],
                         ),
                         Divider(
@@ -250,11 +251,10 @@ class TransactionHistoryFormPage extends StatelessWidget {
                         Row(
                           children: [
                             Expanded(child: Text("Total Price")),
-                            // Text(FunctionHelper.convertPriceWithComma(
-                            //     controller.totalAmount.value +
-                            //         controller.tax.value)),
-                            Text("Rp 11.000"),
-                          ],
+                            Text(FunctionHelper.convertPriceWithComma(
+                                controller.totalAmount.value +
+                                    controller.taxTotal.value)),
+        ]
                         ),
                       ],
                     ),
