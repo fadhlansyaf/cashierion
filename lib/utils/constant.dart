@@ -11,6 +11,7 @@ enum SharedPreferenceKey{
 class DateTimeFormat{
   static const String standard = 'yyyy-MM-dd HH:mm';
   static const String standardNoTime = 'yyyy-MM-dd';
+  static const String standardNoTimeNoStripe = 'yyyyMMdd';
 }
 
 class ApiUrl{

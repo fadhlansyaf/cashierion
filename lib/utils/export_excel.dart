@@ -1,8 +1,10 @@
 import 'dart:io';
 import 'package:cashierion/module/transaction_report/controller/transaction_report_controller.dart';
+import 'package:cashierion/utils/constant.dart';
 import 'package:cashierion/utils/helper.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:cashierion/core.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
@@ -22,6 +24,7 @@ class CreateExcel {
       sheet.getRangeByIndex(3, 3).setText("Sold");
       sheet.getRangeByIndex(3, 4).setText("Price");
       sheet.getRangeByIndex(3, 5).setText("Sub total");
+      sheet.autoFitColumn(1);
     } else {
       sheet.getRangeByIndex(1, 1).setText("Restock Report");
       sheet.getRangeByIndex(3, 1).setText("No");
@@ -29,9 +32,11 @@ class CreateExcel {
       sheet.getRangeByIndex(3, 3).setText("Restock");
       sheet.getRangeByIndex(3, 4).setText("Price");
       sheet.getRangeByIndex(3, 5).setText("Sub total");
+      sheet.autoFitColumn(1);
+
     }
     for (var i = 0; i < controller.reportList.length; i++) {
-      sheet.getRangeByIndex(i + 4, 1).setText((i+1).toString());
+      sheet.getRangeByIndex(i + 4, 1).setText((i + 1).toString());
       sheet.getRangeByIndex(i + 4, 2).setText(controller.reportList[i].name);
       sheet
           .getRangeByIndex(i + 4, 3)
@@ -54,6 +59,7 @@ class CreateExcel {
                       : controller.reportList[i].productPrice)
                   .toInt() +
           total;
+      sheet.autoFitColumn(i + 4);
     }
     sheet
         .getRangeByIndex(controller.reportList.length + 6, 4)
@@ -61,16 +67,20 @@ class CreateExcel {
     sheet
         .getRangeByIndex(controller.reportList.length + 6, 5)
         .setText(FunctionHelper.convertPriceWithComma(total));
+    sheet.autoFitColumn(controller.reportList.length + 6);
 
-    final List<int> bytes =workbook.saveAsStream();
+    final List<int> bytes = workbook.saveAsStream();
     workbook.dispose();
-
-    final String path = '/storage/emulated/0/Download/';
-    final String fileName = '$path/cashierion-report.xlsx';
+    final directory = await getExternalStorageDirectory();
+    final path = directory!.path;
+    // final String path = '/storage/emulated/0/Download/';
+    
+    final String fileName = '$path/' + DateFormat(DateTimeFormat.standardNoTimeNoStripe).format(controller.startDate.value) + '-' + DateFormat(DateTimeFormat.standardNoTimeNoStripe).format(controller.endDate.value) +'.xlsx';
     final File file = File(fileName);
     await file.writeAsBytes(bytes, flush: true);
     OpenFile.open(fileName);
     // FileStorage.writeCounter(bytes, "stock_report.xlsx");
+    // DateFormat(DateTimeFormat.standard).format(DateTime.now())
 
     Get.snackbar('Success', 'stock_report.xlsx has been saved to downloads',
         snackPosition: SnackPosition.BOTTOM,
