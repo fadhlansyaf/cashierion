@@ -43,16 +43,26 @@ class Dialogs {
     );
     if (result == true) {
       controller.deleteCategory(category).then((success) {
-        if(success != null){
-          if(success){
+        if (success != null) {
+          if (success) {
             Get.back();
-          }else{
+          } else {
             //TODO(dhanis): snackbar error gagal karena masih ada produk
+            Get.snackbar(
+                'Cannot delete category!', 'Category is already in use',
+                snackPosition: SnackPosition.BOTTOM,
+                backgroundColor: Colors.red,
+                colorText: Colors.white);
           }
-        }else{
+        } else {
           //TODO(dhanis): unknown error (Tulisanya An error occurred, please try again later gitu aja mungkin)
+          Get.snackbar(
+              'unknown error', 'An error occurred, please try again later',
+              snackPosition: SnackPosition.BOTTOM,
+              backgroundColor: Colors.red,
+              colorText: Colors.white);
         }
-      } );
+      });
     }
   }
 
@@ -86,16 +96,26 @@ class Dialogs {
     );
     if (result == true) {
       controller.deleteItem(product).then((success) {
-        if(success != null){
-          if(success){
+        if (success != null) {
+          if (success) {
             Get.back();
-          }else{
+          } else {
             //TODO(dhanis): snackbar error gagal karena masih ada transaksi detail
+            Get.snackbar(
+                'Cannot delete product!', 'Product is already in transaction',
+                snackPosition: SnackPosition.BOTTOM,
+                backgroundColor: Colors.red,
+                colorText: Colors.white);
           }
-        }else{
+        } else {
           //TODO(dhanis): unknown error (Tulisanya An error occurred, please try again later gitu aja mungkin)
+          Get.snackbar(
+              'unknown error', 'An error occurred, please try again later',
+              snackPosition: SnackPosition.BOTTOM,
+              backgroundColor: Colors.red,
+              colorText: Colors.white);
         }
-      } );
+      });
     }
   }
 
@@ -424,7 +444,8 @@ class Dialogs {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('About prediction'),
-        content: const Text('If the data is still less than 2 years, then there will be data manipulation. Predictive data can be seen according to the data that has been entered.'),
+        content: const Text(
+            'If the data is still less than 2 years, then there will be data manipulation. Predictive data can be seen according to the data that has been entered.'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),

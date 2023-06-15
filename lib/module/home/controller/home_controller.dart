@@ -18,7 +18,8 @@ class HomeLogic extends GetxController {
   var selectedIndex = 0.obs;
   var categoryList = <CategoryModel>[].obs;
   var productList = <ProductModel>[].obs;
-  Rx<PaymentTypeModel> selectedPaymentType = PaymentTypeModel(paymentName: '').obs;
+  Rx<PaymentTypeModel> selectedPaymentType =
+      PaymentTypeModel(paymentName: '').obs;
   var paymentType = <PaymentTypeModel>[].obs;
   Rx<PaymentDetailModel?> selectedPaymentDetail = Rx<PaymentDetailModel?>(null);
   var specificPaymentDetail = <PaymentDetailModel>[].obs;
@@ -86,7 +87,7 @@ class HomeLogic extends GetxController {
     if (prediction["data"] != null) {
       predictionImage.value =
           await ApiManager.getPrediction(prediction: prediction);
-      if(predictionImage.value!.isEmpty){
+      if (predictionImage.value!.isEmpty) {
         noInternet.value = true;
       }
     } else {
@@ -115,7 +116,7 @@ class HomeLogic extends GetxController {
     totalAmount.value = total;
   }
 
-  void setTax(int newTax){
+  void setTax(int newTax) {
     Preferences.getInstance().setInt(SharedPreferenceKey.TAX, newTax);
     tax.value = newTax;
   }
@@ -182,17 +183,19 @@ class HomeLogic extends GetxController {
         Get.back();
         return true;
       } else {
-        Get.snackbar(
-          'Error',
-          'Payment type can\'t be empty',
-          snackPosition: SnackPosition.BOTTOM,
+        Get.snackbar('Error', 'Payment type can\'t be empty',
+            snackPosition: SnackPosition.BOTTOM,
             backgroundColor: Colors.red,
-            colorText: Colors.white
-        );
+            colorText: Colors.white);
         return false;
       }
-    }else{
+    } else {
       //todo(dhanis) error karena masih ada payment detail
+      Get.snackbar(
+          'Cannot delete payment type!', 'payment type is already in use',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white);
     }
   }
 
@@ -276,9 +279,9 @@ class HomeLogic extends GetxController {
     return invoiceNumber;
   }
 
-  void clearAllItems(){
-    for(var e in productList){
-      if(e.quantity.value > 0){
+  void clearAllItems() {
+    for (var e in productList) {
+      if (e.quantity.value > 0) {
         e.quantity.value = 0;
       }
     }
@@ -293,9 +296,9 @@ class HomeLogic extends GetxController {
               paymentDetailId: selectedPaymentDetail.value?.id,
               invoice: await generateInvoiceNumber(),
               dates: DateFormat(DateTimeFormat.standard).format(DateTime.now()),
-              sales: totalAmount.value +
-                  taxTotal.value),
-          productList.where((p0) => p0.quantity.value > 0).toList(), isOrder.value);
+              sales: totalAmount.value + taxTotal.value),
+          productList.where((p0) => p0.quantity.value > 0).toList(),
+          isOrder.value);
 
       clearAllItems();
       onInit();

@@ -19,10 +19,6 @@ class CategoryDetailDao{
             where: 'product_category_id = ?', whereArgs: [category.id]);
         return true;
       }else{
-        Get.snackbar('Cannot delete category!', 'Category is already in transaction',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white);
         return false;
       }
     }  catch (e) {
