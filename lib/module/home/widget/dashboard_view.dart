@@ -171,7 +171,7 @@ class DashboardView extends StatelessWidget {
                               height: 150,
                               alignment: AlignmentDirectional.center,
                               child: Text(
-                                  "Data range must be greater than 30 days"))
+                                  controller.canPredict.value ? "Loading.." :"Data range must be greater than 30 days"))
                       ],
                     ),
                   ),

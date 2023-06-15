@@ -9,8 +9,8 @@ class ApiManager{
   static Dio getDio(){
     var dio = Dio(BaseOptions(
         baseUrl: ApiUrl.baseUrl,
-        connectTimeout: const Duration(seconds: 15),
-        receiveTimeout: const Duration(seconds: 15),
+        connectTimeout: const Duration(seconds: 30),
+        receiveTimeout: const Duration(seconds: 30),
         contentType: Headers.jsonContentType,
         responseDecoder: (responseBytes, options, responseBody) {
           if (responseBody.statusCode != 200) {
