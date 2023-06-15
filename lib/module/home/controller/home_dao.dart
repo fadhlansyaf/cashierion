@@ -138,19 +138,26 @@ class HomeDao {
     }
   }
 
-  Future<bool> deletePaymentType(PaymentTypeModel paymentType) async {
+  Future<bool?> deletePaymentType(PaymentTypeModel paymentType) async {
     try {
       Database db = await DatabaseProvider().database;
       int rowCount = Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM ${DatabaseProvider.paymentType}')) ?? 0;
       if(rowCount > 1) {
-        var detailResult = await db.query(DatabaseProvider.paymentDetail, where: 'payment_type_id = ?', whereArgs: [paymentType.id]);
-        var paymentDetails = detailResult.map((e) => PaymentDetailModel.fromJson(e)).toList();
-        for(var e in paymentDetails){
-          await deletePaymentDetail(e);
+        int paymentDetailWithId = Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM ${DatabaseProvider.paymentDetail} WHERE payment_type_id = ${paymentType.id}')) ?? 0;
+        if(paymentDetailWithId > 0) {
+          var detailResult = await db.query(DatabaseProvider.paymentDetail,
+              where: 'payment_type_id = ?', whereArgs: [paymentType.id]);
+          var paymentDetails =
+              detailResult.map((e) => PaymentDetailModel.fromJson(e)).toList();
+          for (var e in paymentDetails) {
+            await deletePaymentDetail(e);
+          }
+          await db.delete(DatabaseProvider.paymentType,
+              where: 'payment_type_id = ?', whereArgs: [paymentType.id]);
+          return true;
+        }else{
+          return null;
         }
-        await db.delete(DatabaseProvider.paymentType,
-          where: 'payment_type_id = ?', whereArgs: [paymentType.id]);
-        return true;
       }else{
         return false;
       }

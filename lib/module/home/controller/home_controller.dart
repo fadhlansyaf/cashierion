@@ -174,19 +174,25 @@ class HomeLogic extends GetxController {
     Get.back();
   }
 
-  Future<void> deletePaymentType(PaymentTypeModel paymentType) async {
+  Future<bool?> deletePaymentType(PaymentTypeModel paymentType) async {
     var homeDao = Get.find<HomeDao>();
     var isDeleted = await homeDao.deletePaymentType(paymentType);
-    if (isDeleted) {
-      Get.back();
-    } else {
-      Get.snackbar(
-        'Error',
-        'Payment type can\'t be empty',
-        snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white
-      );
+    if (isDeleted != null) {
+      if (isDeleted) {
+        Get.back();
+        return true;
+      } else {
+        Get.snackbar(
+          'Error',
+          'Payment type can\'t be empty',
+          snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.red,
+            colorText: Colors.white
+        );
+        return false;
+      }
+    }else{
+      //todo(dhanis) error karena masih ada payment detail
     }
   }
 
