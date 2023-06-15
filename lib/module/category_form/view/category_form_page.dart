@@ -51,7 +51,7 @@ class CategoryFormPage extends StatelessWidget {
                   controller: controller.textController[0],
                   keyboardType: TextInputType.text,
                   validation: true,
-                  label: "Category Name",
+                  label: "Category Name *",
                 ),
                 CustomTextFieldOld(
                   controller: controller.textController[1],
