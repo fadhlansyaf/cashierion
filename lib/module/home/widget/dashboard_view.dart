@@ -1,3 +1,4 @@
+import 'package:cashierion/utils/dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:cashierion/core.dart';
@@ -137,12 +138,28 @@ class DashboardView extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        Text(
-                          "Prediction",
-                          style: TextStyle(
-                              color: ColorTheme.COLOR_WHITE,
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold),
+                        Row(
+                          children: [
+                            Text(
+                              "Prediction",
+                              style: TextStyle(
+                                  color: ColorTheme.COLOR_WHITE,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                Dialogs.predictionInfoDialog(context);
+                              },
+                              child: Icon(
+                                Icons.info,
+                                size: 15,
+                              ),
+                            )
+                          ],
                         ),
                         SizedBox(
                           height: 5,
@@ -170,8 +187,9 @@ class DashboardView extends StatelessWidget {
                               width: double.infinity,
                               height: 150,
                               alignment: AlignmentDirectional.center,
-                              child: Text(
-                                  controller.canPredict.value ? "Loading.." :"Data range must be greater than 30 days"))
+                              child: Text(controller.canPredict.value
+                                  ? "Loading.."
+                                  : "Data range must be greater than 30 days")),
                       ],
                     ),
                   ),

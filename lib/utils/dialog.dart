@@ -416,4 +416,25 @@ class Dialogs {
           taxController.text.isNotEmpty ? int.parse(taxController.text) : 0);
     }
   }
+
+  static void predictionInfoDialog(
+    BuildContext context,
+  ) async {
+    final result = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('About prediction'),
+        content: const Text('If the data is still less than 2 years, then there will be data manipulation. Predictive data can be seen according to the data that has been entered.'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text(
+              'Ok',
+              style: TextStyle(color: ColorTheme.COLOR_PRIMARY),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }
