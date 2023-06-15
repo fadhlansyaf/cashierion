@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:cashierion/utils/helper.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:cashierion/core.dart';
@@ -105,13 +106,13 @@ class ProductDetailPage extends StatelessWidget {
                     height: 20,
                   ),
                   ProductDetailWidget(
-                      title: 'Price', subtitle: product.price.toString()),
+                      title: 'Price', subtitle: FunctionHelper.convertPriceWithComma(product.price)),
                   SizedBox(
                     height: 20,
                   ),
                   ProductDetailWidget(
                       title: 'Selling Price',
-                      subtitle: product.sellingPrice.toString()),
+                      subtitle: FunctionHelper.convertPriceWithComma(product.sellingPrice)),
                   SizedBox(
                     height: 20,
                   ),
