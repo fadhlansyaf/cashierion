@@ -1,3 +1,4 @@
+///Model untuk halaman report transaction karena outputnya custom
 class ReportProductModel {
   final int productId;
   final String name;
