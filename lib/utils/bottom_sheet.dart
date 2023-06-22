@@ -456,7 +456,7 @@ class BottomSheets {
                         controller: controller.paymentTypeController,
                         keyboardType: TextInputType.text,
                         validation: true,
-                        label: "Payment Type",
+                        label: "Payment Type *",
                       ),
                     ],
                   ),
