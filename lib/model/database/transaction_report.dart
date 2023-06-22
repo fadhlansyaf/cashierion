@@ -1,20 +1,20 @@
 ///Model untuk halaman report transaction karena outputnya custom
-class ReportProductModel {
+class TransactionReportModel {
   final int productId;
   final String name;
   final int totalQuantity;
   final double productPrice;
   final double productSellingPrice;
 
-  ReportProductModel(
+  TransactionReportModel(
       {required this.productId,
       required this.name,
       required this.totalQuantity,
         required this.productSellingPrice,
       required this.productPrice});
 
-  factory ReportProductModel.fromJson(Map<String, dynamic> json) =>
-      ReportProductModel(
+  factory TransactionReportModel.fromJson(Map<String, dynamic> json) =>
+      TransactionReportModel(
           productId: json["product_id"] ?? 0,
           name: json["name"] ?? '',
           productPrice: json["price"] ?? 0,

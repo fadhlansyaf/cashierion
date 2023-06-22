@@ -24,7 +24,7 @@ class TransactionReportPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<TransactionReportLogic>();
-    List<ReportProductModel> duplicate = [];
+    List<TransactionReportModel> duplicate = [];
     duplicate.addAll(controller.reportList);
     return Scaffold(
         appBar: AppBar(
@@ -134,7 +134,7 @@ class TransactionReportPage extends StatelessWidget {
 
                                 onChanged: (value) {
                                   if (value.isNotEmpty) {
-                                    List<ReportProductModel> searched = [];
+                                    List<TransactionReportModel> searched = [];
                                     for (var e in controller.reportList) {
                                       if (e.name
                                           .toLowerCase()

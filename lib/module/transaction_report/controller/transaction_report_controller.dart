@@ -9,7 +9,7 @@ import '../../../utils/preferences.dart';
 import 'transaction_report_dao.dart';
 
 class TransactionReportLogic extends GetxController {
-  var reportList = <ReportProductModel>[].obs;
+  var reportList = <TransactionReportModel>[].obs;
   var isLoading = true.obs;
   var now = DateTime.now();
   late var startDate = DateTime(now.year, now.month, now.day, 0, 0).obs;
@@ -39,7 +39,7 @@ class TransactionReportLogic extends GetxController {
     super.onInit();
   }
 
-  void countTotal(List<ReportProductModel> reportList, bool isOrder) {
+  void countTotal(List<TransactionReportModel> reportList, bool isOrder) {
     double total = 0;
     for (var e in reportList) {
       if (isOrder) {

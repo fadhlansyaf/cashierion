@@ -9,7 +9,7 @@ import '../../../service/database_provider.dart';
 import '../../../utils/constant.dart';
 
 class TransactionReportDao {
-  Future<RxList<ReportProductModel>> getTotalQuantity(
+  Future<RxList<TransactionReportModel>> getTotalQuantity(
       DateTime dateStart, DateTime dateEnd, int type) async {
     try {
       Database db = await DatabaseProvider().database;
@@ -26,11 +26,11 @@ class TransactionReportDao {
         DateFormat(DateTimeFormat.standard).format(dateEnd),
         type == 0 ? 'CO%' : 'CS%'
       ]);
-      var report = result.map((e) => ReportProductModel.fromJson(e)).toList();
+      var report = result.map((e) => TransactionReportModel.fromJson(e)).toList();
       return report.obs;
     } catch (e) {
       print(e);
-      return <ReportProductModel>[].obs;
+      return <TransactionReportModel>[].obs;
     }
   }
 }
