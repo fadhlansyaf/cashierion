@@ -5,7 +5,7 @@ import 'package:sqflite/sqflite.dart';
 
 export 'package:sqflite/sqflite.dart';
 
-
+///Class untuk menggunakan database SQLite pada app Cashierion
 class DatabaseProvider {
   Database? _database;
 
@@ -34,7 +34,7 @@ class DatabaseProvider {
       Database db, int oldVersion, int newVersion) async {}
 
   static Future<void> _onCreate(Database db, int version) async {
-    // Batch batch = db.batch();
+    //Menjalankan semua script pada _initScript
     for (var script in _initScript) {
       db.execute(script);
     }
@@ -58,6 +58,9 @@ class DatabaseProvider {
   static const transactionTable = 'Transactions';
   static const transactionDetailTable = 'TransactionDetails';
 
+  ///List script yang perlu dirun untuk membuat database
+  ///
+  /// [productCategoryTable] dan [paymentType] mempunyai initial value
   static final List<String> _initScript = [
     '''
   CREATE TABLE $productCategoryTable(

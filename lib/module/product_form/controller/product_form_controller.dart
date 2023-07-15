@@ -18,6 +18,7 @@ class ProductFormLogic extends GetxController {
   var selectedImagePath = ''.obs;
   var selectedImageSize = ''.obs;
   Uint8List? selectedImageBytes;
+  ///Kategori awal yang terpilih
   var initialCategory = CategoryModel(name: '', description: '');
   late Rx<CategoryModel> selectedCategory = initialCategory.obs;
 
@@ -39,6 +40,7 @@ class ProductFormLogic extends GetxController {
     final categoryController = Get.find<CategoryListLogic>();
     var categoryList = await categoryController.getCategoryList();
     if (selectedCategory.value == initialCategory) {
+      //initialize selected kategori menjadi kategori pertama pada list kategori
       selectedCategory = categoryList.first.obs;
       textController[5].text = selectedCategory.value.name;
     }
@@ -71,10 +73,10 @@ class ProductFormLogic extends GetxController {
           stock: int.parse(textController[3].text),
           description: textController[4].text,
           image: compressed,
-          productCategoryId: selectedCategory.value?.id));
+          productCategoryId: selectedCategory.value.id));
     }else{
       await dao.editItem(ProductModel(
-          id: product!.id,
+          id: product.id,
           name: textController[0].text,
           price: double.parse(textController[1].text),
           sellingPrice:
@@ -82,12 +84,13 @@ class ProductFormLogic extends GetxController {
           stock: int.parse(textController[3].text),
           description: textController[4].text,
           image: compressed,
-          productCategoryId: selectedCategory.value?.id));
+          productCategoryId: selectedCategory.value.id));
       Get.back();
     }
     Get.back();
   }
 
+  ///Digunakan untuk melakukan kompresi gambar
   Future<String> _compressImage() async{
     if(selectedImageBytes != null) {
       var compressed = await FlutterImageCompress.compressWithList(

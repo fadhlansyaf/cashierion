@@ -10,6 +10,7 @@ import 'register_dao.dart';
 class RegisterLogic extends GetxController {
   final textController = TextEditingController();
 
+  ///Menyimpan data data register toko
   void registerStore(){
     Preferences.getInstance().setString(SharedPreferenceKey.STORE_NAME, textController.text);
     Preferences.getInstance().setInt(SharedPreferenceKey.TAX, 10);

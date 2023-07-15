@@ -29,5 +29,3 @@ export 'package:cashierion/module/stock_report/controller/stock_report_controlle
 export 'package:cashierion/module/stock_report/view/stock_report_view.dart';
 export 'package:cashierion/module/transaction_history_list/controller/transaction_history_list_controller.dart';
 export 'package:cashierion/module/transaction_history_list/view/transaction_history_list_page.dart';
-export 'package:cashierion/service/order_service.dart';
-export 'package:cashierion/service/product_service.dart';

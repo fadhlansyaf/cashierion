@@ -17,6 +17,7 @@ class TransactionHistoryDetailDao{
     }
   }
 
+  ///Melakukan load ulang pada transaction yang ditentukan menggunakan id
   Future<Rx<TransactionModel>> refreshTransaction(TransactionModel transaction) async {
     Database db = await DatabaseProvider().database;
     var query = await db.query(DatabaseProvider.transactionTable, where: 'transaction_id = ?', whereArgs: [transaction.id]);

@@ -4,6 +4,7 @@ export 'constant.dart';
 
 import 'constant.dart';
 
+///Class helper untuk plugin Shared Preferences
 class Preferences {
   static Preferences? _instance;
 

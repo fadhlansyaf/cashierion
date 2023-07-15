@@ -13,34 +13,37 @@ import '../../../model/database/category.dart';
 import '../../transaction_history_list/controller/transaction_history_list_dao.dart';
 
 class TransactionHistoryDetailLogic extends GetxController {
-  var selectedIndex = 0.obs;
-
-  var selectedImagePath = ''.obs;
-  var selectedImageSize = ''.obs;
-
   var transactionDetailList = <TransactionDetailModel>[].obs;
   var productList = <ProductModel>[].obs;
-  var listController = Get.find<TransactionHistoryListLogic>();
-  late Rx<TransactionModel> transaction = listController.selectedTransaction.value!.obs;
+  var historyListController = Get.find<TransactionHistoryListLogic>();
+  ///Menyimpan transaction yang dipilih
+  late Rx<TransactionModel> transaction = historyListController.selectedTransaction.value!.obs;
   var isLoading = true.obs;
+  ///% tax
   var tax = 0.obs;
+  ///Total tax setelah dihitung
   var taxTotal = 0.0.obs;
+  ///Total semua item dan tax
   var totalAmount = 0.0.obs;
 
   @override
   Future<void> onInit() async {
     super.onInit();
+    //initialize tax
     tax.value = Preferences.getInstance().getInt(SharedPreferenceKey.TAX) ?? 0;
     var dao = Get.find<TransactionHistoryDetailDao>();
     try {
-      transaction = await dao.refreshTransaction(listController.selectedTransaction.value!);
+      //initalize ulang transaction
+      transaction = await dao.refreshTransaction(historyListController.selectedTransaction.value!);
     } catch (e) {
       print(e);
     }
-    transactionDetailList.value = await dao.getTransactionDetails(listController.selectedTransaction.value!);
+    //Mengambil data transaction detail
+    transactionDetailList.value = await dao.getTransactionDetails(historyListController.selectedTransaction.value!);
     productList.clear();
     for(var e in transactionDetailList){
       try {
+        //Menambahkan ke list produk dengan menyesuaikan quantity dan description dari data transaction detail
         productList.add((await dao.getProduct(e)).copyWith(quantity: e.quantity.obs, transactionDesc: e.description));
       } catch (e) {
         print(e);
@@ -57,6 +60,7 @@ class TransactionHistoryDetailLogic extends GetxController {
     Get.back();
   }
 
+  ///Menghitung total tax
   void countTotal(List<ProductModel> products, bool isOrder) {
     double total = 0;
     for (var e in products) {

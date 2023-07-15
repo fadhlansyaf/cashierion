@@ -25,12 +25,14 @@ class StoreProfileFormLogic extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    //Initialize controller jika sudah ada data pada shared preferences
     textController[0].text = prefs.getString(SharedPreferenceKey.STORE_NAME) ?? '';
     textController[1].text = prefs.getString(SharedPreferenceKey.PHONE_NUMBER) ?? '';
     textController[2].text = prefs.getString(SharedPreferenceKey.STORE_ADDRESS) ?? '';
     textController[3].text = prefs.getString(SharedPreferenceKey.DESCRIPTION) ?? '';
   }
 
+  ///Menyimpan data toko pada shared preferences
   void saveStoreProfile(){
     prefs.setString(SharedPreferenceKey.STORE_NAME, textController[0].text);
     prefs.setString(SharedPreferenceKey.PHONE_NUMBER, textController[1].text);

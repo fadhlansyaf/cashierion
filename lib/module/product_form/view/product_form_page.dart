@@ -12,7 +12,6 @@ import '../../../model/database/category.dart';
 import '../../category_list/controller/category_list_dao.dart';
 import '/utils/bottom_sheet.dart';
 import '../widget/select_image_dialog.dart';
-import '../widget/category_bottom_sheet.dart';
 import '/widgets/custom_text_field.dart';
 
 ///Jika isEditing true, product dan categories tidak boleh null
