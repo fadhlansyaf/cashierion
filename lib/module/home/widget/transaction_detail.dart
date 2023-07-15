@@ -8,6 +8,7 @@ import 'package:cashierion/utils/helper.dart';
 
 import '/utils/bottom_sheet.dart';
 
+///Halaman transaction detail
 class TransactionDetailView extends StatelessWidget {
   const TransactionDetailView({
     Key? key,

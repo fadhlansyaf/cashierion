@@ -15,22 +15,32 @@ import '../../product_list/controller/product_list_dao.dart';
 import '../../register/controller/register_binding.dart';
 
 class HomeLogic extends GetxController {
+  ///Index untuk bottomnavbar
   var selectedIndex = 0.obs;
   var categoryList = <CategoryModel>[].obs;
   var productList = <ProductModel>[].obs;
   Rx<PaymentTypeModel> selectedPaymentType =
       PaymentTypeModel(paymentName: '').obs;
-  var paymentType = <PaymentTypeModel>[].obs;
+  var paymentTypeList = <PaymentTypeModel>[].obs;
   Rx<PaymentDetailModel?> selectedPaymentDetail = Rx<PaymentDetailModel?>(null);
+  ///Digunakan pada transaction detail
   var specificPaymentDetail = <PaymentDetailModel>[].obs;
+  ///Digunakan pada edit payment detail di profile
   var allPaymentDetail = <PaymentDetailModel>[].obs;
+  ///% tax
   var tax = 0.obs;
+  ///Total tax setelah dihitung
   var taxTotal = 0.0.obs;
+  ///Total semua item dan tax
   var totalAmount = 0.0.obs;
+  ///Untuk cek tipe transaksi order/restock
   var isOrder = true.obs;
+  ///Index untuk transaction
   var pageIndex = 0.obs;
+  ///Hasil prediksi image dari api
   Rx<Uint8List?> predictionImage = Rx<Uint8List?>(null);
   var canPredict = true.obs;
+  ///Indikasi jika tidak ada internet
   var noInternet = false.obs;
   var sales = 0.0.obs;
   var expenditure = 0.0.obs;
@@ -51,13 +61,13 @@ class HomeLogic extends GetxController {
     TextEditingController(),
     TextEditingController()
   ];
-  // final paymentDetailController = TextEditingController();
 
   @override
   Future<void> onInit() async {
     var categoryDao = Get.find<CategoryListDao>();
     var productDao = Get.find<ProductListDao>();
     var homeDao = Get.find<HomeDao>();
+    //reset semua list
     paymentTypeController.clear();
     specificPaymentDetail.clear();
     allPaymentDetail.clear();
@@ -73,29 +83,36 @@ class HomeLogic extends GetxController {
     categoryList = await categoryDao.getCategoryList();
     productList = await productDao.getAllProducts();
     checkEmptyCategory();
-    paymentType.value = await homeDao.getAllPaymentType();
-    selectedPaymentType = paymentType.first.obs;
+    paymentTypeList.value = await homeDao.getAllPaymentType();
+    //set initial payment yang dipilih menjadi paymenttypelist yang pertama
+    selectedPaymentType = paymentTypeList.first.obs;
     allPaymentDetail.value = await homeDao.getAllPaymentDetail();
     specificPaymentDetail.value = await homeDao
         .getPaymentDetailUsingPaymentType(selectedPaymentType.value);
+    //jika paymentdetaillist tidak kosong set initial payment yang dipilih menjadi paymentdetaillist yang pertama
     if (specificPaymentDetail.isNotEmpty) {
       selectedPaymentDetail = specificPaymentDetail.first.obs;
     } else {
       selectedPaymentDetail.value = null;
     }
+    //manipulasi data prediksi
     var prediction = await homeDao.manipulateData();
     if (prediction["data"] != null) {
+      //hit api prediksi
       predictionImage.value =
           await ApiManager.getPrediction(prediction: prediction);
+      //jika kosong maka tidak ada internet
       if (predictionImage.value!.isEmpty) {
         noInternet.value = true;
       }
     } else {
+      //jika kosong maka tidak bisa melakukan prediksi
       canPredict.value = false;
     }
 
     var prefs = Preferences.getInstance();
     await prefs.reload();
+    //initialize profil toko
     storeName.value = prefs.getString(SharedPreferenceKey.STORE_NAME) ?? '';
     phoneNumber.value = prefs.getString(SharedPreferenceKey.PHONE_NUMBER) ?? '';
     address.value = prefs.getString(SharedPreferenceKey.STORE_ADDRESS) ?? '';
@@ -103,6 +120,7 @@ class HomeLogic extends GetxController {
     super.onInit();
   }
 
+  ///Menghitung total
   void countTotal(List<ProductModel> products) {
     double total = 0;
     for (var e in products) {
@@ -116,6 +134,7 @@ class HomeLogic extends GetxController {
     totalAmount.value = total;
   }
 
+  ///Dipanggil ketika mengganti tax di halaman profil
   void setTax(int newTax) {
     Preferences.getInstance().setInt(SharedPreferenceKey.TAX, newTax);
     tax.value = newTax;
@@ -130,7 +149,7 @@ class HomeLogic extends GetxController {
       e.clear();
     }
     var homeDao = Get.find<HomeDao>();
-    paymentType.value = await homeDao.getAllPaymentType();
+    paymentTypeList.value = await homeDao.getAllPaymentType();
     specificPaymentDetail.value = await homeDao
         .getPaymentDetailUsingPaymentType(selectedPaymentType.value);
     allPaymentDetail.value = await homeDao.getAllPaymentDetail();
@@ -211,7 +230,7 @@ class HomeLogic extends GetxController {
     Get.back();
   }
 
-  //untuk mengecek category yg empty
+  ///untuk mengecek category yg empty, jika empty maka hapus dari list
   void checkEmptyCategory() {
     List<int> needToRemoved = [];
     int i = 0;

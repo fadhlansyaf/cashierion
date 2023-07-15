@@ -8,6 +8,7 @@ import 'package:cashierion/utils/dialog.dart';
 import 'package:cashierion/utils/helper.dart';
 import 'toggle_button.dart';
 
+///Keseluruhan halaman transaction
 class TransactionView extends StatelessWidget {
   const TransactionView({
     Key? key,

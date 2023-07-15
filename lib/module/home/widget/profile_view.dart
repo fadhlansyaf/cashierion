@@ -8,6 +8,7 @@ import 'package:cashierion/utils/dialog.dart';
 import 'profile_detail_widget.dart';
 import '/utils/bottom_sheet.dart';
 
+///Halaman profile
 class ProfileView extends StatelessWidget {
   const ProfileView({Key? key}) : super(key: key);
 

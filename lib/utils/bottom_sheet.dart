@@ -213,7 +213,7 @@ class BottomSheets {
       bool isEdit,
       void Function(PaymentTypeModel paymentType) onSelected) {
     List<PaymentTypeModel> duplicate = [];
-    duplicate.addAll(controller.paymentType);
+    duplicate.addAll(controller.paymentTypeList);
     showModalBottomSheet<void>(
       isScrollControlled: true,
       context: context,
@@ -232,7 +232,7 @@ class BottomSheets {
                 onChanged: (value) {
                   List<PaymentTypeModel> searched = [];
                   if (value.isNotEmpty) {
-                    for (var e in controller.paymentType) {
+                    for (var e in controller.paymentTypeList) {
                       if (e.paymentName
                           .toLowerCase()
                           .contains(value.toLowerCase())) {
@@ -245,11 +245,11 @@ class BottomSheets {
                         }
                       }
                     }
-                    controller.paymentType.clear();
-                    controller.paymentType.addAll(searched);
+                    controller.paymentTypeList.clear();
+                    controller.paymentTypeList.addAll(searched);
                   } else {
-                    controller.paymentType.clear();
-                    controller.paymentType.addAll(duplicate);
+                    controller.paymentTypeList.clear();
+                    controller.paymentTypeList.addAll(duplicate);
                   }
                   controller.setStatePaymentType.value;
                 },
@@ -278,7 +278,7 @@ class BottomSheets {
                       ),
                       ListView.builder(
                         physics: const NeverScrollableScrollPhysics(),
-                        itemCount: controller.paymentType.length,
+                        itemCount: controller.paymentTypeList.length,
                         shrinkWrap: true,
                         padding: EdgeInsets.zero,
                         clipBehavior: Clip.none,
@@ -286,14 +286,14 @@ class BottomSheets {
                           return InkWell(
                             onTap: () {
                               if (!isEdit) {
-                                onSelected(controller.paymentType[index]);
+                                onSelected(controller.paymentTypeList[index]);
                                 Navigator.pop(context);
                               } else {
                                 addPaymentTypeModalBottomSheet(
                                         context,
                                         controller,
                                         isEdit,
-                                        controller.paymentType[index])
+                                        controller.paymentTypeList[index])
                                     .then(
                                   (value) => controller.initPayments().then(
                                       (value) =>
@@ -308,7 +308,7 @@ class BottomSheets {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      controller.paymentType[index].paymentName,
+                                      controller.paymentTypeList[index].paymentName,
                                       style: TextStyle(
                                         fontSize: 16,
                                       ),

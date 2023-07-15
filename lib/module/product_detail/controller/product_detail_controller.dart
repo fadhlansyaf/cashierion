@@ -9,8 +9,6 @@ import '../../../model/database/product.dart';
 import '../../category_list/controller/category_list_dao.dart';
 
 class ProductDetailLogic extends GetxController {
-  var selectedIndex = 0.obs;
-
   var selectedImagePath = ''.obs;
   var selectedImageSize = ''.obs;
 
@@ -35,20 +33,6 @@ class ProductDetailLogic extends GetxController {
     categoryList = await categoryDao.getCategoryList();
     isLoading.value = false;
     update();
-  }
-
-  void getImage(ImageSource imageSource) async {
-    final pickedFile = await ImagePicker().pickImage(source: imageSource);
-    if (pickedFile != null) {
-      selectedImagePath.value = pickedFile.path;
-      selectedImageSize.value =
-          "${((File(selectedImagePath.value)).lengthSync() / 1024 / 1024).toStringAsFixed(2)} Mb";
-    } else {
-      Get.snackbar('Error', 'No image selected',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white);
-    }
   }
 
   Future<bool?> deleteItem(ProductModel product)async {

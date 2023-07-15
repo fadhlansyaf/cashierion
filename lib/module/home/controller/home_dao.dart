@@ -259,6 +259,7 @@ class HomeDao {
     }
   }
 
+  ///Manipulasi data agar total data menjadi lebih dari 2 tahun
   Future<Map<String, dynamic>> manipulateData() async {
     try {
       Database db = await DatabaseProvider().database;

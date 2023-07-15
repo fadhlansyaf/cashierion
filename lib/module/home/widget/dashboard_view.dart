@@ -10,6 +10,7 @@ import 'package:cashierion/module/transaction_report/view/transaction_report_pag
 import 'package:cashierion/theme/theme_constants.dart';
 import 'package:cashierion/utils/helper.dart';
 
+///Halaman utama dashboard
 class DashboardView extends StatelessWidget {
   const DashboardView({Key? key}) : super(key: key);
 

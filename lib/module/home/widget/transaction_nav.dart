@@ -6,6 +6,7 @@ import 'package:cashierion/theme/theme_constants.dart';
 import 'transaction_view.dart';
 import 'transaction_detail.dart';
 
+///Halaman pertama transaction
 class TransactionNavView extends StatelessWidget {
   static PageController pageController = PageController();
   final controller = Get.find<HomeLogic>();
