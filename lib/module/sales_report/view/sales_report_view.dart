@@ -7,7 +7,8 @@ import 'package:cashierion/core.dart';
 import 'package:syncfusion_flutter_xlsio/xlsio.dart' as xcel;
 import 'package:open_file/open_file.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:cashierion/main.dart';
+import 'package:cashierion/utils/export_excel.dart';
+// import 'package:cashierion/main.dart';
 
 import '../controller/sales_report_controller.dart';
 
