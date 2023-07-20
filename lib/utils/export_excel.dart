@@ -17,7 +17,7 @@ class CreateExcel {
     final xcel.Workbook workbook = xcel.Workbook();
     final xcel.Worksheet sheet = workbook.worksheets[0];
     int total = 0;
-    if (controller.selectedFilter == 0) {
+    if (controller.selectedFilter.value == 0) {
       sheet.getRangeByIndex(1, 1).setText("Order Report");
       sheet.getRangeByIndex(3, 1).setText("No");
       sheet.getRangeByIndex(3, 2).setText("Name");

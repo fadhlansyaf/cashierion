@@ -38,13 +38,6 @@ class DatabaseProvider {
     for (var script in _initScript) {
       db.execute(script);
     }
-    // await batch.commit(noResult: true);
-
-    // Batch batch2 = db.batch();
-    // for (var script in _secondInitScript) {
-    //   db.execute(script);
-    // }
-    // await batch2.commit(noResult: true);
   }
 
   static Future _onConfigure(Database db) async {
@@ -53,14 +46,14 @@ class DatabaseProvider {
 
   static const productCategoryTable = 'ProductCategory';
   static const productTable = 'Products';
-  static const paymentType = 'PaymentType';
+  static const paymentTypeTable = 'PaymentType';
   static const paymentDetail = 'PaymentDetail';
   static const transactionTable = 'Transactions';
   static const transactionDetailTable = 'TransactionDetails';
 
   ///List script yang perlu dirun untuk membuat database
   ///
-  /// [productCategoryTable] dan [paymentType] mempunyai initial value
+  /// [productCategoryTable] dan [paymentTypeTable] mempunyai initial value
   static final List<String> _initScript = [
     '''
   CREATE TABLE $productCategoryTable(
@@ -86,20 +79,20 @@ class DatabaseProvider {
   INSERT INTO $productCategoryTable(product_category_id, name) VALUES(0, 'No Category')
   ''',
     '''
-    CREATE TABLE $paymentType (
+    CREATE TABLE $paymentTypeTable (
       payment_type_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
       payment_name TEXT NOT NULL
     )
     ''',
     '''
-      INSERT INTO $paymentType (payment_name) VALUES('Cash')
+      INSERT INTO $paymentTypeTable (payment_name) VALUES('Cash')
     ''',
     '''
     CREATE TABLE $paymentDetail (
       payment_detail_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
       payment_type_id INTEGER NOT NULL,
       description TEXT,
-      FOREIGN KEY(payment_type_id) REFERENCES $paymentType(payment_type_id)
+      FOREIGN KEY(payment_type_id) REFERENCES $paymentTypeTable(payment_type_id)
     )
     ''',
     '''
@@ -110,7 +103,7 @@ class DatabaseProvider {
       invoice TEXT NOT NULL,
       dates TEXT NOT NULL,
       sales REAL NOT NULL,
-      FOREIGN KEY(payment_type_id) REFERENCES $paymentType(payment_type_id),
+      FOREIGN KEY(payment_type_id) REFERENCES $paymentTypeTable(payment_type_id),
       FOREIGN KEY(payment_detail_id) REFERENCES $paymentDetail(payment_detail_id)
     )
     ''',

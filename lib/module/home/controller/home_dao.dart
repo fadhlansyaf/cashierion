@@ -91,7 +91,7 @@ class HomeDao {
   Future<RxList<PaymentTypeModel>> getAllPaymentType() async {
     try {
       Database db = await DatabaseProvider().database;
-      var result = await db.query(DatabaseProvider.paymentType);
+      var result = await db.query(DatabaseProvider.paymentTypeTable);
       List<PaymentTypeModel> paymentTypeList =
           List.from(result.map((e) => PaymentTypeModel.fromJson(e)));
       return paymentTypeList.obs;
@@ -128,7 +128,7 @@ class HomeDao {
       PaymentDetailModel paymentDetail) async {
     try {
       Database db = await DatabaseProvider().database;
-      var result = await db.query(DatabaseProvider.paymentType,
+      var result = await db.query(DatabaseProvider.paymentTypeTable,
           where: 'payment_type_id = ?', whereArgs: [paymentDetail.paymentTypeId]);
       PaymentTypeModel paymentTypeList =
           result.map((e) => PaymentTypeModel.fromJson(e)).first;
@@ -141,7 +141,7 @@ class HomeDao {
   Future<bool?> deletePaymentType(PaymentTypeModel paymentType) async {
     try {
       Database db = await DatabaseProvider().database;
-      int rowCount = Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM ${DatabaseProvider.paymentType}')) ?? 0;
+      int rowCount = Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM ${DatabaseProvider.paymentTypeTable}')) ?? 0;
       if(rowCount > 1) {
         int paymentDetailWithId = Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM ${DatabaseProvider.paymentDetail} WHERE payment_type_id = ${paymentType.id}')) ?? 0;
         if(paymentDetailWithId > 0) {
@@ -152,7 +152,7 @@ class HomeDao {
           for (var e in paymentDetails) {
             await deletePaymentDetail(e);
           }
-          await db.delete(DatabaseProvider.paymentType,
+          await db.delete(DatabaseProvider.paymentTypeTable,
               where: 'payment_type_id = ?', whereArgs: [paymentType.id]);
           return true;
         }else{
@@ -184,7 +184,7 @@ class HomeDao {
   Future<void> insertPaymentType(PaymentTypeModel paymentType) async {
     try {
       Database db = await DatabaseProvider().database;
-      await db.insert(DatabaseProvider.paymentType, paymentType.toJson(),
+      await db.insert(DatabaseProvider.paymentTypeTable, paymentType.toJson(),
           conflictAlgorithm: ConflictAlgorithm.replace);
     } catch (e) {
       print(e);
@@ -216,7 +216,7 @@ class HomeDao {
   Future<void> editPaymentType(PaymentTypeModel paymentType) async {
     try {
       Database db = await DatabaseProvider().database;
-      await db.update(DatabaseProvider.paymentType, paymentType.toJson(),
+      await db.update(DatabaseProvider.paymentTypeTable, paymentType.toJson(),
           conflictAlgorithm: ConflictAlgorithm.replace,
           where: 'payment_type_id = ?',
           whereArgs: [paymentType.id]);
@@ -352,7 +352,7 @@ class HomeDao {
       await db.delete(DatabaseProvider.transactionDetailTable);
       await db.delete(DatabaseProvider.transactionTable);
       await db.delete(DatabaseProvider.paymentDetail);
-      await db.delete(DatabaseProvider.paymentType);
+      await db.delete(DatabaseProvider.paymentTypeTable);
       await db.delete(DatabaseProvider.productTable);
       await db.delete(DatabaseProvider.productCategoryTable);
 
@@ -361,7 +361,7 @@ class HomeDao {
   INSERT INTO ${DatabaseProvider.productCategoryTable}(product_category_id, name) VALUES(0, 'No Category')
         ''',
         '''
-        INSERT INTO ${DatabaseProvider.paymentType} (payment_name) VALUES('Cash')
+        INSERT INTO ${DatabaseProvider.paymentTypeTable} (payment_name) VALUES('Cash')
       ''',
       ];
 
