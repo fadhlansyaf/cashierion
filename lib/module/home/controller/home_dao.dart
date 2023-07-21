@@ -281,7 +281,8 @@ class HomeDao {
         final maxDate =
             DateTime(maxDateRaw.year, maxDateRaw.month, maxDateRaw.day, 23, 59);
 
-        if ((minDate.difference(maxDate).abs() >= Duration(days: 30))) {
+        //Tambahkan tanda seru (!) setelah buka kurung pertama setelah if untuk menampilkan prediksi jika data kurang dari 30 hari
+        if (!(minDate.difference(maxDate).abs() >= Duration(days: 30))) {
           final startDateRaw = maxDate.subtract(
               Duration(days: 2 * 365)); // Starting date two years earlier
           final endDate = DateTime(maxDate.year, maxDate.month, maxDate.day, 23,
